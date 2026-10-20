@@ -252,6 +252,7 @@
     }
 
     currentFrame = Math.min(Math.floor(currentProgress * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1);
+    cacheSurroundingFrames(currentFrame, diff);
     renderCanvas(currentFrame);
 
     if (frameCounterEl && loadedCount >= TOTAL_FRAMES) {
