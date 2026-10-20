@@ -2043,7 +2043,7 @@
       name: "Orange Blast",
       series: "SERIES // 03 · THERMOGENIC DRIVE",
       price: 49.00,
-      img: "public/products/orange-blast.png"
+      img: "public/products/watermelon.png"
     },
     {
       id: 3,
@@ -2051,6 +2051,20 @@
       series: "SERIES // 04 · RAW INTENSITY",
       price: 49.00,
       img: "public/products/sour-apple.png"
+    },
+    {
+      id: 4,
+      name: "Blue Razz System",
+      series: "SERIES // 05 · COMPLETE SYSTEM",
+      price: 59.00,
+      img: "public/products/blue-razz-box.png"
+    },
+    {
+      id: 5,
+      name: "Red Rush System",
+      series: "SERIES // 06 · THERMAL RED SYSTEM",
+      price: 59.00,
+      img: "public/products/red-rush-box.png"
     }
   ];
 

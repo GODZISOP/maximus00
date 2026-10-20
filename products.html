@@ -1,788 +1,989 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MAXIMUS | Products Showcase</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAXIMUS | All Formulations & Systems</title>
+  <meta name="description" content="Explore the full MAXIMUS arsenal. Clinical high-stim pre-workouts and all-in-one performance systems engineered for pure kinetic output.">
+  <meta name="theme-color" content="#08080a">
+
+  <!-- Google Fonts: Syne & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=25">
   <style>
-    :root {
-      --bg: #ffffff;
-      --text-main: #0b0c10;
-      --text-muted: #666a73;
-      --border: #e5e7eb;
-      --accent: #00d2ff;
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-font-smoothing: antialiased;
-    }
+    /* Dark Theme Overrides & Dedicated Showcase Page Polish */
     body {
-      background-color: var(--bg);
-      color: var(--text-main);
-      font-family: var(--font-sans);
+      background-color: #08080a;
+      color: #fff;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      overflow-x: hidden;
     }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.5rem 3.5rem;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-    }
-    .brand-logo {
-      font-weight: 900;
-      font-size: 1.4rem;
-      letter-spacing: -0.04em;
-      text-decoration: none;
-      color: #000;
-      display: flex;
-      align-items: center;
-      gap: 0.2rem;
-    }
-    .brand-logo span {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background: #000;
-      border-radius: 50%;
-      margin-left: 2px;
-    }
-    nav {
-      display: flex;
-      gap: 2.2rem;
-    }
-    nav a {
-      text-decoration: none;
-      color: #555;
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    nav a:hover, nav a.active {
-      color: #000;
-    }
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
-    .cart-btn {
+    
+    .products-page-header {
+      padding-top: 7.5rem;
+      padding-bottom: 2.5rem;
       position: relative;
+      text-align: center;
+      background: radial-gradient(circle at 50% 0%, rgba(255, 44, 44, 0.12) 0%, transparent 60%);
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .page-sub {
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    /* Interactive Showcase Stage */
+    .showcase-feature-wrap {
+      padding: 2rem 0 5rem;
+      position: relative;
+    }
+
+    .feature-stage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 24px;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .feature-stage-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      transition: background 0.6s ease;
+      z-index: 0;
+    }
+
+    .feature-left-stage {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 460px;
+      z-index: 1;
+    }
+
+    .feature-img-box {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feature-product-img {
+      max-width: 88%;
+      max-height: 380px;
+      object-fit: contain;
+      filter: drop-shadow(0 25px 35px rgba(0,0,0,0.85));
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+      animation: gentleFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .feature-ground-shadow {
+      position: absolute;
+      bottom: 10px;
+      width: 65%;
+      height: 24px;
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0.9) 0%, transparent 70%);
+      filter: blur(8px);
+      pointer-events: none;
+    }
+
+    .view-toggles-dark {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      padding: 0.3rem;
+      gap: 0.4rem;
+      margin-top: 1.5rem;
+      z-index: 2;
+    }
+
+    .toggle-pill-dark {
       background: none;
       border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.4rem;
-    }
-    .cart-badge {
-      position: absolute;
-      top: -2px;
-      right: -4px;
-      background: #ff334b;
-      color: #fff;
-      font-size: 0.65rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
       font-weight: 700;
-      width: 17px;
-      height: 17px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      letter-spacing: 0.08em;
+      padding: 0.45rem 1.1rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.25s ease;
     }
-    main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2.5rem 3.5rem;
-      max-width: 1350px;
-      margin: 0 auto;
-      width: 100%;
+
+    .toggle-pill-dark.active {
+      background: #fff;
+      color: #000;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
     }
-    .showcase-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 4rem;
-      align-items: center;
-      width: 100%;
-    }
-    .visual-stage {
+
+    /* Details Column */
+    .feature-right-info {
       position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 480px;
-    }
-    .ambient-glow {
-      position: absolute;
-      width: 380px;
-      height: 380px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--accent) 0%, transparent 65%);
-      opacity: 0.18;
-      filter: blur(40px);
       z-index: 1;
-      transition: all 0.5s ease;
-    }
-    .product-img {
-      position: relative;
-      z-index: 2;
-      max-width: 480px;
-      max-height: 440px;
-      width: 100%;
-      object-fit: contain;
-      filter: drop-shadow(0 25px 35px rgba(0,0,0,0.18));
-      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
-      cursor: zoom-in;
-    }
-    .product-img:hover {
-      transform: translateY(-8px) scale(1.03);
-    }
-    .view-toggles {
-      display: flex;
-      gap: 0.75rem;
-      margin-top: 1.75rem;
-      z-index: 3;
-    }
-    .toggle-pill {
-      background: #f3f4f6;
-      border: 1px solid #e5e7eb;
-      padding: 0.5rem 1rem;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #4b5563;
-      cursor: pointer;
-      letter-spacing: 0.05em;
-      transition: all 0.2s ease;
-    }
-    .toggle-pill.active {
-      background: #000;
-      color: #fff;
-      border-color: #000;
-    }
-    .details-panel {
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
+      gap: 1.4rem;
     }
-    .series-label {
+
+    .series-tag-dark {
       font-family: var(--font-mono);
       font-size: 0.75rem;
       font-weight: 700;
       letter-spacing: 0.15em;
-      color: #888;
+      color: #00d2ff;
       text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    .product-title {
-      font-size: 2.35rem;
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -0.03em;
-      color: #0b0c10;
-    }
-    .product-price-row {
-      display: flex;
-      align-items: baseline;
-      gap: 0.9rem;
-    }
-    .product-price {
-      font-size: 2.1rem;
+
+    .feature-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
       font-weight: 800;
       letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: #fff;
     }
-    .original-price {
-      font-size: 1.15rem;
-      color: #9ca3af;
+
+    .feature-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    .price-main-dark {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .price-orig-dark {
+      font-size: 1.25rem;
+      color: rgba(255, 255, 255, 0.35);
       text-decoration: line-through;
     }
-    .save-tag {
-      background: #ecfdf5;
-      color: #059669;
+
+    .save-badge-dark {
+      background: rgba(34, 229, 102, 0.15);
+      border: 1px solid rgba(34, 229, 102, 0.35);
+      color: #22e566;
+      font-family: var(--font-mono);
       font-size: 0.72rem;
-      font-weight: 800;
-      padding: 0.2rem 0.55rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
       border-radius: 6px;
-      letter-spacing: 0.05em;
     }
-    .flavor-section {
+
+    /* Flavor Selector Dots */
+    .flavor-selector-wrap {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
-      margin: 0.5rem 0;
+      gap: 0.75rem;
     }
-    .flavor-name {
-      font-size: 0.8rem;
+
+    .flavor-selector-label {
+      font-size: 0.82rem;
       font-weight: 600;
-      color: #4b5563;
+      color: var(--text-muted);
     }
-    .color-dots {
+
+    .flavor-selector-label strong {
+      color: #fff;
+    }
+
+    .flavor-pills-row {
       display: flex;
-      gap: 0.9rem;
-      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
-    .dot {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
+
+    .flavor-select-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+      padding: 0.5rem 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
       cursor: pointer;
-      position: relative;
-      transition: transform 0.2s ease;
-      border: 2px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.25s ease;
     }
-    .dot::after {
-      content: '';
-      position: absolute;
-      top: -5px;
-      left: -5px;
-      right: -5px;
-      bottom: -5px;
-      border: 2px solid transparent;
+
+    .flavor-select-pill .pill-dot {
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      transition: border-color 0.2s;
-    }
-    .dot.active::after {
-      border-color: #000;
-    }
-    .dot:hover {
-      transform: scale(1.15);
-    }
-    .dot[data-color="blue"] { background: #00d2ff; }
-    .dot[data-color="purple"] { background: #b026ff; }
-    .dot[data-color="orange"] { background: #ff7700; }
-    .dot[data-color="green"] { background: #22e566; }
-
-    .product-desc {
-      font-size: 0.92rem;
-      color: #4b5563;
-      line-height: 1.6;
-      max-width: 480px;
     }
 
-    .actives-grid {
+    .flavor-select-pill:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .flavor-select-pill.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border-color: #fff;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .feature-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* Telemetry specs grid */
+    .feature-specs-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 0.75rem;
-      background: #f9fafb;
-      padding: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
-      border: 1px solid #f3f4f6;
+      padding: 1.25rem;
     }
-    .active-pill {
+
+    .spec-item {
       display: flex;
       flex-direction: column;
+      gap: 0.2rem;
     }
-    .active-label {
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #9ca3af;
-    }
-    .active-val {
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: #111;
+
+    .spec-item-label {
       font-family: var(--font-mono);
-    }
-
-    .action-row {
-      display: flex;
-      gap: 1rem;
-      margin-top: 0.75rem;
-    }
-    .btn-buy {
-      background: #0f1115;
-      color: #fff;
-      border: none;
-      padding: 0.95rem 2.2rem;
-      border-radius: 999px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-      flex: 1;
-    }
-    .btn-buy:hover {
-      background: #252830;
-      transform: translateY(-2px);
-    }
-    .btn-cart {
-      background: #fff;
-      color: #0f1115;
-      border: 1.5px solid #d1d5db;
-      padding: 0.95rem 2rem;
-      border-radius: 999px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.55rem;
-      transition: all 0.2s;
-      flex: 1;
-    }
-    .btn-cart:hover {
-      border-color: #000;
-      background: #f9fafb;
-      transform: translateY(-2px);
-    }
-
-    footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 3.5rem;
-      border-top: 1px solid rgba(0,0,0,0.06);
-      font-size: 0.8rem;
-      color: #9ca3af;
-    }
-    footer a {
-      color: #666;
-      text-decoration: none;
-    }
-
-    .cart-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      backdrop-filter: blur(4px);
-      z-index: 99998;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.35s ease;
-    }
-    .cart-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .cart-drawer {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 440px;
-      max-width: 95vw;
-      height: 100vh;
-      background: #ffffff;
-      box-shadow: -15px 0 50px rgba(0,0,0,0.15);
-      z-index: 99999;
-      display: flex;
-      flex-direction: column;
-      transform: translateX(100%);
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .cart-drawer.active {
-      transform: translateX(0);
-    }
-    .drawer-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 2rem;
-      border-bottom: 1px solid #f3f4f6;
-    }
-    .drawer-header h3 {
-      font-size: 1.1rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-    .close-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #888;
-    }
-    .cart-items {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1.5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .cart-empty {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      height: 100%;
-      color: #9ca3af;
-      gap: 0.5rem;
-    }
-    .cart-item-row {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      padding: 1rem;
-      border: 1px solid #f3f4f6;
-      border-radius: 12px;
-      background: #fcfcfd;
-    }
-    .cart-item-row img {
-      width: 60px;
-      height: 60px;
-      object-fit: contain;
-    }
-    .item-meta {
-      flex: 1;
-    }
-    .item-meta h4 {
-      font-size: 0.88rem;
-      font-weight: 700;
-    }
-    .item-meta p {
-      font-size: 0.78rem;
-      color: #6b7280;
-    }
-    .item-meta .price {
-      font-weight: 800;
-      font-size: 0.95rem;
-      margin-top: 0.2rem;
-    }
-    .qty-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      border: 1px solid #e5e7eb;
-      border-radius: 6px;
-      padding: 0.15rem 0.4rem;
-    }
-    .qty-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 0.9rem;
-      padding: 0 0.25rem;
-    }
-    .drawer-footer {
-      padding: 1.5rem 2rem;
-      border-top: 1px solid #f3f4f6;
-      background: #fafafa;
-    }
-    .subtotal-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 1.05rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-    }
-    .checkout-btn {
-      width: 100%;
-      background: #000;
-      color: #fff;
-      padding: 1rem;
-      border-radius: 999px;
-      border: none;
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
       letter-spacing: 0.05em;
-      transition: background 0.2s;
     }
-    .checkout-btn:hover {
-      background: #222;
+
+    .spec-item-val {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .feature-actions-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    /* Catalog Section */
+    .catalog-section {
+      padding: 5rem 0 7rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: #08080a;
+    }
+
+    .catalog-header {
+      margin-bottom: 3.5rem;
+      text-align: center;
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
     }
 
     @media (max-width: 960px) {
-      header { padding: 1.25rem 1.5rem; }
-      nav { display: none; }
-      main { padding: 1.5rem; }
-      .showcase-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .visual-stage { min-height: 340px; }
-      .product-img { max-width: 320px; max-height: 300px; }
-      .product-title { font-size: 1.85rem; }
-      .action-row { flex-direction: column; }
-      footer { padding: 1.25rem 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
+      .feature-stage-grid {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.5rem;
+        gap: 2rem;
+      }
+      .feature-left-stage {
+        min-height: 320px;
+      }
+      .feature-img-box {
+        height: 280px;
+      }
+      .catalog-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
-<body>
-  <header>
-    <a href="/" class="brand-logo">MAXIMUS<span></span></a>
-    <nav>
-      <a href="/">HOME</a>
-      <a href="/products.html" class="active">PRODUCTS</a>
-      <a href="/#arsenal">ARSENAL</a>
-      <a href="/#formula">FORMULA</a>
-      <a href="/#science">SCIENCE</a>
-    </nav>
-    <div class="header-actions">
-      <button class="cart-btn" id="cartBtn" aria-label="Cart">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-        <span class="cart-badge" id="cartBadgeCount">0</span>
+<body class="bg-grid">
+
+  <!-- ========================================================================
+       1. NAVIGATION HEADER (Identical to Home)
+       ======================================================================== -->
+  <nav class="site-nav" id="siteNav" aria-label="Primary Navigation">
+    <div class="container nav-inner">
+      <!-- Brand Logo -->
+      <a href="/" class="brand-logo" aria-label="MAXIMUS Home">
+        <div class="brand-slash"></div>
+        <span class="brand-text">MAXIMUS</span>
+        <span class="brand-pill">LABS</span>
+      </a>
+
+      <!-- Desktop Links -->
+      <div class="nav-links">
+        <a href="/#products" class="nav-link">Showcase</a>
+        <a href="/products.html" class="nav-link active">All Products</a>
+        <a href="/#performance" class="nav-link">Performance</a>
+        <a href="/#formula" class="nav-link">Formula</a>
+        <a href="/#about" class="nav-link">About</a>
+      </div>
+
+      <!-- Actions -->
+      <div class="nav-actions">
+        <button class="nav-cart-btn" id="navCartBtn" aria-label="Open Shopping Cart">
+          <span class="cart-icon-svg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+          </span>
+          <span class="cart-text">CART</span>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+        <a href="/products.html" class="btn-nav">
+          <span>Shop All</span>
+          <span>↗</span>
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-nav-links">
+      <a href="/" class="mobile-nav-link">01 — Home</a>
+      <a href="/products.html" class="mobile-nav-link">02 — All Products</a>
+      <a href="/#performance" class="mobile-nav-link">03 — Performance</a>
+      <a href="/#formula" class="mobile-nav-link">04 — Formula</a>
+    </div>
+  </div>
+
+  <!-- Header Banner -->
+  <header class="products-page-header">
+    <div class="container">
+      <div class="section-pill" style="margin-bottom: 1rem;">// COMPLETE PRODUCT ARSENAL</div>
+      <h1 class="page-title">
+        PRECISION FORMULATIONS <br>
+        <span class="gradient-text">&amp; COMPLETE SYSTEMS.</span>
+      </h1>
+      <p class="page-sub">
+        Every batch clinical-grade. Select any individual formulation or experience our complete 3-stage performance bundles.
+      </p>
     </div>
   </header>
 
-  <main>
-    <div class="showcase-grid">
-      <div class="visual-stage">
-        <div class="ambient-glow" id="ambientGlow"></div>
-        <img class="product-img" id="showcaseImg" src="public/products/blue-raspberry.png" alt="MAXIMUS Product">
-        <div class="view-toggles">
-          <button class="toggle-pill active" id="btnSealed">SEALED PACKAGING</button>
-          <button class="toggle-pill" id="btnOpen">OPEN TUB &amp; SCOOP</button>
-        </div>
-      </div>
+  <!-- Interactive Featured Showcase -->
+  <section class="showcase-feature-wrap">
+    <div class="container">
+      <div class="feature-stage-grid">
+        <div class="feature-stage-glow" id="stageGlow"></div>
 
-      <div class="details-panel">
-        <span class="series-label" id="seriesLabel">SERIES // 01 · ULTRA HIGH STIM</span>
-        <h1 class="product-title" id="productTitle">MAXIMUS Pre-Workout<br>Blue Raspberry</h1>
-        
-        <div class="product-price-row">
-          <span class="product-price" id="productPrice">$49.00</span>
-          <span class="original-price">$59.00</span>
-          <span class="save-tag">SAVE $10</span>
-        </div>
+        <!-- Left Image Stage -->
+        <div class="feature-left-stage">
+          <div class="feature-img-box">
+            <img class="feature-product-img" id="featProductImg" src="public/products/blue-raspberry.png" alt="MAXIMUS Formulation">
+            <div class="feature-ground-shadow"></div>
+          </div>
 
-        <div class="flavor-section">
-          <span class="flavor-name" id="flavorName">Selected Flavor: <strong>Electric Blue Raspberry</strong></span>
-          <div class="color-dots">
-            <div class="dot active" data-index="0" data-color="blue" title="Blue Raspberry"></div>
-            <div class="dot" data-index="1" data-color="purple" title="Midnight Grape"></div>
-            <div class="dot" data-index="2" data-color="orange" title="Orange Blast"></div>
-            <div class="dot" data-index="3" data-color="green" title="Sour Apple"></div>
+          <div class="view-toggles-dark" id="viewToggleWrap">
+            <button class="toggle-pill-dark active" id="btnSealed">SEALED</button>
+            <button class="toggle-pill-dark" id="btnOpen">OPEN INSPECT</button>
           </div>
         </div>
 
-        <p class="product-desc" id="productDesc">
-          Kinetic propulsion matrix infused with pure Spirulina bioactive color. Clinical 350mg caffeine and 6000mg L-Citrulline deliver instant cellular uptake and sustained vasodilation without crash.
-        </p>
+        <!-- Right Info Panel -->
+        <div class="feature-right-info">
+          <div class="series-tag-dark" id="featSeriesTag">
+            <span style="display:inline-block; width:8px; height:8px; background:#00d2ff; border-radius:50%; box-shadow:0 0 8px #00d2ff;" id="seriesIndicator"></span>
+            <span id="featSeriesText">SERIES // 01 · ULTRA HIGH STIM</span>
+          </div>
 
-        <div class="actives-grid" id="activesGrid">
-          <div class="active-pill">
-            <span class="active-label">Caffeine Matrix</span>
-            <span class="active-val" id="spec1">350mg</span>
-          </div>
-          <div class="active-pill">
-            <span class="active-label">Pure Citrulline</span>
-            <span class="active-val" id="spec2">6,000mg</span>
-          </div>
-          <div class="active-pill">
-            <span class="active-label">Beta-Alanine</span>
-            <span class="active-val" id="spec3">3,200mg</span>
-          </div>
-        </div>
+          <h2 class="feature-title" id="featTitle">MAXIMUS ADDICTED<br><span style="color:#00d2ff;" id="featTitleAccent">Blue Raspberry</span></h2>
 
-        <div class="action-row">
-          <button class="btn-buy" id="btnBuyNow">BUY NOW</button>
-          <button class="btn-cart" id="btnAddToCart">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-            ADD TO CART
-          </button>
+          <div class="feature-price-row">
+            <span class="price-main-dark" id="featPrice">$49</span>
+            <span class="price-orig-dark" id="featOrigPrice">$59</span>
+            <span class="save-badge-dark" id="featSaveBadge">SAVE $10</span>
+          </div>
+
+          <!-- Flavor Pills Switcher -->
+          <div class="flavor-selector-wrap">
+            <div class="flavor-selector-label">
+              Select Formulation: <strong id="selectedFlavorName">Blue Raspberry</strong>
+            </div>
+            <div class="flavor-pills-row" id="flavorPillsRow">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <p class="feature-desc" id="featDesc">
+            Kinetic propulsion matrix infused with pure Spirulina bioactive color. Clinical 350mg caffeine and 6000mg L-Citrulline deliver instant cellular uptake and sustained vasodilation without crash.
+          </p>
+
+          <!-- Specifications HUD -->
+          <div class="feature-specs-grid" id="featSpecsGrid">
+            <div class="spec-item">
+              <span class="spec-item-label" id="specLabel1">Caffeine</span>
+              <span class="spec-item-val" id="specVal1">350mg</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-item-label" id="specLabel2">Citrulline</span>
+              <span class="spec-item-val" id="specVal2">6,000mg</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-item-label" id="specLabel3">Beta-Alanine</span>
+              <span class="spec-item-val" id="specVal3">3,200mg</span>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="feature-actions-row">
+            <button class="btn-primary" id="btnStageAddToCart" style="flex: 1; justify-content: center; padding: 1.15rem;">
+              <span>Add To Cart</span>
+              <span style="font-size: 1.2rem;">+</span>
+            </button>
+            <button class="btn-nav" id="btnStageBuyNow" style="padding: 1.15rem 1.8rem; border-radius: 8px;">
+              <span>Buy Now</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </main>
+  </section>
 
-  <footer>
-    <span>Copyright © 2026 MAXIMUS Global LLC. All rights reserved.</span>
-    <span>Engineered for Peak Human Velocity.</span>
+  <!-- Complete Catalog Grid (All 6 Formulations & Systems) -->
+  <section class="catalog-section" id="catalogSection">
+    <div class="container">
+      <div class="catalog-header">
+        <div class="section-pill">// 02 FULL CATALOGUE</div>
+        <h2 class="editorial-headline" style="font-size: clamp(2rem, 4vw, 3.2rem);">
+          THE COMPLETE <br><span class="gradient-text">6-PRODUCT ROSTER.</span>
+        </h2>
+        <p class="editorial-copy" style="max-width: 540px; margin: 0 auto;">
+          Explore each single formulation or upgrade to our full Box + Tub + Stick Pack bundles.
+        </p>
+      </div>
+
+      <div class="catalog-grid" id="catalogGrid">
+        <!-- Rendered dynamically via JS for 100% sync -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer with email -->
+  <footer class="site-footer" style="background:#050507; border-top:1px solid rgba(255,255,255,0.08); padding: 4rem 0 2rem;">
+    <div class="container">
+      <div class="footer-main" style="display:grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 3rem; margin-bottom: 3rem;">
+        <div>
+          <div class="brand-logo" style="margin-bottom: 1rem;">
+            <div class="brand-slash"></div>
+            <span class="brand-text">MAXIMUS</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; max-width: 340px; margin-bottom: 1rem;">
+            Engineered for athletes, obsessives, and creators who demand absolute physiological supremacy.
+          </p>
+          <div style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+            Customer Support: <a href="mailto:info@maximusmart.com" style="color: #00d2ff; text-decoration: none; font-weight: 600;">info@maximusmart.com</a>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim);">
+            © 2026 MAXIMUS Performance Labs Inc. All rights reserved.
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 style="font-size: 0.85rem; font-weight:700; text-transform:uppercase; margin-bottom:1rem; letter-spacing:0.1em;">Formulas</h4>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:0.5rem; font-size:0.82rem; color:var(--text-muted);">
+            <li>Blue Raspberry</li>
+            <li>Midnight Grape</li>
+            <li>Orange Blast</li>
+            <li>Sour Apple</li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 style="font-size: 0.85rem; font-weight:700; text-transform:uppercase; margin-bottom:1rem; letter-spacing:0.1em;">Systems</h4>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:0.5rem; font-size:0.82rem; color:var(--text-muted);">
+            <li>Blue Razz System Bundle</li>
+            <li>Red Rush System Bundle</li>
+            <li>On-The-Go Stick Packs</li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 style="font-size: 0.85rem; font-weight:700; text-transform:uppercase; margin-bottom:1rem; letter-spacing:0.1em;">Inquiries</h4>
+          <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0.75rem;">
+            Direct order and clinical inquiries to our support desk:
+          </p>
+          <a href="mailto:info@maximusmart.com" class="btn-nav" style="display:inline-flex; border-radius:6px; padding:0.6rem 1.2rem;">
+            <span>info@maximusmart.com</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom" style="border-top:1px solid rgba(255,255,255,0.06); padding-top:1.5rem; display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; color:var(--text-dim);">
+        <p>*These statements have not been evaluated by the FDA. Products are not intended to diagnose, treat, or prevent any disease.</p>
+        <a href="#" style="color:var(--text-muted); text-decoration:none;">TOP ↑</a>
+      </div>
+    </div>
   </footer>
 
+  <!-- Unified Slide-Over Cart Drawer -->
   <div class="cart-overlay" id="cartOverlay"></div>
-  <aside class="cart-drawer" id="cartDrawer">
-    <div class="drawer-header">
-      <h3>YOUR ARSENAL CART</h3>
-      <button class="close-btn" id="closeCartBtn">&times;</button>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart">
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title-wrap">
+        <span class="cart-drawer-spark">⚡</span>
+        <h3 class="cart-drawer-title">YOUR ARSENAL</h3>
+        <span class="cart-drawer-count" id="cartDrawerCount">(0)</span>
+      </div>
+      <button class="cart-drawer-close" id="cartDrawerClose" aria-label="Close Shopping Cart">✕</button>
     </div>
-    <div class="cart-items" id="cartItemsList">
-      <div class="cart-empty">
-        <p>Your arsenal is currently empty.</p>
-        <span style="font-size:0.8rem;">Select a formulation to add.</span>
+
+    <div class="cart-shipping-meter" id="cartShippingMeter">
+      <div class="shipping-meter-text" id="shippingMeterText">
+        Add <span class="highlight-amt" id="shippingRemaining">$75.00</span> more to unlock <strong>FREE EXPRESS SHIPPING</strong>
+      </div>
+      <div class="shipping-meter-track">
+        <div class="shipping-meter-fill" id="shippingMeterFill" style="width: 0%;"></div>
       </div>
     </div>
-    <div class="drawer-footer">
-      <div class="subtotal-row">
-        <span>Subtotal</span>
-        <span id="cartSubtotalVal">$0.00</span>
+
+    <div class="cart-items-container" id="cartItemsContainer">
+      <!-- Dynamic cart items -->
+    </div>
+
+    <div class="cart-drawer-footer" id="cartDrawerFooter">
+      <div class="cart-summary-card">
+        <div class="cart-summary-row">
+          <span>Subtotal</span>
+          <span class="summary-val" id="cartSubtotal">$0.00</span>
+        </div>
+        <div class="cart-summary-row">
+          <span>Shipping</span>
+          <span class="summary-val" id="cartShipping">Calculated next</span>
+        </div>
+        <div class="cart-summary-divider"></div>
+        <div class="cart-summary-row total-row">
+          <span>Estimated Total</span>
+          <span class="summary-total-val" id="cartTotal">$0.00</span>
+        </div>
       </div>
-      <button class="checkout-btn" id="checkoutBtn">PROCEED TO CHECKOUT</button>
+
+      <button class="btn-primary cart-checkout-btn" id="cartCheckoutBtn">
+        <span class="btn-text">SECURE CHECKOUT</span>
+        <span class="btn-icon">→</span>
+      </button>
+
+      <div class="cart-trust-row">
+        <span>🛡️ 30-Day Money Back</span>
+        <span>•</span>
+        <span>🔒 256-Bit Encrypted</span>
+      </div>
     </div>
   </aside>
 
+  <!-- Cyber HUD Add-to-Cart Toast Notification -->
+  <div class="cart-hud-toast" id="cartHudToast" aria-live="polite">
+    <div class="toast-icon">✓</div>
+    <div class="toast-content">
+      <div class="toast-tag">// ARSENAL UPDATED</div>
+      <div class="toast-name" id="toastProductName">MAXIMUS Blue Raspberry</div>
+    </div>
+    <button class="toast-view-btn" id="toastViewCart">VIEW CART</button>
+  </div>
+
   <script>
+    // Unified 6-Product Master Dataset
     const PRODUCTS = [
       {
         id: 0,
         name: 'Blue Raspberry',
         series: 'SERIES // 01 · ULTRA HIGH STIM',
         price: 49.00,
+        origPrice: 59.00,
         color: '#00d2ff',
+        glow: 'rgba(0, 210, 255, 0.28)',
         sealedImg: 'public/products/blue-raspberry.png',
         openImg: 'public/open/blue-raspberry-open.png',
         desc: 'Kinetic propulsion matrix infused with pure Spirulina bioactive color. Clinical 350mg caffeine and 6000mg L-Citrulline deliver instant cellular uptake and sustained vasodilation.',
-        specs: ['350mg', '6,000mg', '3,200mg']
+        specs: [
+          { label: 'Caffeine', val: '350mg' },
+          { label: 'Citrulline', val: '6,000mg' },
+          { label: 'Beta-Alanine', val: '3,200mg' }
+        ],
+        tagline: 'Kinetic propulsion • Pure Spirulina bioactive color'
       },
       {
         id: 1,
         name: 'Midnight Grape',
         series: 'SERIES // 02 · NEURO MATRIX',
         price: 49.00,
+        origPrice: 59.00,
         color: '#b026ff',
+        glow: 'rgba(176, 38, 255, 0.28)',
         sealedImg: 'public/products/grape.png',
         openImg: 'public/open/grape-open.png',
         desc: 'Cognitive velocity formulation engineered with deep Concord beet extract. Delivers razor laser focus, elevated memory recall, and seamless mind-muscle coordination.',
-        specs: ['600mg', '1,000mg', '200mcg']
+        specs: [
+          { label: 'Alpha-GPC', val: '600mg' },
+          { label: 'L-Tyrosine', val: '1,000mg' },
+          { label: 'Huperzine A', val: '200mcg' }
+        ],
+        tagline: 'Cognitive velocity • Deep Concord beet extract'
       },
       {
         id: 2,
         name: 'Orange Blast',
         series: 'SERIES // 03 · THERMOGENIC DRIVE',
         price: 49.00,
+        origPrice: 59.00,
         color: '#ff7700',
-        sealedImg: 'public/products/orange-blast.png',
+        glow: 'rgba(255, 119, 0, 0.28)',
+        sealedImg: 'public/products/watermelon.png',
         openImg: 'public/open/orange-blast-open.png',
         desc: 'Thermogenic cellular fire powered by Sicilian blood citrus carotenoids. Accelerates core lipid metabolic oxidation while maintaining pristine electrolyte equilibrium.',
-        specs: ['300mg', '100mg', 'Pure Matrix']
+        specs: [
+          { label: 'Caffeine', val: '300mg' },
+          { label: 'CognatiQ®', val: '100mg' },
+          { label: 'Electrolytes', val: 'Matrix' }
+        ],
+        tagline: 'Thermogenic core • Blood citrus beta-carotene'
       },
       {
         id: 3,
         name: 'Sour Apple',
         series: 'SERIES // 04 · RAW INTENSITY',
         price: 49.00,
+        origPrice: 59.00,
         color: '#22e566',
+        glow: 'rgba(34, 229, 102, 0.28)',
         sealedImg: 'public/products/sour-apple.png',
         openImg: 'public/open/sour-apple-open.png',
         desc: 'Unfiltered savage pumps driven by natural chlorophyll and tart malic acid. 8000mg super-dosed Citrulline floods target muscle tissue with explosive intra-workout vascularity.',
-        specs: ['400mg', '8,000mg', '2,500mg']
+        specs: [
+          { label: 'Caffeine', val: '400mg' },
+          { label: 'Citrulline', val: '8,000mg' },
+          { label: 'Betaine', val: '2,500mg' }
+        ],
+        tagline: 'Savage cellular fullness • Tart natural chlorophyll'
+      },
+      {
+        id: 4,
+        name: 'Blue Razz System',
+        series: 'SERIES // 05 · COMPLETE SYSTEM',
+        price: 59.00,
+        origPrice: 75.00,
+        color: '#0088ff',
+        glow: 'rgba(0, 136, 255, 0.28)',
+        sealedImg: 'public/products/blue-razz-box.png',
+        openImg: 'public/products/blue-razz-box.png',
+        desc: 'The complete 3-stage performance system. Includes full 30-serving pre-workout tub, collector presentation box, and 10 on-the-go travel stick packs with micronized ice-cold solubility.',
+        specs: [
+          { label: 'Caffeine', val: '350mg' },
+          { label: 'Citrulline', val: '6,000mg' },
+          { label: 'System', val: 'Tub+Sticks' }
+        ],
+        tagline: 'Complete 3-Stage System • Box, Tub & Stick Packs'
+      },
+      {
+        id: 5,
+        name: 'Red Rush System',
+        series: 'SERIES // 06 · THERMAL RED SYSTEM',
+        price: 59.00,
+        origPrice: 75.00,
+        color: '#ff2244',
+        glow: 'rgba(255, 34, 68, 0.28)',
+        sealedImg: 'public/products/red-rush-box.png',
+        openImg: 'public/products/red-rush-box.png',
+        desc: 'Watermelon and red raspberry hyper-thermal surge. Full 30-serving tub and travel stick pack box delivering ferocious vascular fullness and cellular hydration.',
+        specs: [
+          { label: 'Caffeine', val: '375mg' },
+          { label: 'Citrulline', val: '8,000mg' },
+          { label: 'System', val: 'Tub+Sticks' }
+        ],
+        tagline: 'Watermelon & Raspberry Fusion • Box, Tub & Sticks'
       }
     ];
 
     let currentIdx = 0;
     let isViewOpen = false;
 
+    // Check URL param ?id=
     const params = new URLSearchParams(window.location.search);
     if (params.has('id')) {
       const pId = parseInt(params.get('id'), 10);
       if (pId >= 0 && pId < PRODUCTS.length) currentIdx = pId;
     }
 
-    const showcaseImg = document.getElementById('showcaseImg');
-    const ambientGlow = document.getElementById('ambientGlow');
-    const seriesLabel = document.getElementById('seriesLabel');
-    const productTitle = document.getElementById('productTitle');
-    const flavorName = document.getElementById('flavorName');
-    const productDesc = document.getElementById('productDesc');
+    // Stage DOM Elements
+    const stageGlow = document.getElementById('stageGlow');
+    const featProductImg = document.getElementById('featProductImg');
+    const featSeriesTag = document.getElementById('featSeriesTag');
+    const featSeriesText = document.getElementById('featSeriesText');
+    const seriesIndicator = document.getElementById('seriesIndicator');
+    const featTitle = document.getElementById('featTitle');
+    const featTitleAccent = document.getElementById('featTitleAccent');
+    const featPrice = document.getElementById('featPrice');
+    const featOrigPrice = document.getElementById('featOrigPrice');
+    const featSaveBadge = document.getElementById('featSaveBadge');
+    const selectedFlavorName = document.getElementById('selectedFlavorName');
+    const flavorPillsRow = document.getElementById('flavorPillsRow');
+    const featDesc = document.getElementById('featDesc');
     const btnSealed = document.getElementById('btnSealed');
     const btnOpen = document.getElementById('btnOpen');
-    const dots = document.querySelectorAll('.dot');
-    const spec1 = document.getElementById('spec1');
-    const spec2 = document.getElementById('spec2');
-    const spec3 = document.getElementById('spec3');
+    const viewToggleWrap = document.getElementById('viewToggleWrap');
 
-    function updateProductUI(idx) {
+    const specLabel1 = document.getElementById('specLabel1');
+    const specVal1 = document.getElementById('specVal1');
+    const specLabel2 = document.getElementById('specLabel2');
+    const specVal2 = document.getElementById('specVal2');
+    const specLabel3 = document.getElementById('specLabel3');
+    const specVal3 = document.getElementById('specVal3');
+
+    // Render Flavor Selector Pills
+    flavorPillsRow.innerHTML = PRODUCTS.map((p, idx) => `
+      <button class="flavor-select-pill ${idx === currentIdx ? 'active' : ''}" data-idx="${idx}">
+        <span class="pill-dot" style="background:${p.color}; box-shadow:0 0 8px ${p.color};"></span>
+        <span>${p.name}</span>
+      </button>
+    `).join('');
+
+    function updateFeatureStage(idx) {
       currentIdx = idx;
       const p = PRODUCTS[idx];
 
-      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      // Update active pills
+      document.querySelectorAll('.flavor-select-pill').forEach((pill, i) => {
+        pill.classList.toggle('active', i === idx);
+      });
 
-      seriesLabel.textContent = p.series;
-      productTitle.innerHTML = 'MAXIMUS Pre-Workout<br>' + p.name;
-      flavorName.innerHTML = 'Selected Flavor: <strong>' + p.name + '</strong>';
-      productDesc.textContent = p.desc;
-      spec1.textContent = p.specs[0];
-      spec2.textContent = p.specs[1];
-      spec3.textContent = p.specs[2];
+      // Update texts
+      featSeriesText.textContent = p.series;
+      seriesIndicator.style.background = p.color;
+      seriesIndicator.style.boxShadow = '0 0 10px ' + p.color;
 
-      ambientGlow.style.background = 'radial-gradient(circle, ' + p.color + ' 0%, transparent 65%)';
-      showcaseImg.src = isViewOpen ? p.openImg : p.sealedImg;
+      featTitleAccent.textContent = p.name;
+      featTitleAccent.style.color = p.color;
+
+      featPrice.textContent = '$' + p.price.toFixed(0);
+      featOrigPrice.textContent = '$' + p.origPrice.toFixed(0);
+      featSaveBadge.textContent = 'SAVE $' + (p.origPrice - p.price).toFixed(0);
+      selectedFlavorName.textContent = p.name;
+      featDesc.textContent = p.desc;
+
+      // Specs
+      specLabel1.textContent = p.specs[0].label;
+      specVal1.textContent = p.specs[0].val;
+      specLabel2.textContent = p.specs[1].label;
+      specVal2.textContent = p.specs[1].val;
+      specLabel3.textContent = p.specs[2].label;
+      specVal3.textContent = p.specs[2].val;
+
+      // Glow & Image
+      stageGlow.style.background = `radial-gradient(circle at 30% 50%, ${p.glow} 0%, transparent 65%)`;
+      featProductImg.src = isViewOpen ? p.openImg : p.sealedImg;
+
+      // Toggle visibility if single tub vs bundle
+      if (p.id >= 4) {
+        viewToggleWrap.style.display = 'none';
+      } else {
+        viewToggleWrap.style.display = 'inline-flex';
+      }
     }
 
-    dots.forEach((dot, idx) => {
-      dot.addEventListener('click', () => updateProductUI(idx));
+    flavorPillsRow.addEventListener('click', (e) => {
+      const btn = e.target.closest('.flavor-select-pill');
+      if (!btn) return;
+      const idx = parseInt(btn.getAttribute('data-idx'), 10);
+      updateFeatureStage(idx);
     });
 
     btnSealed.addEventListener('click', () => {
       isViewOpen = false;
       btnSealed.classList.add('active');
       btnOpen.classList.remove('active');
-      showcaseImg.src = PRODUCTS[currentIdx].sealedImg;
+      featProductImg.src = PRODUCTS[currentIdx].sealedImg;
     });
 
     btnOpen.addEventListener('click', () => {
       isViewOpen = true;
       btnOpen.classList.add('active');
       btnSealed.classList.remove('active');
-      showcaseImg.src = PRODUCTS[currentIdx].openImg;
+      featProductImg.src = PRODUCTS[currentIdx].openImg;
     });
 
-    updateProductUI(currentIdx);
+    // Render Full Catalog Grid
+    const catalogGrid = document.getElementById('catalogGrid');
+    catalogGrid.innerHTML = PRODUCTS.map((p) => `
+      <article class="arsenal-card" data-product-index="${p.id}" style="--prod-accent: ${p.color}; --prod-glow: ${p.glow};">
+        <div class="arsenal-card-glow"></div>
+        <div class="arsenal-card-head">
+          <span class="arsenal-series-badge">${p.series.split('·')[0]}</span>
+          <span class="arsenal-tag-stim" style="color: ${p.color}; border-color: ${p.color}55;">${p.series.split('·')[1] || 'FORMULA'}</span>
+        </div>
+        <div class="arsenal-img-stage" onclick="updateFeatureStage(${p.id}); window.scrollTo({top: 150, behavior: 'smooth'});" style="cursor:pointer;">
+          <div class="arsenal-shadow"></div>
+          <img class="arsenal-img arsenal-img-closed" src="${p.sealedImg}" alt="${p.name}" loading="lazy">
+          <img class="arsenal-img arsenal-img-open" src="${p.openImg}" alt="${p.name}" loading="lazy">
+          <span class="hover-inspect-badge">INSPECT FORMULA</span>
+        </div>
+        <div class="arsenal-card-body">
+          <div class="arsenal-rating">
+            <span class="stars">★★★★★</span>
+            <span class="rating-text">4.9+ (600+ Reviews)</span>
+          </div>
+          <h3 class="arsenal-card-title">${p.name.toUpperCase()}</h3>
+          <p class="arsenal-card-tagline">${p.tagline}</p>
+          <div class="arsenal-actives-list">
+            <span>${p.specs[0].val} ${p.specs[0].label}</span>
+            <span>${p.specs[1].val} ${p.specs[1].label}</span>
+            <span>${p.specs[2].val} ${p.specs[2].label}</span>
+          </div>
+          <div class="arsenal-price-row">
+            <div class="price-wrap">
+              <span class="current-price">$${p.price.toFixed(0)}</span>
+              <span class="orig-price">$${p.origPrice.toFixed(0)}</span>
+              <span class="save-badge">SAVE $${(p.origPrice - p.price).toFixed(0)}</span>
+            </div>
+            <span class="doses-badge">30 DOSES</span>
+          </div>
+          <button class="btn-primary arsenal-add-btn" onclick="addToCart(${p.id})" aria-label="Add ${p.name} to Cart">
+            <span class="btn-text">Add To Cart</span>
+            <span class="btn-icon">+</span>
+          </button>
+        </div>
+      </article>
+    `).join('');
 
+    // Cart Management
     let cart = JSON.parse(localStorage.getItem('maximus_cart') || '[]');
 
-    function saveCart() {
+    function saveAndRenderCart() {
       localStorage.setItem('maximus_cart', JSON.stringify(cart));
       renderCart();
     }
 
     function renderCart() {
-      const countEl = document.getElementById('cartBadgeCount');
-      const itemsList = document.getElementById('cartItemsList');
-      const subtotalEl = document.getElementById('cartSubtotalVal');
+      const cartBadge = document.getElementById('cartBadge');
+      const cartDrawerCount = document.getElementById('cartDrawerCount');
+      const container = document.getElementById('cartItemsContainer');
+      const subtotalEl = document.getElementById('cartSubtotal');
+      const totalEl = document.getElementById('cartTotal');
+      const shippingMeterFill = document.getElementById('shippingMeterFill');
+      const shippingRemaining = document.getElementById('shippingRemaining');
 
       const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
-      countEl.textContent = totalQty;
+      if (cartBadge) cartBadge.textContent = totalQty;
+      if (cartDrawerCount) cartDrawerCount.textContent = `(${totalQty})`;
 
       if (cart.length === 0) {
-        itemsList.innerHTML = '<div class="cart-empty"><p>Your arsenal is currently empty.</p><span style="font-size:0.8rem;">Select a formulation to add.</span></div>';
+        container.innerHTML = `
+          <div style="text-align:center; padding: 4rem 1rem; color: var(--text-muted);">
+            <p style="font-size: 1rem; margin-bottom: 0.5rem; color:#fff;">Your arsenal cart is empty.</p>
+            <span style="font-size: 0.8rem;">Select a formulation to add.</span>
+          </div>
+        `;
         subtotalEl.textContent = '$0.00';
+        totalEl.textContent = '$0.00';
+        shippingMeterFill.style.width = '0%';
+        shippingRemaining.textContent = '$75.00';
         return;
       }
 
       let subtotal = 0;
-      itemsList.innerHTML = cart.map((item, i) => {
+      container.innerHTML = cart.map((item, i) => {
         subtotal += item.price * item.qty;
-        return '<div class="cart-item-row">' +
-          '<img src="' + item.img + '" alt="' + item.name + '">' +
-          '<div class="item-meta">' +
-            '<h4>' + item.name + '</h4>' +
-            '<p>Series Formulation</p>' +
-            '<div class="price">$' + (item.price * item.qty).toFixed(2) + '</div>' +
-          '</div>' +
-          '<div class="qty-controls">' +
-            '<button class="qty-btn" onclick="changeQty(' + i + ', -1)">-</button>' +
-            '<span>' + item.qty + '</span>' +
-            '<button class="qty-btn" onclick="changeQty(' + i + ', 1)">+</button>' +
-          '</div>' +
-        '</div>';
+        return `
+          <div class="cart-item-row" style="display:flex; gap:1rem; align-items:center; padding:1.25rem 0; border-bottom:1px solid rgba(255,255,255,0.06);">
+            <img src="${item.img}" alt="${item.name}" style="width:64px; height:64px; object-fit:contain; background:rgba(255,255,255,0.03); border-radius:8px; padding:4px;">
+            <div style="flex:1;">
+              <h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin-bottom:0.2rem;">${item.name}</h4>
+              <div style="font-family:var(--font-mono); font-size:0.75rem; color:#00d2ff;">$${(item.price * item.qty).toFixed(2)}</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.5rem; background:rgba(255,255,255,0.08); border-radius:6px; padding:0.25rem 0.5rem;">
+              <button onclick="changeCartQty(${i}, -1)" style="background:none; border:none; color:#fff; cursor:pointer; font-weight:bold; padding:0 4px;">−</button>
+              <span style="font-size:0.85rem; font-weight:600; min-width:16px; text-align:center;">${item.qty}</span>
+              <button onclick="changeCartQty(${i}, 1)" style="background:none; border:none; color:#fff; cursor:pointer; font-weight:bold; padding:0 4px;">+</button>
+            </div>
+          </div>
+        `;
       }).join('');
 
       subtotalEl.textContent = '$' + subtotal.toFixed(2);
+      totalEl.textContent = '$' + subtotal.toFixed(2);
+
+      // Shipping meter ($75 threshold)
+      const threshold = 75;
+      const progress = Math.min((subtotal / threshold) * 100, 100);
+      shippingMeterFill.style.width = progress + '%';
+      if (subtotal >= threshold) {
+        shippingRemaining.parentElement.innerHTML = '⚡ You unlocked <strong>FREE EXPRESS SHIPPING!</strong>';
+      } else {
+        shippingRemaining.textContent = '$' + (threshold - subtotal).toFixed(2);
+      }
     }
 
-    window.changeQty = function(index, delta) {
-      cart[index].qty += delta;
-      if (cart[index].qty <= 0) {
-        cart.splice(index, 1);
-      }
-      saveCart();
+    window.changeCartQty = function(i, delta) {
+      cart[i].qty += delta;
+      if (cart[i].qty <= 0) cart.splice(i, 1);
+      saveAndRenderCart();
     };
 
-    function addToCart(pIdx) {
-      const p = PRODUCTS[pIdx];
+    function addToCart(pId) {
+      const p = PRODUCTS.find(item => item.id === pId) || PRODUCTS[0];
       const existing = cart.find(item => item.id === p.id);
       if (existing) {
         existing.qty++;
@@ -795,14 +996,24 @@
           qty: 1
         });
       }
-      saveCart();
-      openCart();
+      saveAndRenderCart();
+
+      // Show toast
+      const toast = document.getElementById('cartHudToast');
+      const toastName = document.getElementById('toastProductName');
+      if (toast && toastName) {
+        toastName.textContent = 'MAXIMUS ' + p.name;
+        toast.classList.add('active');
+        setTimeout(() => toast.classList.remove('active'), 3200);
+      }
     }
 
+    // Drawer toggles
     const cartDrawer = document.getElementById('cartDrawer');
     const cartOverlay = document.getElementById('cartOverlay');
-    const cartBtn = document.getElementById('cartBtn');
-    const closeCartBtn = document.getElementById('closeCartBtn');
+    const navCartBtn = document.getElementById('navCartBtn');
+    const cartDrawerClose = document.getElementById('cartDrawerClose');
+    const toastViewCart = document.getElementById('toastViewCart');
 
     function openCart() {
       cartDrawer.classList.add('active');
@@ -813,20 +1024,32 @@
       cartOverlay.classList.remove('active');
     }
 
-    cartBtn.addEventListener('click', openCart);
-    closeCartBtn.addEventListener('click', closeCart);
-    cartOverlay.addEventListener('click', closeCart);
+    if (navCartBtn) navCartBtn.addEventListener('click', openCart);
+    if (cartDrawerClose) cartDrawerClose.addEventListener('click', closeCart);
+    if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
+    if (toastViewCart) toastViewCart.addEventListener('click', openCart);
 
-    document.getElementById('btnAddToCart').addEventListener('click', () => {
+    document.getElementById('btnStageAddToCart').addEventListener('click', () => addToCart(currentIdx));
+    document.getElementById('btnStageBuyNow').addEventListener('click', () => {
       addToCart(currentIdx);
-    });
-    document.getElementById('btnBuyNow').addEventListener('click', () => {
-      addToCart(currentIdx);
-    });
-    document.getElementById('checkoutBtn').addEventListener('click', () => {
-      alert('Secure Checkout initiated for $' + document.getElementById('cartSubtotalVal').textContent);
+      openCart();
     });
 
+    document.getElementById('cartCheckoutBtn').addEventListener('click', () => {
+      alert('Secure Checkout initiated for ' + document.getElementById('cartTotal').textContent);
+    });
+
+    // Mobile menu toggle
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (mobileToggle && mobileMenu) {
+      mobileToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+      });
+    }
+
+    // Initialize
+    updateFeatureStage(currentIdx);
     renderCart();
   </script>
 </body>
