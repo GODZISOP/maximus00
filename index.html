@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAXIMUS | High-Performance Pre-Workout</title>
+  <meta name="description" content="Engineered for explosive energy, razor focus, and unyielding intensity. Clinical doses. Zero fillers. Discover the next standard in sports performance.">
+  <meta name="theme-color" content="#08080a">
+
+  <!-- Google Fonts: Syne & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=13">
+</head>
+<body class="bg-grid">
+
+  <!-- ========================================================================
+       1. NAVIGATION HEADER
+       ======================================================================== -->
+  <nav class="site-nav" id="siteNav" aria-label="Primary Navigation">
+    <div class="container nav-inner">
+      <!-- Brand Logo -->
+      <a href="#" class="brand-logo" aria-label="MAXIMUS Home">
+        <div class="brand-slash"></div>
+        <span class="brand-text">MAXIMUS</span>
+        <span class="brand-pill">LABS</span>
+      </a>
+
+      <!-- Desktop Links -->
+      <div class="nav-links">
+        <a href="#products" class="nav-link">Showcase</a>
+        <a href="#arsenal" class="nav-link">All Products</a>
+        <a href="#performance" class="nav-link">Performance</a>
+        <a href="#formula" class="nav-link">Formula</a>
+        <a href="#about" class="nav-link">About</a>
+      </div>
+
+      <!-- Actions -->
+      <div class="nav-actions">
+        <button class="nav-cart-btn" id="navCartBtn" aria-label="Open Shopping Cart">
+          <span class="cart-icon-svg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+          </span>
+          <span class="cart-text">CART</span>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+        <a href="#arsenal" class="btn-nav">
+          <span>Shop All</span>
+          <span>↗</span>
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-nav-links">
+      <a href="#products" class="mobile-nav-link">01 — Products</a>
+      <a href="#performance" class="mobile-nav-link">02 — Performance</a>
+      <a href="#formula" class="mobile-nav-link">03 — Formula</a>
+      <a href="#about" class="mobile-nav-link">04 — About</a>
+    </div>
+    <div style="margin-top: 2.5rem;">
+      <a href="#products" class="btn-primary" style="width: 100%; text-align: center; justify-content: center;">
+        Shop Now
+      </a>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       2. CINEMATIC HERO SEQUENCE (600vh Track with Native Sticky Canvas)
+       Controlled zoom (Never cuts off tub lid!), Interactive Phase Pills,
+       Floating HUD Telemetry, and Smooth Continuous Downward Scroll.
+       ======================================================================== -->
+  <section class="hero-track" id="heroTrack" aria-label="MAXIMUS Interactive Hero">
+    <div class="hero-sticky">
+      <!-- 160-Frame HTML5 Canvas -->
+      <canvas id="heroCanvas"></canvas>
+
+      <!-- Ambient Lighting & Vignette -->
+      <div class="hero-glow-core"></div>
+      <div class="hero-vignette"></div>
+
+      <!-- Top Interactive Phase Navigation Pills -->
+      <div class="hero-phase-nav" aria-label="Hero Timeline Navigation">
+        <button class="phase-pill active" data-phase="1">01 // OVERVIEW</button>
+        <button class="phase-pill" data-phase="2">02 // FORMULA</button>
+        <button class="phase-pill" data-phase="3">03 // KINETICS</button>
+        <button class="phase-pill" data-phase="4">04 // FLAVORS</button>
+      </div>
+
+      <!-- Layered Interactive Website HUD Overlays -->
+      <div class="hero-hud-container">
+
+        <!-- Phase 1: Left-Aligned Editorial Intro (0% - 22%) -->
+        <div class="hud-phase-1" id="hudPhase1">
+          <div class="hud-badge">
+            <span>⚡ Formula 2026 // Gen-4 Pre-Workout</span>
+          </div>
+          <h1 class="hud-headline">
+            Push Beyond <br>
+            <span>Your Limits.</span>
+          </h1>
+          <p class="hud-desc">
+            Clinically calibrated for relentless kinetic drive, razor focus, and unyielding cellular endurance.
+          </p>
+          <div class="hud-pills">
+            <span class="hud-pill-spec">400mg Caffeine</span>
+            <span class="hud-pill-spec">6g L-Citrulline</span>
+            <span class="hud-pill-spec">3.2g Beta-Alanine</span>
+            <span class="hud-pill-spec">Zero Crash</span>
+          </div>
+        </div>
+
+        <!-- Phase 2: Ingredients Floating Telemetry (22% - 54%) -->
+        <div class="hud-telemetry-layer" id="hudPhase2" style="opacity: 0;">
+          <div class="telemetry-card card-left-top">
+            <div class="telemetry-tag">// Nitric Saturation</div>
+            <div class="telemetry-val">6,000mg</div>
+            <div class="telemetry-desc">Pure L-Citrulline Malate for extreme endothelial vasodilation & massive skin-splitting pumps.</div>
+            <div class="telemetry-bar"><div class="telemetry-bar-fill" style="width: 100%;"></div></div>
+          </div>
+
+          <div class="telemetry-card card-right-bottom">
+            <div class="telemetry-tag">// Lactate Defense</div>
+            <div class="telemetry-val">3,200mg</div>
+            <div class="telemetry-desc">Clinical Beta-Alanine elevates intramuscular carnosine to buffer fatigue through maximum rep volume.</div>
+            <div class="telemetry-bar"><div class="telemetry-bar-fill" style="width: 85%;"></div></div>
+          </div>
+        </div>
+
+        <!-- Phase 3: Neuro & Energy Telemetry (54% - 82%) -->
+        <div class="hud-telemetry-layer" id="hudPhase3" style="opacity: 0;">
+          <div class="telemetry-card card-left-bottom">
+            <div class="telemetry-tag">// Biphasic Stimulant</div>
+            <div class="telemetry-val">400mg Dual Stim</div>
+            <div class="telemetry-desc">Anhydrous + Infinergy™ di-caffeine malate for instantaneous launch with zero metabolic drop.</div>
+            <div class="telemetry-bar"><div class="telemetry-bar-fill" style="width: 95%;"></div></div>
+          </div>
+
+          <div class="telemetry-card card-right-top">
+            <div class="telemetry-tag">// Synaptic Flow</div>
+            <div class="telemetry-val">600mg Alpha-GPC</div>
+            <div class="telemetry-desc">Direct blood-brain barrier transport for laser tunnel focus and neuromuscular motor drive.</div>
+            <div class="telemetry-bar"><div class="telemetry-bar-fill" style="width: 90%;"></div></div>
+          </div>
+        </div>
+
+        <!-- Phase 4: Final Docked CTA Bar (82% - 100%) -->
+        <div class="hud-phase-4" id="hudPhase4" style="opacity: 0;">
+          <div>
+            <div class="p4-title">
+              <span>MAXIMUS ADDICTED</span>
+              <span style="font-size: 0.65rem; padding: 0.2rem 0.5rem; background: rgba(255,44,44,0.2); border: 1px solid rgba(255,44,44,0.4); color: #ff2c2c; border-radius: 4px; font-family: var(--font-mono); font-weight: 700; text-transform: uppercase;">
+                Ultra High Stim
+              </span>
+            </div>
+            <div class="p4-sub">Clinical Grade • Zero Sugar • 30 Servings • 5 Flavors</div>
+          </div>
+          <div style="display: flex; gap: 0.75rem; align-items: center;">
+            <a href="#products" class="btn-primary">
+              <span>Discover Flavors</span>
+              <span>→</span>
+            </a>
+            <a href="#about" class="btn-nav" style="border-radius: 9999px;">
+              <span>Philosophy ↓</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Telemetry Footer Status -->
+        <div class="hero-footer-bar">
+          <div>
+            <span class="live-pulse"></span>
+            <span>SYSTEM // ACTIVE KINETIC</span>
+          </div>
+          <div id="frameCounter">FRAME: [001/160]</div>
+          <div>SCROLL TO ROTATE 360° ↓</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       3. BRAND STATEMENT & PHILOSOPHY ("Engineered For More")
+       Glides in naturally as user scrolls past hero with zero redirect jerk.
+       ======================================================================== -->
+  <section class="section-philosophy" id="about" aria-label="Brand Philosophy">
+    <div class="container">
+      <div class="section-pill">// 01 Philosophy</div>
+
+      <h2 class="editorial-headline">
+        Engineered <br>
+        <span class="gradient-text">For More.</span>
+      </h2>
+
+      <p class="editorial-copy">
+        Performance built for athletes and obsessives who refuse to settle.
+        We stripped away the gimmicks, the fairy dusting, and the proprietary blinds
+        to engineer a formula that delivers pure, unyielding intensity from your first
+        rep to your final set.
+      </p>
+
+      <!-- Specifications Ledger -->
+      <div class="specs-ledger">
+        <div class="spec-card">
+          <div class="spec-stat"><span class="counter-val" data-target="100">100</span><span class="counter-suffix">%</span></div>
+          <div class="spec-label">Transparent Label</div>
+          <p class="spec-sub">Zero proprietary blinds. Exact clinical dosages declared on every single tub.</p>
+          <div class="spec-glow-overlay"></div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-stat"><span class="counter-val" data-target="0">0</span><span class="counter-suffix">g</span></div>
+          <div class="spec-label">Fillers & Sugar</div>
+          <p class="spec-sub">Pure bioactive compounds with zero metabolic drop, crash, or sluggish digestion.</p>
+          <div class="spec-glow-overlay"></div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-stat"><span class="stat-highlight">Clinical</span></div>
+          <div class="spec-label">Full Dosages</div>
+          <p class="spec-sub">Formulated to verified human clinical thresholds documented in peer-reviewed trials.</p>
+          <div class="spec-glow-overlay"></div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-stat"><span class="stat-highlight">ISO / GMP</span></div>
+          <div class="spec-label">Lab Certified</div>
+          <p class="spec-sub">Independently tested for purity, heavy metals, and zero prohibited substances.</p>
+          <div class="spec-glow-overlay"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       4. INTERACTIVE PRODUCT SHOWCASE (Pinned Scroll-Driven 5-Flavor Experience)
+       Dynamic GSAP background glow, kinetic watermark, and smooth 3D product transitions.
+       ======================================================================== -->
+  <div class="products-scroll-track" id="productsTrack">
+    <section class="section-products" id="products" aria-label="Product Showcase">
+      <!-- Full-Bleed Atmospheric Background Gradient -->
+      <div class="products-bg-ambient" id="prodBgAmbient"></div>
+      
+      <!-- Kinetic Background Typography Watermark -->
+      <div class="products-watermark" id="prodWatermark">BLUE RASPBERRY</div>
+
+      <div class="container products-container">
+        <!-- Top Centered Frosted Navigation Bar (Reference Style) -->
+        <div class="products-top-nav">
+          <div class="section-pill">// 02 Product Lineup</div>
+          <div class="flavor-nav" aria-label="Select Pre-Workout Flavor">
+            <button class="flavor-tab active" data-index="0">
+              <span class="flavor-tab-dot" style="background-color: #00d2ff;"></span>
+              <span>BLUE RASPBERRY</span>
+            </button>
+            <button class="flavor-tab" data-index="1">
+              <span class="flavor-tab-dot" style="background-color: #b026ff;"></span>
+              <span>MIDNIGHT GRAPE</span>
+            </button>
+            <button class="flavor-tab" data-index="2">
+              <span class="flavor-tab-dot" style="background-color: #ff7700;"></span>
+              <span>ORANGE BLAST</span>
+            </button>
+            <button class="flavor-tab" data-index="3">
+              <span class="flavor-tab-dot" style="background-color: #22e566;"></span>
+              <span>SOUR APPLE</span>
+            </button>
+          </div>
+          <div class="products-scroll-hint" id="prodScrollHint">
+            <span id="prodCountBadge" class="prod-count-badge">01 // 04</span>
+          </div>
+        </div>
+
+        <!-- 3-Column Product Stage (Left Copy • Center Stage • Right Specs) -->
+        <div class="product-showcase-grid">
+          
+          <!-- LEFT COLUMN: Navigation Arrows & Editorial Headline -->
+          <div class="prod-col-left">
+            <!-- Reference Style Carousel Arrows -->
+            <div class="carousel-arrows-row">
+              <button class="carousel-arrow-btn" id="prodPrevBtn" aria-label="Previous Flavor">‹</button>
+              <button class="carousel-arrow-btn" id="prodNextBtn" aria-label="Next Flavor">›</button>
+            </div>
+
+            <div class="prod-series-badge">
+              <span style="color: var(--accent-red); font-weight: 700;" id="prodSeries">01 — ULTRA HIGH STIM</span>
+            </div>
+
+            <h2 class="editorial-headline prod-main-heading">
+              Stand Out <br>
+              <span class="gradient-text" id="prodHeaderGradient">Without Limits.</span>
+            </h2>
+
+            <p class="prod-tagline" id="prodTagline">
+              Maximum intensity for athletes demanding pure kinetic propulsion.
+            </p>
+
+            <!-- Benefits -->
+            <ul class="prod-benefits" id="prodBenefits">
+              <!-- Dynamically populated -->
+            </ul>
+
+            <!-- Order CTA Button -->
+            <div style="margin-top: 1.5rem; margin-bottom: 2rem;">
+              <button class="btn-primary btn-magnetic" id="prodBuyBtn" style="font-size: 0.85rem; padding: 0.95rem 2.2rem;">
+                <span>Get The Look</span>
+                <span>›</span>
+              </button>
+            </div>
+
+            <div class="prod-motto" id="prodMotto">
+              Confidence, wrapped in intensity
+            </div>
+          </div>
+
+          <!-- CENTER COLUMN: Floating Bottle & Ground Shadow (Upward Exit Animation) -->
+          <div class="prod-col-center">
+            <div class="prod-glow-backing" id="prodGlowBacking"></div>
+            <div class="prod-image-wrapper" id="prodImageWrapper">
+              <img id="prodImg" class="prod-img" src="public/products/blue-raspberry.png" alt="MAXIMUS ADDICTED Complete Packaging Box and Tub">
+              <!-- Soft Realistic Ground Contact Shadow -->
+              <div class="prod-ground-shadow" id="prodGroundShadow"></div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: Price, Flavor Selectors & Specs -->
+          <div class="prod-col-right">
+            <!-- Price Display (Huge $149 / $199 Style) -->
+            <div class="prod-price-stack">
+              <div class="prod-price-current" id="prodPriceMain">$49</div>
+              <div class="prod-price-original" id="prodPriceOrig">$59</div>
+            </div>
+
+            <!-- Flavor Circles (Like "Choose your size: 36 38 40") -->
+            <div class="prod-selector-group">
+              <div class="prod-selector-label">Choose your flavor:</div>
+              <div class="prod-variant-circles" id="prodVariantCircles">
+                <button class="variant-circle-btn active" data-index="0">01</button>
+                <button class="variant-circle-btn" data-index="1">02</button>
+                <button class="variant-circle-btn" data-index="2">03</button>
+                <button class="variant-circle-btn" data-index="3">04</button>
+              </div>
+            </div>
+
+            <!-- Clinical Doses Details -->
+            <div class="prod-actives-card">
+              <div class="actives-card-label">// CLINICAL FORMULA PER SCOOP</div>
+              <div class="actives-card-val" id="prodActives">350mg Caffeine • 6000mg L-Citrulline • 3200mg Beta-Alanine</div>
+            </div>
+
+            <div class="prod-stock-note">
+              <span>● IN STOCK</span>
+              <span>30 SERVINGS • FULL TRANSPARENCY</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- BOTTOM-RIGHT FLOATING NEXT PRODUCT THUMBNAIL (Reference Style) -->
+        <div class="next-flavor-card" id="nextFlavorCard" title="Click to view next flavor">
+          <div class="next-card-text">
+            <span class="next-card-tag">NEXT FLAVOR ›</span>
+            <span class="next-card-title" id="nextCardTitle">WATERMELON</span>
+          </div>
+          <img class="next-card-thumb" id="nextCardThumb" src="public/products/watermelon.png" alt="Next product preview">
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- ========================================================================
+       5. SCIENTIFIC PERFORMANCE PILLARS
+       ======================================================================== -->
+  <section class="section-performance formulation-section" id="performance" aria-label="Scientific Performance Pillars">
+    <div class="container">
+      <div class="section-pill formulation-badge" id="formulationBadge">
+        <span class="badge-border-line"></span>
+        <span class="badge-scan-highlight"></span>
+        <span class="badge-text">// 03 Formulation Science</span>
+      </div>
+      <h2 class="editorial-headline formulation-headline" aria-label="FORMULATED FOR INTENSITY.">
+        <div class="headline-line headline-line-1" aria-hidden="true">
+          <span class="word-formulated" id="wordFormulated">FORMULATED</span>
+        </div>
+        <div class="headline-line headline-line-2" aria-hidden="true">
+          <span class="word-for-wrap" id="wordForWrap">
+            <span class="word-for" id="wordFor">FOR</span>
+            <span class="for-streak" id="forStreak"></span>
+          </span>
+          <span class="word-intensity-wrap" id="wordIntensityWrap">
+            <span class="intensity-bg-glow" id="intensityBgGlow"></span>
+            <span class="word-intensity gradient-text" id="wordIntensity">INTENSITY.</span>
+          </span>
+        </div>
+      </h2>
+      <p class="editorial-copy formulation-copy" style="margin-bottom: 4rem;">
+        <span class="desc-line-wrap"><span class="desc-line">Four synergistic physiological pillars engineered for maximum human output.</span></span>
+        <span class="desc-line-wrap"><span class="desc-line">No proprietary smoke screens. Pure, transparent efficacy.</span></span>
+      </p>
+
+      <div class="pillars-grid">
+        <!-- Pillar 01 -->
+        <div class="pillar-row" data-pillar="1">
+          <div class="pillar-ambient-glow"></div>
+          <div class="pillar-laser-scan"></div>
+          <div class="pillar-num">
+            <span>01</span>
+            <div class="pillar-num-glow"></div>
+          </div>
+          <div class="pillar-content-main">
+            <h3 class="pillar-title">EXPLOSIVE ENERGY</h3>
+            <p class="pillar-sub">Biphasic Kinetic Propulsion</p>
+            <span class="pillar-actives">350mg Caffeine Anhydrous + 100mg Infinergy™ Di-Caffeine Malate</span>
+            <!-- Live Kinetic Telemetry Gauge -->
+            <div class="pillar-gauge">
+              <div class="pillar-gauge-header">
+                <span class="gauge-label">// KINETIC ATP OUTPUT</span>
+                <span class="gauge-val">99.4% PEAK</span>
+              </div>
+              <div class="pillar-gauge-track">
+                <div class="pillar-gauge-fill" data-progress="99.4"></div>
+              </div>
+            </div>
+          </div>
+          <div class="pillar-desc">
+            Rapid central nervous system ignition without the cliff-drop crash. Two-stage release sustains cellular ATP output throughout grueling training sessions.
+          </div>
+        </div>
+
+        <!-- Pillar 02 -->
+        <div class="pillar-row" data-pillar="2">
+          <div class="pillar-ambient-glow"></div>
+          <div class="pillar-laser-scan"></div>
+          <div class="pillar-num">
+            <span>02</span>
+            <div class="pillar-num-glow"></div>
+          </div>
+          <div class="pillar-content-main">
+            <h3 class="pillar-title">RAZOR FOCUS</h3>
+            <p class="pillar-sub">Neuro-Synaptic Acceleration</p>
+            <span class="pillar-actives">600mg Alpha-GPC (50%) + 1000mg L-Tyrosine + 200mcg Huperzine A</span>
+            <!-- Live Kinetic Telemetry Gauge -->
+            <div class="pillar-gauge">
+              <div class="pillar-gauge-header">
+                <span class="gauge-label">// ACETYLCHOLINE SYNAPSE</span>
+                <span class="gauge-val">97.8% PEAK</span>
+              </div>
+              <div class="pillar-gauge-track">
+                <div class="pillar-gauge-fill" data-progress="97.8"></div>
+              </div>
+            </div>
+          </div>
+          <div class="pillar-desc">
+            Crosses the blood-brain barrier to accelerate acetylcholine synthesis. Lock into deep tunnel-vision where external distractions evaporate.
+          </div>
+        </div>
+
+        <!-- Pillar 03 -->
+        <div class="pillar-row" data-pillar="3">
+          <div class="pillar-ambient-glow"></div>
+          <div class="pillar-laser-scan"></div>
+          <div class="pillar-num">
+            <span>03</span>
+            <div class="pillar-num-glow"></div>
+          </div>
+          <div class="pillar-content-main">
+            <h3 class="pillar-title">SAVAGE MUSCLE PUMP</h3>
+            <p class="pillar-sub">Endothelial Nitric Oxide Hyperemia</p>
+            <span class="pillar-actives">6000mg Pure L-Citrulline Malate (2:1) + 1500mg Nitrosigine®</span>
+            <!-- Live Kinetic Telemetry Gauge -->
+            <div class="pillar-gauge">
+              <div class="pillar-gauge-header">
+                <span class="gauge-label">// NITRIC ENDOTHELIAL FLOW</span>
+                <span class="gauge-val">99.9% PEAK</span>
+              </div>
+              <div class="pillar-gauge-track">
+                <div class="pillar-gauge-fill" data-progress="99.9"></div>
+              </div>
+            </div>
+          </div>
+          <div class="pillar-desc">
+            Unlocks massive vasodilation, maximizing nutrient and oxygen delivery directly to working muscle fibers for extreme skin-splitting fullness.
+          </div>
+        </div>
+
+        <!-- Pillar 04 -->
+        <div class="pillar-row" data-pillar="4">
+          <div class="pillar-ambient-glow"></div>
+          <div class="pillar-laser-scan"></div>
+          <div class="pillar-num">
+            <span>04</span>
+            <div class="pillar-num-glow"></div>
+          </div>
+          <div class="pillar-content-main">
+            <h3 class="pillar-title">UNYIELDING ENDURANCE</h3>
+            <p class="pillar-sub">Lactate Defense & Cellular Buffer</p>
+            <span class="pillar-actives">3200mg Beta-Alanine (CarnoSyn®) + 150mg ElevATP®</span>
+            <!-- Live Kinetic Telemetry Gauge -->
+            <div class="pillar-gauge">
+              <div class="pillar-gauge-header">
+                <span class="gauge-label">// CARNOSINE LACTATE BUFFER</span>
+                <span class="gauge-val">98.2% PEAK</span>
+              </div>
+              <div class="pillar-gauge-track">
+                <div class="pillar-gauge-fill" data-progress="98.2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="pillar-desc">
+            Elevates intracellular carnosine levels to buffer hydrogen ion accumulation, delaying muscular fatigue and crushing your personal thresholds.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       6. INSIDE THE FORMULA (Open Tub & Powder Inspection)
+       ======================================================================== -->
+  <section class="section-formula" id="formula" aria-label="Open Product Anatomy">
+    <div class="container">
+      <div class="section-pill">// 04 Inside The Formula</div>
+
+      <div class="formula-stage">
+        <!-- Left: Copy & Switcher -->
+        <div>
+          <h2 class="editorial-headline" style="font-size: clamp(2.5rem, 5.5vw, 4.5rem);">
+            What's Inside <br>
+            <span class="gradient-text">Matters.</span>
+          </h2>
+          <p class="editorial-copy" style="font-size: 1rem; margin-bottom: 2rem;">
+            Performance starts with what goes into every serving. Ultra-micronized
+            powder engineered for instantaneous dissolution, zero settling, and rapid
+            gastrointestinal assimilation.
+          </p>
+
+          <div style="margin-bottom: 2.5rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.75rem;">
+              Inspect Open Tub Formulation:
+            </div>
+            <div class="flavor-nav">
+              <button class="flavor-tab open-tub-tab active" data-open-index="0">
+                <span class="flavor-tab-dot" style="background-color: #00d2ff;"></span>
+                <span>BLUE RASPBERRY</span>
+              </button>
+              <button class="flavor-tab open-tub-tab" data-open-index="1">
+                <span class="flavor-tab-dot" style="background-color: #b026ff;"></span>
+                <span>MIDNIGHT GRAPE</span>
+              </button>
+              <button class="flavor-tab open-tub-tab" data-open-index="2">
+                <span class="flavor-tab-dot" style="background-color: #ff7700;"></span>
+                <span>ORANGE BLAST</span>
+              </button>
+              <button class="flavor-tab open-tub-tab" data-open-index="3">
+                <span class="flavor-tab-dot" style="background-color: #22e566;"></span>
+                <span>SOUR APPLE</span>
+              </button>
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; font-size: 0.82rem; color: var(--text-muted);">
+            <div>✓ Instant Micronized Solubility — Mixes clear in 8-10oz cold water with zero shaker grit.</div>
+            <div>✓ Zero Artificial Dyes — Naturally tinted with spirulina, organic beet root, and beta-carotene.</div>
+            <div>✓ Calibrated 17.5g Scoop Included — Precision molded for guaranteed active compound saturation.</div>
+          </div>
+        </div>
+
+        <!-- Right: Open Tub Image with Interactive 3D HUD & Radar Rings -->
+        <div class="open-tub-container" id="openTubStage">
+          <div id="openTubGlow" class="open-tub-glow"></div>
+          <div class="formula-radar-ring ring-1"></div>
+          <div class="formula-radar-ring ring-2"></div>
+
+          <!-- Floating Interactive HUD Pins -->
+          <div class="formula-hud-pin pin-top-left" id="hudPinLeft">
+            <div class="hud-pin-dot" id="hudPinLeftDot" style="background: #00d2ff; box-shadow: 0 0 8px #00d2ff;"></div>
+            <div class="hud-pin-content">
+              <span class="hud-pin-tag" id="hudPinLeftTag" style="color: #00d2ff;">// BIO-ACTIVE COLOR</span>
+              <span class="hud-pin-text" id="hudPinLeftText">Organic Spirulina Extract (Cyan)</span>
+            </div>
+          </div>
+          <div class="formula-hud-pin pin-bottom-right" id="hudPinRight">
+            <div class="hud-pin-dot" id="hudPinRightDot"></div>
+            <div class="hud-pin-content">
+              <span class="hud-pin-tag">// MICRONIZED MESH</span>
+              <span class="hud-pin-text" id="hudPinRightText">Zero Shaker Residue • &lt; 1.8s</span>
+            </div>
+          </div>
+
+          <!-- Butter-Smooth Stacked Preloaded Layers (Zero Pop, Pure GPU Crossfade) -->
+          <div class="open-tub-layers" id="openTubLayers">
+            <img class="open-tub-img active" data-open-idx="0" src="public/open/blue-raspberry-open.png" alt="MAXIMUS Blue Raspberry Open Tub with Scoop and Micronized Powder">
+            <img class="open-tub-img" data-open-idx="1" src="public/open/grape-open.png" alt="MAXIMUS Midnight Grape Open Tub with Scoop and Micronized Powder">
+            <img class="open-tub-img" data-open-idx="2" src="public/open/orange-blast-open.png" alt="MAXIMUS Orange Blast Open Tub with Scoop and Micronized Powder">
+            <img class="open-tub-img" data-open-idx="3" src="public/open/sour-apple-open.png" alt="MAXIMUS Sour Apple Open Tub with Scoop and Micronized Powder">
+          </div>
+        </div>
+      </div>
+
+      <!-- Complete Open Formulations Deck (All 4 Open Tubs Displayed Simultaneously) -->
+      <div class="open-tubs-gallery-wrap">
+        <div class="gallery-header-row">
+          <div>
+            <span class="gallery-label">// UNSEALED FORMULATION DECK</span>
+            <h3 class="gallery-title">ALL 4 OPEN FORMULATIONS — INSPECT ANY BATCH</h3>
+          </div>
+          <div class="gallery-hint">CLICK ANY TUB TO LOAD 3D TELEMETRY STAGE</div>
+        </div>
+
+        <div class="open-tubs-deck">
+          <!-- Card 0: Blue Raspberry -->
+          <div class="open-tub-card active" data-deck-index="0" style="--card-accent: #00d2ff; --card-glow: rgba(0, 210, 255, 0.32);">
+            <div class="card-glow" style="background: radial-gradient(circle, rgba(0, 210, 255, 0.28) 0%, transparent 70%);"></div>
+            <div class="card-status-pill">
+              <span class="status-indicator" style="background: #00d2ff; box-shadow: 0 0 8px #00d2ff;"></span>
+              <span class="status-text">INSPECTING</span>
+            </div>
+            <div class="card-img-wrap">
+              <img src="public/open/blue-raspberry-open.png" alt="Blue Raspberry Open Tub" loading="eager">
+            </div>
+            <div class="card-info">
+              <div class="card-flavor-name" style="color: #00d2ff;">BLUE RASPBERRY</div>
+              <div class="card-sub">Electric Berry • Pure Spirulina Extract</div>
+              <div class="card-specs">
+                <span>// 200µm MESH</span>
+                <span>17.5g SCOOP</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 1: Midnight Grape -->
+          <div class="open-tub-card" data-deck-index="1" style="--card-accent: #b026ff; --card-glow: rgba(176, 38, 255, 0.32);">
+            <div class="card-glow" style="background: radial-gradient(circle, rgba(176, 38, 255, 0.28) 0%, transparent 70%);"></div>
+            <div class="card-status-pill">
+              <span class="status-indicator" style="background: #b026ff; box-shadow: 0 0 8px #b026ff;"></span>
+              <span class="status-text">SELECT</span>
+            </div>
+            <div class="card-img-wrap">
+              <img src="public/open/grape-open.png" alt="Midnight Grape Open Tub" loading="eager">
+            </div>
+            <div class="card-info">
+              <div class="card-flavor-name" style="color: #b026ff;">MIDNIGHT GRAPE</div>
+              <div class="card-sub">Deep Concord • Beet &amp; Anthocyanin</div>
+              <div class="card-specs">
+                <span>// 200µm MESH</span>
+                <span>17.5g SCOOP</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Orange Blast -->
+          <div class="open-tub-card" data-deck-index="2" style="--card-accent: #ff7700; --card-glow: rgba(255, 119, 0, 0.32);">
+            <div class="card-glow" style="background: radial-gradient(circle, rgba(255, 119, 0, 0.28) 0%, transparent 70%);"></div>
+            <div class="card-status-pill">
+              <span class="status-indicator" style="background: #ff7700; box-shadow: 0 0 8px #ff7700;"></span>
+              <span class="status-text">SELECT</span>
+            </div>
+            <div class="card-img-wrap">
+              <img src="public/open/orange-blast-open.png" alt="Orange Blast Open Tub" loading="eager">
+            </div>
+            <div class="card-info">
+              <div class="card-flavor-name" style="color: #ff7700;">ORANGE BLAST</div>
+              <div class="card-sub">Blood Citrus • Pure Beta-Carotene</div>
+              <div class="card-specs">
+                <span>// 200µm MESH</span>
+                <span>17.5g SCOOP</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Sour Apple -->
+          <div class="open-tub-card" data-deck-index="3" style="--card-accent: #22e566; --card-glow: rgba(34, 229, 102, 0.32);">
+            <div class="card-glow" style="background: radial-gradient(circle, rgba(34, 229, 102, 0.28) 0%, transparent 70%);"></div>
+            <div class="card-status-pill">
+              <span class="status-indicator" style="background: #22e566; box-shadow: 0 0 8px #22e566;"></span>
+              <span class="status-text">SELECT</span>
+            </div>
+            <div class="card-img-wrap">
+              <img src="public/open/sour-apple-open.png" alt="Sour Apple Open Tub" loading="eager">
+            </div>
+            <div class="card-info">
+              <div class="card-flavor-name" style="color: #22e566;">SOUR APPLE</div>
+              <div class="card-sub">Tart Granny Smith • Pure Chlorophyll</div>
+              <div class="card-specs">
+                <span>// 200µm MESH</span>
+                <span>17.5g SCOOP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       6. COMPLETE PRODUCT ARSENAL (All 4 Formulations Quick Shop & Instant Cart)
+       ======================================================================== -->
+  <section class="section-arsenal" id="arsenal" aria-label="Complete Product Arsenal">
+    <div class="arsenal-ambient-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-badge">
+        <span class="badge-scan-highlight"></span>
+        <span class="badge-text">// 05 Complete Arsenal</span>
+      </div>
+      <div class="arsenal-header-wrap">
+        <div>
+          <h2 class="editorial-headline arsenal-headline">
+            THE COMPLETE <br>
+            <span class="gradient-text">PRODUCT ARSENAL.</span>
+          </h2>
+          <p class="editorial-copy arsenal-subcopy">
+            Four hyper-calibrated formulations engineered for elite physical output.
+            Mix clear, zero grit, clinically dosed active compounds. Instant dispatch with free shipping on $75+.
+          </p>
+        </div>
+        <div class="arsenal-guarantee-pill">
+          <span class="guar-icon">🛡️</span>
+          <span>100% MONEY-BACK SATISFACTION GUARANTEED</span>
+        </div>
+      </div>
+
+      <!-- 4 Products Grid -->
+      <div class="arsenal-grid" id="arsenalGrid">
+        <!-- Product 0: Blue Raspberry -->
+        <article class="arsenal-card" data-product-index="0" style="--prod-accent: #00d2ff; --prod-glow: rgba(0, 210, 255, 0.28);">
+          <div class="arsenal-card-glow"></div>
+          <div class="arsenal-card-head">
+            <span class="arsenal-series-badge">SERIES // 01</span>
+            <span class="arsenal-tag-stim" style="color: #00d2ff; border-color: rgba(0, 210, 255, 0.35);">ULTRA HIGH STIM</span>
+          </div>
+          <div class="arsenal-img-stage">
+            <div class="arsenal-shadow"></div>
+            <img class="arsenal-img" src="public/products/blue-raspberry.png" alt="MAXIMUS Blue Raspberry Pre-Workout Tub and Box" loading="lazy">
+          </div>
+          <div class="arsenal-card-body">
+            <div class="arsenal-rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-text">4.9 (840+ Reviews)</span>
+            </div>
+            <h3 class="arsenal-card-title">BLUE RASPBERRY</h3>
+            <p class="arsenal-card-tagline">Kinetic propulsion • Pure Spirulina bioactive color</p>
+            <div class="arsenal-actives-list">
+              <span>350mg Caffeine</span>
+              <span>6000mg Citrulline</span>
+              <span>3200mg Beta-Alanine</span>
+            </div>
+            <div class="arsenal-price-row">
+              <div class="price-wrap">
+                <span class="current-price">$49</span>
+                <span class="orig-price">$59</span>
+                <span class="save-badge">SAVE $10</span>
+              </div>
+              <span class="doses-badge">30 DOSES</span>
+            </div>
+            <button class="btn-primary arsenal-add-btn" data-product-index="0" aria-label="Add Blue Raspberry to Cart">
+              <span class="btn-text">Add To Cart</span>
+              <span class="btn-icon">+</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Product 1: Midnight Grape -->
+        <article class="arsenal-card" data-product-index="1" style="--prod-accent: #b026ff; --prod-glow: rgba(176, 38, 255, 0.28);">
+          <div class="arsenal-card-glow"></div>
+          <div class="arsenal-card-head">
+            <span class="arsenal-series-badge">SERIES // 02</span>
+            <span class="arsenal-tag-stim" style="color: #b026ff; border-color: rgba(176, 38, 255, 0.35);">NEURO MATRIX</span>
+          </div>
+          <div class="arsenal-img-stage">
+            <div class="arsenal-shadow"></div>
+            <img class="arsenal-img" src="public/products/grape.png" alt="MAXIMUS Midnight Grape Pre-Workout Tub and Box" loading="lazy">
+          </div>
+          <div class="arsenal-card-body">
+            <div class="arsenal-rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-text">4.9 (620+ Reviews)</span>
+            </div>
+            <h3 class="arsenal-card-title">MIDNIGHT GRAPE</h3>
+            <p class="arsenal-card-tagline">Cognitive velocity • Deep Concord beet extract</p>
+            <div class="arsenal-actives-list">
+              <span>600mg Alpha-GPC</span>
+              <span>1000mg L-Tyrosine</span>
+              <span>200mcg Huperzine</span>
+            </div>
+            <div class="arsenal-price-row">
+              <div class="price-wrap">
+                <span class="current-price">$49</span>
+                <span class="orig-price">$59</span>
+                <span class="save-badge">SAVE $10</span>
+              </div>
+              <span class="doses-badge">30 DOSES</span>
+            </div>
+            <button class="btn-primary arsenal-add-btn" data-product-index="1" aria-label="Add Midnight Grape to Cart">
+              <span class="btn-text">Add To Cart</span>
+              <span class="btn-icon">+</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Product 2: Orange Blast -->
+        <article class="arsenal-card" data-product-index="2" style="--prod-accent: #ff7700; --prod-glow: rgba(255, 119, 0, 0.28);">
+          <div class="arsenal-card-glow"></div>
+          <div class="arsenal-card-head">
+            <span class="arsenal-series-badge">SERIES // 03</span>
+            <span class="arsenal-tag-stim" style="color: #ff7700; border-color: rgba(255, 119, 0, 0.35);">THERMOGENIC DRIVE</span>
+          </div>
+          <div class="arsenal-img-stage">
+            <div class="arsenal-shadow"></div>
+            <img class="arsenal-img" src="public/products/watermelon.png" alt="MAXIMUS Orange Blast Pre-Workout Tub and Box" loading="lazy">
+          </div>
+          <div class="arsenal-card-body">
+            <div class="arsenal-rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-text">4.8 (510+ Reviews)</span>
+            </div>
+            <h3 class="arsenal-card-title">ORANGE BLAST</h3>
+            <p class="arsenal-card-tagline">Thermogenic core • Blood citrus beta-carotene</p>
+            <div class="arsenal-actives-list">
+              <span>300mg Caffeine</span>
+              <span>100mg CognatiQ®</span>
+              <span>Electrolyte Matrix</span>
+            </div>
+            <div class="arsenal-price-row">
+              <div class="price-wrap">
+                <span class="current-price">$49</span>
+                <span class="orig-price">$59</span>
+                <span class="save-badge">SAVE $10</span>
+              </div>
+              <span class="doses-badge">30 DOSES</span>
+            </div>
+            <button class="btn-primary arsenal-add-btn" data-product-index="2" aria-label="Add Orange Blast to Cart">
+              <span class="btn-text">Add To Cart</span>
+              <span class="btn-icon">+</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Product 3: Sour Apple -->
+        <article class="arsenal-card" data-product-index="3" style="--prod-accent: #22e566; --prod-glow: rgba(34, 229, 102, 0.28);">
+          <div class="arsenal-card-glow"></div>
+          <div class="arsenal-card-head">
+            <span class="arsenal-series-badge">SERIES // 04</span>
+            <span class="arsenal-tag-stim" style="color: #22e566; border-color: rgba(34, 229, 102, 0.35);">RAW INTENSITY</span>
+          </div>
+          <div class="arsenal-img-stage">
+            <div class="arsenal-shadow"></div>
+            <img class="arsenal-img" src="public/products/sour-apple.png" alt="MAXIMUS Sour Apple Pre-Workout Tub and Box" loading="lazy">
+          </div>
+          <div class="arsenal-card-body">
+            <div class="arsenal-rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-text">5.0 (980+ Reviews)</span>
+            </div>
+            <h3 class="arsenal-card-title">SOUR APPLE</h3>
+            <p class="arsenal-card-tagline">Savage cellular fullness • Tart natural chlorophyll</p>
+            <div class="arsenal-actives-list">
+              <span>400mg Caffeine</span>
+              <span>8000mg Citrulline</span>
+              <span>2500mg Betaine</span>
+            </div>
+            <div class="arsenal-price-row">
+              <div class="price-wrap">
+                <span class="current-price">$49</span>
+                <span class="orig-price">$59</span>
+                <span class="save-badge">SAVE $10</span>
+              </div>
+              <span class="doses-badge">30 DOSES</span>
+            </div>
+            <button class="btn-primary arsenal-add-btn" data-product-index="3" aria-label="Add Sour Apple to Cart">
+              <span class="btn-text">Add To Cart</span>
+              <span class="btn-icon">+</span>
+            </button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       7. MANTRA STATEMENT (Dual-Direction Kinetic Parallax & Infinite Marquee)
+       ======================================================================== -->
+  <section class="section-mantra" aria-label="Brand Mantra">
+    <!-- Kinetic Background Stream -->
+    <div class="mantra-marquee" aria-hidden="true">
+      <div class="mantra-track">
+        <span>MAXIMUS • UNYIELDING INTENSITY • CLINICAL CALIBRATION • MAXIMUM VELOCITY • ZERO WEAKNESS • </span>
+        <span>MAXIMUS • UNYIELDING INTENSITY • CLINICAL CALIBRATION • MAXIMUM VELOCITY • ZERO WEAKNESS • </span>
+      </div>
+    </div>
+    <div class="container mantra-inner">
+      <div class="mantra-line mantra-line-1" id="mantraLine1">NO EXCUSES.</div>
+      <div class="mantra-laser-line" id="mantraLaser"></div>
+      <div class="mantra-line mantra-line-2 mantra-gradient" id="mantraLine2">JUST PERFORMANCE.</div>
+      <p class="mantra-sub">MAXIMUS ATHLETIC LABS // UNCOMPROMISED PHYSIOLOGICAL OUTPUT</p>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       8. FINAL CTA (Award-Winning 3D Levitation, Orbital Rings & Cinematic Scrub)
+       ======================================================================== -->
+  <section class="section-final-cta" id="cta" aria-label="Final Call to Action">
+    <div class="cta-backdrop-glow" id="ctaBackdropGlow" aria-hidden="true"></div>
+    <div class="cta-cyber-grid" aria-hidden="true"></div>
+    <div class="container cta-container">
+      <div class="section-pill cta-pill" id="ctaPill">
+        <span class="pill-spark">⚡</span>
+        <span class="pill-text">Elevate Every Training Session</span>
+        <span class="pill-laser-sweep"></span>
+      </div>
+      <h2 class="editorial-headline cta-headline" id="ctaHeadline">
+        <span class="cta-headline-line cta-line-top" id="ctaLineTop">Ready To</span>
+        <span class="cta-headline-line cta-line-bottom gradient-text" id="ctaLineBottom">Go Further?</span>
+      </h2>
+      <p class="editorial-copy cta-copy" id="ctaCopy" style="margin: 0 auto 2.5rem; text-align: center;">
+        Built for intensity. Built for performance.
+        Experience the pre-workout engineered to redefine your physical limits.
+      </p>
+
+      <div class="final-cta-stage" id="ctaStage">
+        <!-- Concentric Cyber Pulse Waves -->
+        <div class="cta-shockwave cta-shockwave-1"></div>
+        <div class="cta-shockwave cta-shockwave-2"></div>
+        <div class="cta-shockwave cta-shockwave-3"></div>
+        <div class="cta-orbital-dash" id="ctaOrbitalDash"></div>
+
+        <!-- Dynamic Ambient Flare Behind Tub -->
+        <div class="cta-stage-aura" id="ctaStageAura"></div>
+
+        <!-- Floating Tactical Badges -->
+        <div class="cta-floating-chip chip-left" id="chipLeft">
+          <span class="chip-icon">⚡</span>
+          <span class="chip-label">30 CLINICAL DOSES</span>
+          <span class="chip-flare"></span>
+        </div>
+        <div class="cta-floating-chip chip-right" id="chipRight">
+          <span class="chip-icon">🛡️</span>
+          <span class="chip-label">WADA PROTOCOL SAFE</span>
+          <span class="chip-flare"></span>
+        </div>
+
+        <!-- 3D Packaging Wrapper with Dynamic Ground Shadow -->
+        <div class="cta-product-wrapper" id="ctaProductWrapper">
+          <div class="cta-ground-shadow" id="ctaGroundShadow"></div>
+          <img class="final-cta-img" id="finalCtaImg" src="public/products/watermelon.png" alt="MAXIMUS ADDICTED Complete Packaging Box and Tub">
+        </div>
+      </div>
+
+      <div class="cta-action-wrap">
+        <a href="#products" class="btn-primary btn-magnetic cta-primary-btn" id="finalCtaBtn" style="font-size: 0.95rem; padding: 1.15rem 2.8rem;">
+          <span class="btn-glow-aura"></span>
+          <span class="btn-text">Discover MAXIMUS</span>
+          <span class="btn-icon">→</span>
+        </a>
+      </div>
+
+      <p class="cta-guarantee-text" id="ctaGuarantee" style="margin-top: 1.75rem; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim);">
+        <span class="guar-item">30-DAY MONEY-BACK GUARANTEE</span>
+        <span class="guar-sep">•</span>
+        <span class="guar-item">FREE SHIPPING ON ORDERS $75+</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- Custom Ambient Spotlight Glow Cursor -->
+  <div class="custom-spotlight-cursor" id="customSpotlightCursor" aria-hidden="true"></div>
+
+  <!-- ========================================================================
+       9. SITE FOOTER
+       ======================================================================== -->
+  <footer class="site-footer" aria-label="Site Footer">
+    <div class="container">
+      <!-- Trust Signals -->
+      <div class="footer-trust">
+        <div class="trust-item">
+          <div class="trust-icon">🛡</div>
+          <div>
+            <div class="trust-title">GMP Certified</div>
+            <div class="trust-sub">Strict Quality Facility</div>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">★</div>
+          <div>
+            <div class="trust-title">3rd-Party Tested</div>
+            <div class="trust-sub">Independent Lab Verified</div>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">✓</div>
+          <div>
+            <div class="trust-title">Zero Banned Drugs</div>
+            <div class="trust-sub">WADA Protocol Compliant</div>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">🇺🇸</div>
+          <div>
+            <div class="trust-title">Made In USA</div>
+            <div class="trust-sub">Global Bioactive Sourcing</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Footer Grid -->
+      <div class="footer-main">
+        <div>
+          <div class="brand-logo" style="margin-bottom: 1rem;">
+            <div class="brand-slash"></div>
+            <span class="brand-text">MAXIMUS</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; max-width: 340px; margin-bottom: 1.5rem;">
+            Engineered for athletes, obsessives, and creators who demand absolute physiological supremacy.
+          </p>
+          <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim);">
+            © 2026 MAXIMUS Performance Labs Inc. All rights reserved.
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Formulas</h4>
+          <ul>
+            <li><a href="#products">Blue Raspberry</a></li>
+            <li><a href="#products">Midnight Grape</a></li>
+            <li><a href="#products">Orange Blast</a></li>
+            <li><a href="#products">Sour Apple</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Science</h4>
+          <ul>
+            <li><a href="#performance">Clinical Pillars</a></li>
+            <li><a href="#formula">Inside The Formula</a></li>
+            <li><a href="#about">Our Philosophy</a></li>
+            <li><a href="#">Certificates of Analysis</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>The Maximus Drop</h4>
+          <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+            Subscribe for early access to limited batch flavor drops and clinical research updates.
+          </p>
+          <form class="footer-form" id="newsletterForm">
+            <input type="email" required placeholder="ENTER EMAIL" class="footer-input">
+            <button type="submit" class="btn-primary" style="padding: 0.65rem 1.25rem;">Join</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Bottom Disclaimer -->
+      <div class="footer-bottom">
+        <p style="max-width: 820px; line-height: 1.6;">
+          *These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Consume responsibly. Not recommended for children, pregnant or nursing women, or individuals sensitive to caffeine.
+        </p>
+        <a href="#" style="color: var(--text-muted); text-decoration: none; display: flex; align-items: center; gap: 0.4rem;">
+          <span>TOP ↑</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       INTERACTIVE CART SYSTEM (Slide-Over Drawer, Free Shipping Meter & HUD Toast)
+       ======================================================================== -->
+  <!-- Cart Backdrop Overlay -->
+  <div class="cart-overlay" id="cartOverlay" aria-hidden="true"></div>
+
+  <!-- Cart Slide-Over Drawer -->
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart">
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title-wrap">
+        <span class="cart-drawer-spark">⚡</span>
+        <h3 class="cart-drawer-title">YOUR ARSENAL</h3>
+        <span class="cart-drawer-count" id="cartDrawerCount">(0)</span>
+      </div>
+      <button class="cart-drawer-close" id="cartDrawerClose" aria-label="Close Shopping Cart">✕</button>
+    </div>
+
+    <!-- Free Shipping Progress Tracker -->
+    <div class="cart-shipping-meter" id="cartShippingMeter">
+      <div class="shipping-meter-text" id="shippingMeterText">
+        Add <span class="highlight-amt" id="shippingRemaining">$75.00</span> more to unlock <strong>FREE EXPRESS SHIPPING</strong>
+      </div>
+      <div class="shipping-meter-track">
+        <div class="shipping-meter-fill" id="shippingMeterFill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Dynamic Cart Items Container -->
+    <div class="cart-items-container" id="cartItemsContainer">
+      <!-- Populated dynamically via JS -->
+    </div>
+
+    <!-- Cart Footer & Checkout Action -->
+    <div class="cart-drawer-footer" id="cartDrawerFooter">
+      <div class="cart-summary-card">
+        <div class="cart-summary-row">
+          <span>Subtotal</span>
+          <span class="summary-val" id="cartSubtotal">$0.00</span>
+        </div>
+        <div class="cart-summary-row">
+          <span>Shipping</span>
+          <span class="summary-val" id="cartShipping">Calculated next</span>
+        </div>
+        <div class="cart-summary-divider"></div>
+        <div class="cart-summary-row total-row">
+          <span>Estimated Total</span>
+          <span class="summary-total-val" id="cartTotal">$0.00</span>
+        </div>
+      </div>
+
+      <button class="btn-primary cart-checkout-btn" id="cartCheckoutBtn">
+        <span class="btn-text">SECURE CHECKOUT</span>
+        <span class="btn-icon">→</span>
+      </button>
+
+      <div class="cart-trust-row">
+        <span>🛡️ 30-Day Money Back</span>
+        <span>•</span>
+        <span>🔒 256-Bit Encrypted</span>
+        <span>•</span>
+        <span>⚡ Same Day Dispatch</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Cyber HUD Add-to-Cart Toast Notification -->
+  <div class="cart-hud-toast" id="cartHudToast" aria-live="polite">
+    <div class="toast-icon">✓</div>
+    <div class="toast-content">
+      <div class="toast-tag">// ARSENAL UPDATED</div>
+      <div class="toast-name" id="toastProductName">MAXIMUS Blue Raspberry</div>
+    </div>
+    <button class="toast-view-btn" id="toastViewCart">VIEW CART</button>
+  </div>
+
+  <!-- GSAP & ScrollTrigger for High-Performance Cinematic Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Master Zero-Lag JavaScript -->
+  <script src="script.js?v=22"></script>
+</body>
+</html>
