@@ -33,9 +33,9 @@
   canvas.width = FRAME_WIDTH;   // 1280
   canvas.height = FRAME_HEIGHT; // 720
 
-  // Frame Cache & Queue State
+  // Frame Cache & Dual-Queue Streamer State
   const frames = new Array(TOTAL_FRAMES);
-  const loadingStatus = new Uint8Array(TOTAL_FRAMES); // 0 = idle, 1 = loading, 2 = loaded, 3 = error
+  const loadingStatus = new Uint8Array(TOTAL_FRAMES); // 0 = idle, 1 = in-flight, 2 = loaded, 3 = error
   let currentFrame = 0;
   let lastDrawnFrame = -1;
   let lastActivePhase = -1;
@@ -47,27 +47,57 @@
     return `public/frames/ezgif-frame-${pad}.webp`;
   }
 
-  // Concurrency-controlled, non-blocking frame streamer (Leaves sockets open for page images)
-  const MAX_CONCURRENT = 3;
+  // Concurrency-controlled dual-priority queue (Max 2 connections ensures rest of website loads instantly)
+  const MAX_CONCURRENT = 2;
   let activeDownloads = 0;
-  const loadQueue = [];
+  const highPriorityQueue = [];
+  const lowPriorityQueue = [];
 
   function enqueueFrame(idx, highPriority = false) {
     if (idx < 0 || idx >= TOTAL_FRAMES) return;
     if (loadingStatus[idx] !== 0) return;
     loadingStatus[idx] = 1;
+
     if (highPriority) {
-      loadQueue.unshift(idx);
+      highPriorityQueue.unshift(idx);
     } else {
-      loadQueue.push(idx);
+      lowPriorityQueue.push(idx);
     }
     pumpQueue();
   }
 
+  // Preload window around scroll position (Scroll ke aas-paas next frames cache)
+  function cacheSurroundingFrames(centerIdx, velocity = 0) {
+    const isForward = velocity >= 0;
+    const windowAhead = 10;
+    const windowBehind = 3;
+
+    if (isForward) {
+      for (let i = 0; i <= windowAhead; i++) {
+        const target = centerIdx + i;
+        if (target < TOTAL_FRAMES) enqueueFrame(target, true);
+      }
+      for (let i = 1; i <= windowBehind; i++) {
+        const target = centerIdx - i;
+        if (target >= 0) enqueueFrame(target, true);
+      }
+    } else {
+      for (let i = 0; i <= windowAhead; i++) {
+        const target = centerIdx - i;
+        if (target >= 0) enqueueFrame(target, true);
+      }
+      for (let i = 1; i <= windowBehind; i++) {
+        const target = centerIdx + i;
+        if (target < TOTAL_FRAMES) enqueueFrame(target, true);
+      }
+    }
+  }
+
   function pumpQueue() {
-    while (activeDownloads < MAX_CONCURRENT && loadQueue.length > 0) {
-      const idx = loadQueue.shift();
+    while (activeDownloads < MAX_CONCURRENT && (highPriorityQueue.length > 0 || lowPriorityQueue.length > 0)) {
+      const idx = highPriorityQueue.length > 0 ? highPriorityQueue.shift() : lowPriorityQueue.shift();
       activeDownloads++;
+
       const img = new Image();
       img.src = getFramePath(idx);
       img.onload = () => {
@@ -75,9 +105,15 @@
         loadingStatus[idx] = 2;
         loadedCount++;
         activeDownloads--;
+
+        // If this is initial frame 0 or currently active frame, render immediately
         if (idx === 0 && lastDrawnFrame === -1) {
           renderCanvas(0);
+        } else if (idx === currentFrame) {
+          ctx.drawImage(img, 0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+          lastDrawnFrame = idx;
         }
+
         updateFrameCounter();
         pumpQueue();
       };
@@ -99,55 +135,57 @@
     }
   }
 
-  // 1. High-Performance Progressive Preloader
+  // 1. Initial Page Load: Hero + First Frames Only (Website Instantly Visible)
   function initProgressivePreloader() {
-    // Stage A: Immediate frame 0 and first 6 frames for instant hero canvas view
-    for (let i = 0; i <= 6; i++) {
+    // Only first 4 frames load on startup so website is instantly visible without bandwidth choke
+    for (let i = 0; i <= 3; i++) {
       enqueueFrame(i, true);
     }
 
-    // Stage B: Keyframes (every 4th frame) for immediate fluid responsiveness across entire track
-    for (let i = 8; i < TOTAL_FRAMES; i += 4) {
-      enqueueFrame(i, false);
-    }
+    // Dynamic background preload kicks in smoothly after initial render
+    const startBackgroundPreload = () => {
+      // Step A: Preload keyframes (every 4th frame) so any scrub point has immediate visuals
+      for (let i = 4; i < TOTAL_FRAMES; i += 4) {
+        enqueueFrame(i, false);
+      }
 
-    // Stage C: Progressively fill remaining frames during idle time without blocking network
-    const fillRemaining = () => {
-      for (let i = 0; i < TOTAL_FRAMES; i++) {
-        if (loadingStatus[i] === 0) {
-          enqueueFrame(i, false);
+      // Step B: Progressively fill remaining frames during browser idle cycles
+      const fillRemaining = () => {
+        for (let i = 0; i < TOTAL_FRAMES; i++) {
+          if (loadingStatus[i] === 0) {
+            enqueueFrame(i, false);
+          }
         }
+      };
+
+      if (window.requestIdleCallback) {
+        window.requestIdleCallback(fillRemaining, { timeout: 3000 });
+      } else {
+        setTimeout(fillRemaining, 1200);
       }
     };
 
-    if (window.requestIdleCallback) {
-      window.requestIdleCallback(fillRemaining, { timeout: 2000 });
+    if (document.readyState === 'complete') {
+      setTimeout(startBackgroundPreload, 400);
     } else {
-      setTimeout(fillRemaining, 1000);
+      window.addEventListener('load', () => setTimeout(startBackgroundPreload, 400), { once: true });
     }
   }
   initProgressivePreloader();
 
-  // 2. Ultra-Fast Canvas Draw Function with On-Demand Prioritization & Fallback
+  // 2. Ultra-Fast Canvas Draw Function with Adaptive Fallback
   function renderCanvas(targetIndex) {
     if (!ctx) return;
     const idx = Math.min(Math.max(0, Math.round(targetIndex)), TOTAL_FRAMES - 1);
     if (idx === lastDrawnFrame) return;
 
-    // Prioritize target frame if not loaded or queued
-    if (loadingStatus[idx] === 0) {
-      enqueueFrame(idx, true);
-    }
-    // Warm ahead upcoming 2 frames in direction of scrub
-    for (let k = 1; k <= 2; k++) {
-      if (idx + k < TOTAL_FRAMES && loadingStatus[idx + k] === 0) {
-        enqueueFrame(idx + k, true);
-      }
-    }
-
     let img = frames[idx];
     if (!img) {
-      // Find nearest loaded frame
+      if (loadingStatus[idx] === 0) {
+        enqueueFrame(idx, true);
+      }
+
+      // Find nearest loaded frame for zero-blackout instant render
       for (let s = 1; s < 30; s++) {
         if (idx - s >= 0 && frames[idx - s]) {
           img = frames[idx - s];
