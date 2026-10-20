@@ -1408,7 +1408,8 @@
     }
 
     // ------------------------------------------------------------------------
-    // 3.5. COMPLETE PRODUCT ARSENAL: 3D CYBER ENTRANCE & PARALLAX SCROLL SCRUB
+    // 3.5. COMPLETE PRODUCT ARSENAL: AWWWARDS-GRADE 3D SCROLL CHOREOGRAPHY
+    // (Every-time scroll reactive • Reversible • Deep 3D Space • Scrubbed Parallax)
     // ------------------------------------------------------------------------
     const arsenalSection = document.getElementById('arsenal');
     const arsenalGrid = document.getElementById('arsenalGrid');
@@ -1430,203 +1431,258 @@
           transform: 'none',
         });
       } else {
-        // Initial Staging: 3D Perspective Offscreen Position
-        if (arsenalBadge) gsap.set(arsenalBadge, { x: -35, opacity: 0 });
-        if (arsenalHeadline) gsap.set(arsenalHeadline, { y: 45, opacity: 0 });
-        if (arsenalSubcopy) gsap.set(arsenalSubcopy, { y: 30, opacity: 0 });
-        if (arsenalGuar) gsap.set(arsenalGuar, { x: 30, opacity: 0, scale: 0.92 });
-        if (arsenalFooter) gsap.set(arsenalFooter, { y: 35, opacity: 0, scale: 0.92 });
-
-        arsenalCards.forEach((card, idx) => {
-          const scanline = card.querySelector('.arsenal-card-scanline');
-          const tub = card.querySelector('.arsenal-img-closed');
-          const shadow = card.querySelector('.arsenal-shadow');
-          const glow = card.querySelector('.arsenal-card-glow');
-
-          let initX = 0;
-          let initRotY = 0;
-          let initRotZ = 0;
-          if (idx === 0) { initX = -45; initRotY = 16; initRotZ = -2; }
-          else if (idx === 1) { initX = -15; initRotY = 6; initRotZ = -1; }
-          else if (idx === 2) { initX = 15; initRotY = -6; initRotZ = 1; }
-          else if (idx === 3) { initX = 45; initRotY = -16; initRotZ = 2; }
-
-          gsap.set(card, {
-            x: initX,
-            y: 110,
-            rotationY: initRotY,
-            rotationX: 20,
-            rotationZ: initRotZ,
-            scale: 0.9,
-            opacity: 0,
-            transformPerspective: 1200,
-          });
-
-          if (tub) gsap.set(tub, { y: -45, scale: 0.82, opacity: 0 });
-          if (shadow) gsap.set(shadow, { scaleX: 0.3, opacity: 0 });
-          if (scanline) gsap.set(scanline, { y: -20, opacity: 0 });
-          if (glow) gsap.set(glow, { opacity: 0 });
-        });
-
-        // 1. Master Scroll Entrance Timeline
+        // 1. MASTER ENTRANCE & RE-TRIGGERABLE TIMELINE (Runs every single time scrolled into view)
         const arsenalEntranceTl = gsap.timeline({
           scrollTrigger: {
             trigger: arsenalSection,
-            start: 'top 78%',
-            once: true,
-          },
-          onComplete: () => {
-            // Ambient levitation float after landing
-            arsenalCards.forEach((card, idx) => {
-              const tub = card.querySelector('.arsenal-img-closed');
-              const shadow = card.querySelector('.arsenal-shadow');
-              if (tub) {
-                gsap.to(tub, {
-                  y: -8,
-                  duration: 2.8 + (idx * 0.3),
-                  repeat: -1,
-                  yoyo: true,
-                  ease: 'sine.inOut',
-                });
-              }
-              if (shadow) {
-                gsap.to(shadow, {
-                  scaleX: 0.92,
-                  opacity: 0.65,
-                  duration: 2.8 + (idx * 0.3),
-                  repeat: -1,
-                  yoyo: true,
-                  ease: 'sine.inOut',
-                });
-              }
-            });
+            start: 'top 82%',
+            end: 'bottom 15%',
+            toggleActions: 'play reverse play reverse', // Re-triggers every time you scroll!
           }
         });
 
+        // Header: Badge + Headline + Subcopy + Guarantee
         if (arsenalBadge) {
-          arsenalEntranceTl.to(arsenalBadge, { x: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 0);
+          arsenalEntranceTl.fromTo(arsenalBadge,
+            { x: -50, opacity: 0, scale: 0.85 },
+            { x: 0, opacity: 1, scale: 1, duration: 0.6, ease: 'power3.out' },
+            0
+          );
         }
+
         if (arsenalHeadline) {
-          arsenalEntranceTl.to(arsenalHeadline, { y: 0, opacity: 1, duration: 0.65, ease: 'power3.out' }, 0.08);
+          arsenalEntranceTl.fromTo(arsenalHeadline,
+            { y: 60, opacity: 0, rotationX: 25 },
+            { y: 0, opacity: 1, rotationX: 0, duration: 0.8, ease: 'power4.out' },
+            0.05
+          );
         }
+
         if (arsenalSubcopy) {
-          arsenalEntranceTl.to(arsenalSubcopy, { y: 0, opacity: 1, duration: 0.55, ease: 'power3.out' }, 0.16);
+          arsenalEntranceTl.fromTo(arsenalSubcopy,
+            { y: 35, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.65, ease: 'power3.out' },
+            0.12
+          );
         }
+
         if (arsenalGuar) {
-          arsenalEntranceTl.to(arsenalGuar, { x: 0, opacity: 1, scale: 1, duration: 0.55, ease: 'back.out(1.4)' }, 0.2);
+          arsenalEntranceTl.fromTo(arsenalGuar,
+            { x: 45, opacity: 0, scale: 0.88 },
+            { x: 0, opacity: 1, scale: 1, duration: 0.65, ease: 'back.out(1.6)' },
+            0.15
+          );
         }
 
-        // Staggered 3D Landing for the 4 Cards
-        arsenalEntranceTl.to(arsenalCards, {
-          x: 0,
-          y: 0,
-          rotationY: 0,
-          rotationX: 0,
-          rotationZ: 0,
-          scale: 1,
-          opacity: 1,
-          duration: 0.9,
-          stagger: 0.11,
-          ease: 'power3.out',
-        }, 0.22);
-
-        // Tub Elastic Drop & Shadow Expansion inside each card
+        // 4 Cards Deep 3D Fan Entrance: Staggered from deep Z-space
         arsenalCards.forEach((card, idx) => {
           const tub = card.querySelector('.arsenal-img-closed');
           const shadow = card.querySelector('.arsenal-shadow');
           const scanline = card.querySelector('.arsenal-card-scanline');
           const glow = card.querySelector('.arsenal-card-glow');
-          const cardStartTime = 0.28 + (idx * 0.11);
+          const tagStim = card.querySelector('.arsenal-tag-stim');
+          const addBtn = card.querySelector('.arsenal-add-btn');
 
-          if (tub) {
-            arsenalEntranceTl.to(tub, {
+          // Dynamic 3D Fan angles
+          const angles = [
+            { x: -65, rotY: 22, rotZ: -3 },
+            { x: -20, rotY: 8, rotZ: -1 },
+            { x: 20, rotY: -8, rotZ: 1 },
+            { x: 65, rotY: -22, rotZ: 3 }
+          ];
+          const cfg = angles[idx] || { x: 0, rotY: 0, rotZ: 0 };
+          const cardDelay = 0.18 + (idx * 0.12);
+
+          // Card Body arrival
+          arsenalEntranceTl.fromTo(card,
+            {
+              x: cfg.x,
+              y: 150,
+              z: -180,
+              rotationY: cfg.rotY,
+              rotationX: 26,
+              rotationZ: cfg.rotZ,
+              scale: 0.82,
+              opacity: 0,
+              transformPerspective: 1200,
+            },
+            {
+              x: 0,
               y: 0,
+              z: 0,
+              rotationY: 0,
+              rotationX: 0,
+              rotationZ: 0,
               scale: 1,
               opacity: 1,
-              duration: 0.75,
-              ease: 'back.out(1.5)',
-            }, cardStartTime);
+              duration: 0.95,
+              ease: 'power3.out',
+            },
+            cardDelay
+          );
+
+          // Tub Levitation Drop with Elastic Spring
+          if (tub) {
+            arsenalEntranceTl.fromTo(tub,
+              { y: -70, scale: 0.72, opacity: 0, rotationZ: (idx % 2 === 0 ? -6 : 6) },
+              {
+                y: 0,
+                scale: 1,
+                opacity: 1,
+                rotationZ: 0,
+                duration: 0.85,
+                ease: 'back.out(1.7)',
+              },
+              cardDelay + 0.08
+            );
           }
 
+          // Ground Shadow dynamic expansion
           if (shadow) {
-            arsenalEntranceTl.to(shadow, {
-              scaleX: 1,
-              opacity: 0.75,
-              duration: 0.65,
-              ease: 'power2.out',
-            }, cardStartTime + 0.05);
+            arsenalEntranceTl.fromTo(shadow,
+              { scaleX: 0.2, opacity: 0 },
+              { scaleX: 1, opacity: 0.75, duration: 0.75, ease: 'power2.out' },
+              cardDelay + 0.12
+            );
           }
 
+          // Cyber Laser Scanline Sweep down the card
           if (scanline) {
             arsenalEntranceTl.fromTo(scanline,
               { y: -10, opacity: 0 },
               {
-                y: 450,
-                opacity: 0.95,
-                duration: 0.65,
+                y: 460,
+                opacity: 1,
+                duration: 0.7,
                 ease: 'power2.inOut',
-                onComplete: () => gsap.set(scanline, { opacity: 0 })
+                onComplete: () => gsap.set(scanline, { opacity: 0 }),
               },
-              cardStartTime + 0.08
+              cardDelay + 0.1
             );
           }
 
+          // Ambient Glow Pulse on entrance
           if (glow) {
-            arsenalEntranceTl.to(glow, {
-              opacity: 0.7,
-              duration: 0.32,
-              yoyo: true,
-              repeat: 1,
-              ease: 'power2.inOut',
-            }, cardStartTime + 0.1);
+            arsenalEntranceTl.fromTo(glow,
+              { opacity: 0, scale: 0.7 },
+              {
+                opacity: 0.85,
+                scale: 1.1,
+                duration: 0.38,
+                yoyo: true,
+                repeat: 1,
+                ease: 'power2.inOut',
+              },
+              cardDelay + 0.15
+            );
+          }
+
+          // Micro-stagger on internal badge & CTA
+          if (tagStim) {
+            arsenalEntranceTl.fromTo(tagStim,
+              { scale: 0.7, opacity: 0 },
+              { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2)' },
+              cardDelay + 0.25
+            );
+          }
+          if (addBtn) {
+            arsenalEntranceTl.fromTo(addBtn,
+              { y: 15, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' },
+              cardDelay + 0.3
+            );
           }
         });
 
+        // Show All Products Button entrance
         if (arsenalFooter) {
-          arsenalEntranceTl.to(arsenalFooter, {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.6,
-            ease: 'back.out(1.4)',
-          }, 0.75);
+          arsenalEntranceTl.fromTo(arsenalFooter,
+            { y: 50, opacity: 0, scale: 0.88 },
+            { y: 0, opacity: 1, scale: 1, duration: 0.7, ease: 'back.out(1.5)' },
+            0.75
+          );
         }
 
-        // 2. Kinetic Scroll Scrub (Multi-layer Floating Parallax Wave)
+        // 2. CONTINUOUS AWARD-WINNING SCROLL SCRUB (Active every time user scrolls)
+        // Tub Parallax Float Wave + Card 3D Depth tilt synced directly to scroll wheel
         arsenalCards.forEach((card, idx) => {
-          const img = card.querySelector('.arsenal-img-closed');
-          const cardScrubShift = (idx % 2 === 0) ? -28 : -46;
+          const tub = card.querySelector('.arsenal-img-closed');
+          const shadow = card.querySelector('.arsenal-shadow');
+          const scrubLift = (idx % 2 === 0) ? -42 : -68;
+          const tiltShift = (idx % 2 === 0) ? -4 : 4;
 
-          if (img) {
-            gsap.to(img, {
+          // Card 3D tilt reacts dynamically as you scroll through the section
+          gsap.fromTo(card,
+            { rotationX: 3 },
+            {
               scrollTrigger: {
                 trigger: arsenalSection,
-                start: 'top 50%',
-                end: 'bottom 15%',
+                start: 'top 60%',
+                end: 'bottom 20%',
                 scrub: 1.2,
               },
-              y: cardScrubShift,
+              rotationX: -4,
+              rotationY: tiltShift,
+              y: -15,
               ease: 'none',
-            });
+            }
+          );
+
+          // Tub floating levitation scrubs with scroll wheel
+          if (tub) {
+            gsap.fromTo(tub,
+              { y: 10 },
+              {
+                scrollTrigger: {
+                  trigger: arsenalSection,
+                  start: 'top 60%',
+                  end: 'bottom 10%',
+                  scrub: 1.4,
+                },
+                y: scrubLift,
+                ease: 'none',
+              }
+            );
+          }
+
+          if (shadow) {
+            gsap.fromTo(shadow,
+              { scaleX: 1.05, opacity: 0.8 },
+              {
+                scrollTrigger: {
+                  trigger: arsenalSection,
+                  start: 'top 60%',
+                  end: 'bottom 10%',
+                  scrub: 1.4,
+                },
+                scaleX: 0.82,
+                opacity: 0.45,
+                ease: 'none',
+              }
+            );
           }
         });
 
+        // Ambient background aura breath & scrub
         if (arsenalAmbientBg) {
-          gsap.to(arsenalAmbientBg, {
-            scrollTrigger: {
-              trigger: arsenalSection,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 1.5,
-            },
-            y: -100,
-            scale: 1.25,
-            opacity: 0.15,
-            ease: 'none',
-          });
+          gsap.fromTo(arsenalAmbientBg,
+            { y: 40, scale: 0.9, opacity: 0.05 },
+            {
+              scrollTrigger: {
+                trigger: arsenalSection,
+                start: 'top 90%',
+                end: 'bottom 10%',
+                scrub: 1.5,
+              },
+              y: -120,
+              scale: 1.35,
+              opacity: 0.18,
+              ease: 'none',
+            }
+          );
         }
 
-        // 3. Interactive 3D Gyro Tilt & Cursor Spotlight on Hover
+        // 3. INTERACTIVE 3D GYRO MAGNETIC TILT & CURSOR SPOTLIGHT
         arsenalCards.forEach((card) => {
           const glow = card.querySelector('.arsenal-card-glow');
           const img = card.querySelector('.arsenal-img-closed');
@@ -1642,16 +1698,16 @@
             const xPercent = (x / rect.width) - 0.5;
             const yPercent = (y / rect.height) - 0.5;
 
-            rotateX(-yPercent * 12);
-            rotateY(xPercent * 12);
+            rotateX(-yPercent * 15);
+            rotateY(xPercent * 15);
 
             if (imgShiftX && imgShiftY) {
-              imgShiftX(xPercent * 14);
-              imgShiftY(yPercent * 14);
+              imgShiftX(xPercent * 18);
+              imgShiftY(yPercent * 18);
             }
 
             if (glow) {
-              glow.style.background = `radial-gradient(circle 240px at ${x}px ${y}px, var(--prod-glow) 0%, transparent 70%)`;
+              glow.style.background = `radial-gradient(circle 260px at ${x}px ${y}px, var(--prod-glow) 0%, transparent 70%)`;
               glow.style.opacity = '1';
             }
           });
@@ -1666,7 +1722,7 @@
             gsap.to(card, {
               rotationX: 0,
               rotationY: 0,
-              duration: 0.7,
+              duration: 0.75,
               ease: 'elastic.out(1, 0.4)',
             });
             if (glow) {
