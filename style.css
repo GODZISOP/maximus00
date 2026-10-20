@@ -3341,3 +3341,91 @@ body {
   border-color: var(--accent-red);
 }
 
+
+/* ==========================================================================
+   PRODUCT ARSENAL: OPEN TUB HOVER TRANSITION & INTERACTION
+   ========================================================================== */
+.arsenal-img-stage {
+  position: relative;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  overflow: visible;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.arsenal-img {
+  max-height: 230px;
+  max-width: 90%;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.7));
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, filter 0.35s ease;
+  will-change: transform, opacity;
+}
+
+.arsenal-img-closed {
+  position: relative;
+  z-index: 2;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.arsenal-img-open {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  opacity: 0;
+  transform: translate(-50%, -46%) scale(0.9);
+  pointer-events: none;
+}
+
+.arsenal-card:hover .arsenal-img-closed {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.92);
+}
+
+.arsenal-card:hover .arsenal-img-open {
+  opacity: 1;
+  transform: translate(-50%, -54%) scale(1.08);
+  filter: drop-shadow(0 20px 40px var(--prod-glow)) drop-shadow(0 15px 30px rgba(0, 0, 0, 0.85));
+}
+
+.hover-inspect-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-dim);
+  z-index: 4;
+  opacity: 0.75;
+  transition: opacity 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  pointer-events: none;
+}
+
+.arsenal-card:hover .hover-inspect-badge {
+  opacity: 1;
+  color: #fff;
+  border-color: var(--prod-accent);
+  background: rgba(0, 0, 0, 0.95);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .arsenal-img-stage {
+    height: 220px;
+  }
+  .arsenal-img {
+    max-height: 200px;
+  }
+}

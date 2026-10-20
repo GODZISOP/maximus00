@@ -2018,4 +2018,185 @@
       newsletterForm.reset();
     });
   }
+
+  // ==========================================================================
+  // UNIFIED CART COMMERCE ENGINE & DRAWER INTERACTION
+  // ==========================================================================
+  const ARSENAL_PRODUCTS = [
+    {
+      id: 0,
+      name: "Blue Raspberry",
+      series: "SERIES // 01 · ULTRA HIGH STIM",
+      price: 49.00,
+      img: "public/products/blue-raspberry.png"
+    },
+    {
+      id: 1,
+      name: "Midnight Grape",
+      series: "SERIES // 02 · NEURO MATRIX",
+      price: 49.00,
+      img: "public/products/grape.png"
+    },
+    {
+      id: 2,
+      name: "Orange Blast",
+      series: "SERIES // 03 · THERMOGENIC DRIVE",
+      price: 49.00,
+      img: "public/products/orange-blast.png"
+    },
+    {
+      id: 3,
+      name: "Sour Apple",
+      series: "SERIES // 04 · RAW INTENSITY",
+      price: 49.00,
+      img: "public/products/sour-apple.png"
+    }
+  ];
+
+  let cart = JSON.parse(localStorage.getItem('maximus_cart') || '[]');
+
+  const navCartBtn = document.getElementById('navCartBtn');
+  const cartBadge = document.getElementById('cartBadge');
+  const cartOverlay = document.getElementById('cartOverlay');
+  const cartDrawer = document.getElementById('cartDrawer');
+  const cartDrawerClose = document.getElementById('cartDrawerClose');
+  const cartDrawerCount = document.getElementById('cartDrawerCount');
+  const cartItemsContainer = document.getElementById('cartItemsContainer');
+  const cartSubtotal = document.getElementById('cartSubtotal');
+  const cartTotal = document.getElementById('cartTotal');
+  const cartCheckoutBtn = document.getElementById('cartCheckoutBtn');
+  const cartHudToast = document.getElementById('cartHudToast');
+  const toastViewCart = document.getElementById('toastViewCart');
+
+  function openCartDrawer() {
+    if (cartDrawer) cartDrawer.classList.add('active');
+    if (cartOverlay) cartOverlay.classList.add('active');
+  }
+
+  function closeCartDrawer() {
+    if (cartDrawer) cartDrawer.classList.remove('active');
+    if (cartOverlay) cartOverlay.classList.remove('active');
+  }
+
+  function saveAndRenderCart() {
+    localStorage.setItem('maximus_cart', JSON.stringify(cart));
+    renderCartUI();
+  }
+
+  function renderCartUI() {
+    const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
+    if (cartBadge) cartBadge.textContent = totalQty;
+    if (cartDrawerCount) cartDrawerCount.textContent = `(${totalQty})`;
+
+    if (!cartItemsContainer) return;
+
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = `
+        <div class="cart-empty-state">
+          <p style="color:#aaa; font-size:0.95rem;">Your arsenal cart is empty.</p>
+          <span style="color:#666; font-size:0.75rem; margin-top:0.3rem;">Select any formulation below to add.</span>
+        </div>
+      `;
+      if (cartSubtotal) cartSubtotal.textContent = '$0.00';
+      if (cartTotal) cartTotal.textContent = '$0.00';
+      return;
+    }
+
+    let subtotal = 0;
+    cartItemsContainer.innerHTML = cart.map((item, idx) => {
+      subtotal += item.price * item.qty;
+      return `
+        <div class="cart-item">
+          <div class="cart-item-img-wrap">
+            <img src="${item.img}" alt="${item.name}">
+          </div>
+          <div class="cart-item-info">
+            <div class="cart-item-header">
+              <div>
+                <h4 class="cart-item-name">${item.name}</h4>
+                <span class="cart-item-series">${item.series}</span>
+              </div>
+              <button class="cart-item-remove-btn" onclick="window.removeCartItem(${idx})" title="Remove item">&times;</button>
+            </div>
+            <div class="cart-item-bottom">
+              <div class="cart-qty-control">
+                <button class="qty-btn" onclick="window.updateCartQty(${idx}, -1)">-</button>
+                <span style="font-size:0.85rem; font-weight:700; padding:0 0.5rem; color:#fff;">${item.qty}</span>
+                <button class="qty-btn" onclick="window.updateCartQty(${idx}, 1)">+</button>
+              </div>
+              <span class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    if (cartSubtotal) cartSubtotal.textContent = '$' + subtotal.toFixed(2);
+    if (cartTotal) cartTotal.textContent = '$' + subtotal.toFixed(2);
+  }
+
+  window.updateCartQty = function(idx, delta) {
+    if (!cart[idx]) return;
+    cart[idx].qty += delta;
+    if (cart[idx].qty <= 0) {
+      cart.splice(idx, 1);
+    }
+    saveAndRenderCart();
+  };
+
+  window.removeCartItem = function(idx) {
+    cart.splice(idx, 1);
+    saveAndRenderCart();
+  };
+
+  function addProductToCart(productIndex) {
+    const p = ARSENAL_PRODUCTS[productIndex];
+    if (!p) return;
+    const existing = cart.find(item => item.id === p.id);
+    if (existing) {
+      existing.qty++;
+    } else {
+      cart.push({
+        id: p.id,
+        name: p.name,
+        series: p.series,
+        price: p.price,
+        img: p.img,
+        qty: 1
+      });
+    }
+    saveAndRenderCart();
+    openCartDrawer();
+  }
+
+  // Bind Navbar Cart Button
+  if (navCartBtn) navCartBtn.addEventListener('click', openCartDrawer);
+  if (cartDrawerClose) cartDrawerClose.addEventListener('click', closeCartDrawer);
+  if (cartOverlay) cartOverlay.addEventListener('click', closeCartDrawer);
+
+  // Bind all Add to Cart buttons in the Arsenal
+  document.querySelectorAll('.arsenal-add-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const pIdx = parseInt(btn.getAttribute('data-product-index'), 10);
+      addProductToCart(pIdx);
+
+      // Temporary button feedback
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<span class="btn-text" style="color:#00ff88;">ADDED ✓</span>';
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+      }, 1200);
+    });
+  });
+
+  if (cartCheckoutBtn) {
+    cartCheckoutBtn.addEventListener('click', () => {
+      alert('Secure Checkout initiated! Total: ' + (cartTotal ? cartTotal.textContent : '$0.00'));
+    });
+  }
+
+  // Initial cart render
+  renderCartUI();
+
 })();

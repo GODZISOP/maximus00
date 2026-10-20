@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAXIMUS | Products Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text-main: #0b0c10;
+      --text-muted: #666a73;
+      --border: #e5e7eb;
+      --accent: #00d2ff;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-x: hidden;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 3.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .brand-logo {
+      font-weight: 900;
+      font-size: 1.4rem;
+      letter-spacing: -0.04em;
+      text-decoration: none;
+      color: #000;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+    .brand-logo span {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: #000;
+      border-radius: 50%;
+      margin-left: 2px;
+    }
+    nav {
+      display: flex;
+      gap: 2.2rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: #555;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active {
+      color: #000;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .cart-btn {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem;
+    }
+    .cart-badge {
+      position: absolute;
+      top: -2px;
+      right: -4px;
+      background: #ff334b;
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 3.5rem;
+      max-width: 1350px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+    .visual-stage {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 480px;
+    }
+    .ambient-glow {
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent) 0%, transparent 65%);
+      opacity: 0.18;
+      filter: blur(40px);
+      z-index: 1;
+      transition: all 0.5s ease;
+    }
+    .product-img {
+      position: relative;
+      z-index: 2;
+      max-width: 480px;
+      max-height: 440px;
+      width: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 25px 35px rgba(0,0,0,0.18));
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+      cursor: zoom-in;
+    }
+    .product-img:hover {
+      transform: translateY(-8px) scale(1.03);
+    }
+    .view-toggles {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.75rem;
+      z-index: 3;
+    }
+    .toggle-pill {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #4b5563;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: all 0.2s ease;
+    }
+    .toggle-pill.active {
+      background: #000;
+      color: #fff;
+      border-color: #000;
+    }
+    .details-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .series-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: #888;
+      text-transform: uppercase;
+    }
+    .product-title {
+      font-size: 2.35rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: #0b0c10;
+    }
+    .product-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.9rem;
+    }
+    .product-price {
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .original-price {
+      font-size: 1.15rem;
+      color: #9ca3af;
+      text-decoration: line-through;
+    }
+    .save-tag {
+      background: #ecfdf5;
+      color: #059669;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      letter-spacing: 0.05em;
+    }
+    .flavor-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin: 0.5rem 0;
+    }
+    .flavor-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #4b5563;
+    }
+    .color-dots {
+      display: flex;
+      gap: 0.9rem;
+      align-items: center;
+    }
+    .dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.2s ease;
+      border: 2px solid transparent;
+    }
+    .dot::after {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      transition: border-color 0.2s;
+    }
+    .dot.active::after {
+      border-color: #000;
+    }
+    .dot:hover {
+      transform: scale(1.15);
+    }
+    .dot[data-color="blue"] { background: #00d2ff; }
+    .dot[data-color="purple"] { background: #b026ff; }
+    .dot[data-color="orange"] { background: #ff7700; }
+    .dot[data-color="green"] { background: #22e566; }
+
+    .product-desc {
+      font-size: 0.92rem;
+      color: #4b5563;
+      line-height: 1.6;
+      max-width: 480px;
+    }
+
+    .actives-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      background: #f9fafb;
+      padding: 1rem;
+      border-radius: 12px;
+      border: 1px solid #f3f4f6;
+    }
+    .active-pill {
+      display: flex;
+      flex-direction: column;
+    }
+    .active-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9ca3af;
+    }
+    .active-val {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #111;
+      font-family: var(--font-mono);
+    }
+
+    .action-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+    .btn-buy {
+      background: #0f1115;
+      color: #fff;
+      border: none;
+      padding: 0.95rem 2.2rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      flex: 1;
+    }
+    .btn-buy:hover {
+      background: #252830;
+      transform: translateY(-2px);
+    }
+    .btn-cart {
+      background: #fff;
+      color: #0f1115;
+      border: 1.5px solid #d1d5db;
+      padding: 0.95rem 2rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      transition: all 0.2s;
+      flex: 1;
+    }
+    .btn-cart:hover {
+      border-color: #000;
+      background: #f9fafb;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3.5rem;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+    footer a {
+      color: #666;
+      text-decoration: none;
+    }
+
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(4px);
+      z-index: 99998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .cart-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 440px;
+      max-width: 95vw;
+      height: 100vh;
+      background: #ffffff;
+      box-shadow: -15px 0 50px rgba(0,0,0,0.15);
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cart-drawer.active {
+      transform: translateX(0);
+    }
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .drawer-header h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #888;
+    }
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .cart-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+      color: #9ca3af;
+      gap: 0.5rem;
+    }
+    .cart-item-row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      padding: 1rem;
+      border: 1px solid #f3f4f6;
+      border-radius: 12px;
+      background: #fcfcfd;
+    }
+    .cart-item-row img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+    .item-meta {
+      flex: 1;
+    }
+    .item-meta h4 {
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+    .item-meta p {
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+    .item-meta .price {
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-top: 0.2rem;
+    }
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      padding: 0.15rem 0.4rem;
+    }
+    .qty-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.9rem;
+      padding: 0 0.25rem;
+    }
+    .drawer-footer {
+      padding: 1.5rem 2rem;
+      border-top: 1px solid #f3f4f6;
+      background: #fafafa;
+    }
+    .subtotal-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    .checkout-btn {
+      width: 100%;
+      background: #000;
+      color: #fff;
+      padding: 1rem;
+      border-radius: 999px;
+      border: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: background 0.2s;
+    }
+    .checkout-btn:hover {
+      background: #222;
+    }
+
+    @media (max-width: 960px) {
+      header { padding: 1.25rem 1.5rem; }
+      nav { display: none; }
+      main { padding: 1.5rem; }
+      .showcase-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .visual-stage { min-height: 340px; }
+      .product-img { max-width: 320px; max-height: 300px; }
+      .product-title { font-size: 1.85rem; }
+      .action-row { flex-direction: column; }
+      footer { padding: 1.25rem 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="brand-logo">MAXIMUS<span></span></a>
+    <nav>
+      <a href="/">HOME</a>
+      <a href="/products.html" class="active">PRODUCTS</a>
+      <a href="/#arsenal">ARSENAL</a>
+      <a href="/#formula">FORMULA</a>
+      <a href="/#science">SCIENCE</a>
+    </nav>
+    <div class="header-actions">
+      <button class="cart-btn" id="cartBtn" aria-label="Cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+        <span class="cart-badge" id="cartBadgeCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <div class="showcase-grid">
+      <div class="visual-stage">
+        <div class="ambient-glow" id="ambientGlow"></div>
+        <img class="product-img" id="showcaseImg" src="public/products/blue-raspberry.png" alt="MAXIMUS Product">
+        <div class="view-toggles">
+          <button class="toggle-pill active" id="btnSealed">SEALED PACKAGING</button>
+          <button class="toggle-pill" id="btnOpen">OPEN TUB &amp; SCOOP</button>
+        </div>
+      </div>
+
+      <div class="details-panel">
+        <span class="series-label" id="seriesLabel">SERIES // 01 · ULTRA HIGH STIM</span>
+        <h1 class="product-title" id="productTitle">MAXIMUS Pre-Workout<br>Blue Raspberry</h1>
+        
+        <div class="product-price-row">
+          <span class="product-price" id="productPrice">$49.00</span>
+          <span class="original-price">$59.00</span>
+          <span class="save-tag">SAVE $10</span>
+        </div>
+
+        <div class="flavor-section">
+          <span class="flavor-name" id="flavorName">Selected Flavor: <strong>Electric Blue Raspberry</strong></span>
+          <div class="color-dots">
+            <div class="dot active" data-index="0" data-color="blue" title="Blue Raspberry"></div>
+            <div class="dot" data-index="1" data-color="purple" title="Midnight Grape"></div>
+            <div class="dot" data-index="2" data-color="orange" title="Orange Blast"></div>
+            <div class="dot" data-index="3" data-color="green" title="Sour Apple"></div>
+          </div>
+        </div>
+
+        <p class="product-desc" id="productDesc">
+          Kinetic propulsion matrix infused with pure Spirulina bioactive color. Clinical 350mg caffeine and 6000mg L-Citrulline deliver instant cellular uptake and sustained vasodilation without crash.
+        </p>
+
+        <div class="actives-grid" id="activesGrid">
+          <div class="active-pill">
+            <span class="active-label">Caffeine Matrix</span>
+            <span class="active-val" id="spec1">350mg</span>
+          </div>
+          <div class="active-pill">
+            <span class="active-label">Pure Citrulline</span>
+            <span class="active-val" id="spec2">6,000mg</span>
+          </div>
+          <div class="active-pill">
+            <span class="active-label">Beta-Alanine</span>
+            <span class="active-val" id="spec3">3,200mg</span>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button class="btn-buy" id="btnBuyNow">BUY NOW</button>
+          <button class="btn-cart" id="btnAddToCart">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+            ADD TO CART
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>Copyright © 2026 MAXIMUS Global LLC. All rights reserved.</span>
+    <span>Engineered for Peak Human Velocity.</span>
+  </footer>
+
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h3>YOUR ARSENAL CART</h3>
+      <button class="close-btn" id="closeCartBtn">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItemsList">
+      <div class="cart-empty">
+        <p>Your arsenal is currently empty.</p>
+        <span style="font-size:0.8rem;">Select a formulation to add.</span>
+      </div>
+    </div>
+    <div class="drawer-footer">
+      <div class="subtotal-row">
+        <span>Subtotal</span>
+        <span id="cartSubtotalVal">$0.00</span>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn">PROCEED TO CHECKOUT</button>
+    </div>
+  </aside>
+
+  <script>
+    const PRODUCTS = [
+      {
+        id: 0,
+        name: 'Blue Raspberry',
+        series: 'SERIES // 01 · ULTRA HIGH STIM',
+        price: 49.00,
+        color: '#00d2ff',
+        sealedImg: 'public/products/blue-raspberry.png',
+        openImg: 'public/open/blue-raspberry-open.png',
+        desc: 'Kinetic propulsion matrix infused with pure Spirulina bioactive color. Clinical 350mg caffeine and 6000mg L-Citrulline deliver instant cellular uptake and sustained vasodilation.',
+        specs: ['350mg', '6,000mg', '3,200mg']
+      },
+      {
+        id: 1,
+        name: 'Midnight Grape',
+        series: 'SERIES // 02 · NEURO MATRIX',
+        price: 49.00,
+        color: '#b026ff',
+        sealedImg: 'public/products/grape.png',
+        openImg: 'public/open/grape-open.png',
+        desc: 'Cognitive velocity formulation engineered with deep Concord beet extract. Delivers razor laser focus, elevated memory recall, and seamless mind-muscle coordination.',
+        specs: ['600mg', '1,000mg', '200mcg']
+      },
+      {
+        id: 2,
+        name: 'Orange Blast',
+        series: 'SERIES // 03 · THERMOGENIC DRIVE',
+        price: 49.00,
+        color: '#ff7700',
+        sealedImg: 'public/products/orange-blast.png',
+        openImg: 'public/open/orange-blast-open.png',
+        desc: 'Thermogenic cellular fire powered by Sicilian blood citrus carotenoids. Accelerates core lipid metabolic oxidation while maintaining pristine electrolyte equilibrium.',
+        specs: ['300mg', '100mg', 'Pure Matrix']
+      },
+      {
+        id: 3,
+        name: 'Sour Apple',
+        series: 'SERIES // 04 · RAW INTENSITY',
+        price: 49.00,
+        color: '#22e566',
+        sealedImg: 'public/products/sour-apple.png',
+        openImg: 'public/open/sour-apple-open.png',
+        desc: 'Unfiltered savage pumps driven by natural chlorophyll and tart malic acid. 8000mg super-dosed Citrulline floods target muscle tissue with explosive intra-workout vascularity.',
+        specs: ['400mg', '8,000mg', '2,500mg']
+      }
+    ];
+
+    let currentIdx = 0;
+    let isViewOpen = false;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('id')) {
+      const pId = parseInt(params.get('id'), 10);
+      if (pId >= 0 && pId < PRODUCTS.length) currentIdx = pId;
+    }
+
+    const showcaseImg = document.getElementById('showcaseImg');
+    const ambientGlow = document.getElementById('ambientGlow');
+    const seriesLabel = document.getElementById('seriesLabel');
+    const productTitle = document.getElementById('productTitle');
+    const flavorName = document.getElementById('flavorName');
+    const productDesc = document.getElementById('productDesc');
+    const btnSealed = document.getElementById('btnSealed');
+    const btnOpen = document.getElementById('btnOpen');
+    const dots = document.querySelectorAll('.dot');
+    const spec1 = document.getElementById('spec1');
+    const spec2 = document.getElementById('spec2');
+    const spec3 = document.getElementById('spec3');
+
+    function updateProductUI(idx) {
+      currentIdx = idx;
+      const p = PRODUCTS[idx];
+
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+
+      seriesLabel.textContent = p.series;
+      productTitle.innerHTML = 'MAXIMUS Pre-Workout<br>' + p.name;
+      flavorName.innerHTML = 'Selected Flavor: <strong>' + p.name + '</strong>';
+      productDesc.textContent = p.desc;
+      spec1.textContent = p.specs[0];
+      spec2.textContent = p.specs[1];
+      spec3.textContent = p.specs[2];
+
+      ambientGlow.style.background = 'radial-gradient(circle, ' + p.color + ' 0%, transparent 65%)';
+      showcaseImg.src = isViewOpen ? p.openImg : p.sealedImg;
+    }
+
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => updateProductUI(idx));
+    });
+
+    btnSealed.addEventListener('click', () => {
+      isViewOpen = false;
+      btnSealed.classList.add('active');
+      btnOpen.classList.remove('active');
+      showcaseImg.src = PRODUCTS[currentIdx].sealedImg;
+    });
+
+    btnOpen.addEventListener('click', () => {
+      isViewOpen = true;
+      btnOpen.classList.add('active');
+      btnSealed.classList.remove('active');
+      showcaseImg.src = PRODUCTS[currentIdx].openImg;
+    });
+
+    updateProductUI(currentIdx);
+
+    let cart = JSON.parse(localStorage.getItem('maximus_cart') || '[]');
+
+    function saveCart() {
+      localStorage.setItem('maximus_cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function renderCart() {
+      const countEl = document.getElementById('cartBadgeCount');
+      const itemsList = document.getElementById('cartItemsList');
+      const subtotalEl = document.getElementById('cartSubtotalVal');
+
+      const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
+      countEl.textContent = totalQty;
+
+      if (cart.length === 0) {
+        itemsList.innerHTML = '<div class="cart-empty"><p>Your arsenal is currently empty.</p><span style="font-size:0.8rem;">Select a formulation to add.</span></div>';
+        subtotalEl.textContent = '$0.00';
+        return;
+      }
+
+      let subtotal = 0;
+      itemsList.innerHTML = cart.map((item, i) => {
+        subtotal += item.price * item.qty;
+        return '<div class="cart-item-row">' +
+          '<img src="' + item.img + '" alt="' + item.name + '">' +
+          '<div class="item-meta">' +
+            '<h4>' + item.name + '</h4>' +
+            '<p>Series Formulation</p>' +
+            '<div class="price">$' + (item.price * item.qty).toFixed(2) + '</div>' +
+          '</div>' +
+          '<div class="qty-controls">' +
+            '<button class="qty-btn" onclick="changeQty(' + i + ', -1)">-</button>' +
+            '<span>' + item.qty + '</span>' +
+            '<button class="qty-btn" onclick="changeQty(' + i + ', 1)">+</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      subtotalEl.textContent = '$' + subtotal.toFixed(2);
+    }
+
+    window.changeQty = function(index, delta) {
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      saveCart();
+    };
+
+    function addToCart(pIdx) {
+      const p = PRODUCTS[pIdx];
+      const existing = cart.find(item => item.id === p.id);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({
+          id: p.id,
+          name: p.name,
+          price: p.price,
+          img: p.sealedImg,
+          qty: 1
+        });
+      }
+      saveCart();
+      openCart();
+    }
+
+    const cartDrawer = document.getElementById('cartDrawer');
+    const cartOverlay = document.getElementById('cartOverlay');
+    const cartBtn = document.getElementById('cartBtn');
+    const closeCartBtn = document.getElementById('closeCartBtn');
+
+    function openCart() {
+      cartDrawer.classList.add('active');
+      cartOverlay.classList.add('active');
+    }
+    function closeCart() {
+      cartDrawer.classList.remove('active');
+      cartOverlay.classList.remove('active');
+    }
+
+    cartBtn.addEventListener('click', openCart);
+    closeCartBtn.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+
+    document.getElementById('btnAddToCart').addEventListener('click', () => {
+      addToCart(currentIdx);
+    });
+    document.getElementById('btnBuyNow').addEventListener('click', () => {
+      addToCart(currentIdx);
+    });
+    document.getElementById('checkoutBtn').addEventListener('click', () => {
+      alert('Secure Checkout initiated for $' + document.getElementById('cartSubtotalVal').textContent);
+    });
+
+    renderCart();
+  </script>
+</body>
+</html>
