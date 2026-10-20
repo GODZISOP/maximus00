@@ -33,51 +33,117 @@
   canvas.width = FRAME_WIDTH;   // 1280
   canvas.height = FRAME_HEIGHT; // 720
 
-  // Frame Cache
+  // Frame Cache & Queue State
   const frames = new Array(TOTAL_FRAMES);
+  const loadingStatus = new Uint8Array(TOTAL_FRAMES); // 0 = idle, 1 = loading, 2 = loaded, 3 = error
   let currentFrame = 0;
   let lastDrawnFrame = -1;
   let lastActivePhase = -1;
   let loadedCount = 0;
 
-  // Helper to format frame path
+  // Helper to format frame path (Ultra-compressed WebP 6.2MB vs 79MB PNG)
   function getFramePath(idx) {
     const pad = String(idx + 1).padStart(3, '0');
-    return `public/frames/ezgif-frame-${pad}.png`;
+    return `public/frames/ezgif-frame-${pad}.webp`;
   }
 
-  // 1. High-Performance Preloader (Zero stuck promises, background decompression)
-  function preloadAllFrames() {
-    for (let i = 0; i < TOTAL_FRAMES; i++) {
+  // Concurrency-controlled, non-blocking frame streamer (Leaves sockets open for page images)
+  const MAX_CONCURRENT = 3;
+  let activeDownloads = 0;
+  const loadQueue = [];
+
+  function enqueueFrame(idx, highPriority = false) {
+    if (idx < 0 || idx >= TOTAL_FRAMES) return;
+    if (loadingStatus[idx] !== 0) return;
+    loadingStatus[idx] = 1;
+    if (highPriority) {
+      loadQueue.unshift(idx);
+    } else {
+      loadQueue.push(idx);
+    }
+    pumpQueue();
+  }
+
+  function pumpQueue() {
+    while (activeDownloads < MAX_CONCURRENT && loadQueue.length > 0) {
+      const idx = loadQueue.shift();
+      activeDownloads++;
       const img = new Image();
-      img.src = getFramePath(i);
+      img.src = getFramePath(idx);
       img.onload = () => {
-        frames[i] = img;
+        frames[idx] = img;
+        loadingStatus[idx] = 2;
         loadedCount++;
-        if (i === 0 && lastDrawnFrame === -1) {
+        activeDownloads--;
+        if (idx === 0 && lastDrawnFrame === -1) {
           renderCanvas(0);
         }
-        if (frameCounterEl) {
-          if (loadedCount < TOTAL_FRAMES) {
-            const pct = Math.round((loadedCount / TOTAL_FRAMES) * 100);
-            frameCounterEl.textContent = `BUFFER: [${pct}%] • FRAME: [${String(currentFrame + 1).padStart(3, '0')}/160]`;
-          } else {
-            frameCounterEl.textContent = `FRAME: [${String(currentFrame + 1).padStart(3, '0')}/160]`;
-          }
-        }
+        updateFrameCounter();
+        pumpQueue();
       };
-      if (img.decode) {
-        img.decode().catch(() => {});
-      }
+      img.onerror = () => {
+        loadingStatus[idx] = 3;
+        activeDownloads--;
+        pumpQueue();
+      };
     }
   }
-  preloadAllFrames();
 
-  // 2. Ultra-Fast 0.01ms Canvas Draw Function (No software scaling overhead)
+  function updateFrameCounter() {
+    if (!frameCounterEl) return;
+    if (loadedCount < TOTAL_FRAMES) {
+      const pct = Math.round((loadedCount / TOTAL_FRAMES) * 100);
+      frameCounterEl.textContent = `BUFFER: [${pct}%] • FRAME: [${String(currentFrame + 1).padStart(3, '0')}/160]`;
+    } else {
+      frameCounterEl.textContent = `FRAME: [${String(currentFrame + 1).padStart(3, '0')}/160]`;
+    }
+  }
+
+  // 1. High-Performance Progressive Preloader
+  function initProgressivePreloader() {
+    // Stage A: Immediate frame 0 and first 6 frames for instant hero canvas view
+    for (let i = 0; i <= 6; i++) {
+      enqueueFrame(i, true);
+    }
+
+    // Stage B: Keyframes (every 4th frame) for immediate fluid responsiveness across entire track
+    for (let i = 8; i < TOTAL_FRAMES; i += 4) {
+      enqueueFrame(i, false);
+    }
+
+    // Stage C: Progressively fill remaining frames during idle time without blocking network
+    const fillRemaining = () => {
+      for (let i = 0; i < TOTAL_FRAMES; i++) {
+        if (loadingStatus[i] === 0) {
+          enqueueFrame(i, false);
+        }
+      }
+    };
+
+    if (window.requestIdleCallback) {
+      window.requestIdleCallback(fillRemaining, { timeout: 2000 });
+    } else {
+      setTimeout(fillRemaining, 1000);
+    }
+  }
+  initProgressivePreloader();
+
+  // 2. Ultra-Fast Canvas Draw Function with On-Demand Prioritization & Fallback
   function renderCanvas(targetIndex) {
     if (!ctx) return;
     const idx = Math.min(Math.max(0, Math.round(targetIndex)), TOTAL_FRAMES - 1);
     if (idx === lastDrawnFrame) return;
+
+    // Prioritize target frame if not loaded or queued
+    if (loadingStatus[idx] === 0) {
+      enqueueFrame(idx, true);
+    }
+    // Warm ahead upcoming 2 frames in direction of scrub
+    for (let k = 1; k <= 2; k++) {
+      if (idx + k < TOTAL_FRAMES && loadingStatus[idx + k] === 0) {
+        enqueueFrame(idx + k, true);
+      }
+    }
 
     let img = frames[idx];
     if (!img) {
