@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=25">
+  <link rel="stylesheet" href="style.css?v=26">
 </head>
 <body class="bg-grid">
 
@@ -533,26 +533,26 @@
        ======================================================================== -->
   <section class="section-formula" id="formula" aria-label="Open Product Anatomy">
     <div class="container">
-      <div class="section-pill">// 04 Inside The Formula</div>
+      <div class="section-pill" id="formulaPill">// 04 Inside The Formula</div>
 
       <div class="formula-stage">
         <!-- Left: Copy & Switcher -->
         <div>
-          <h2 class="editorial-headline" style="font-size: clamp(2.5rem, 5.5vw, 4.5rem);">
+          <h2 class="editorial-headline" id="formulaHeadline" style="font-size: clamp(2.5rem, 5.5vw, 4.5rem);">
             What's Inside <br>
             <span class="gradient-text">Matters.</span>
           </h2>
-          <p class="editorial-copy" style="font-size: 1rem; margin-bottom: 2rem;">
+          <p class="editorial-copy" id="formulaCopy" style="font-size: 1rem; margin-bottom: 2rem;">
             Performance starts with what goes into every serving. Ultra-micronized
             powder engineered for instantaneous dissolution, zero settling, and rapid
             gastrointestinal assimilation.
           </p>
 
-          <div style="margin-bottom: 2.5rem;">
+          <div style="margin-bottom: 2.5rem;" id="formulaTabsWrap">
             <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.75rem;">
               Inspect Open Tub Formulation:
             </div>
-            <div class="flavor-nav">
+            <div class="flavor-nav" id="formulaFlavorNav">
               <button class="flavor-tab open-tub-tab active" data-open-index="0">
                 <span class="flavor-tab-dot" style="background-color: #00d2ff;"></span>
                 <span>BLUE RASPBERRY</span>
@@ -572,10 +572,10 @@
             </div>
           </div>
 
-          <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; font-size: 0.82rem; color: var(--text-muted);">
-            <div>✓ Instant Micronized Solubility — Mixes clear in 8-10oz cold water with zero shaker grit.</div>
-            <div>✓ Zero Artificial Dyes — Naturally tinted with spirulina, organic beet root, and beta-carotene.</div>
-            <div>✓ Calibrated 17.5g Scoop Included — Precision molded for guaranteed active compound saturation.</div>
+          <div class="formula-features-list" id="formulaFeaturesList" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; font-size: 0.82rem; color: var(--text-muted);">
+            <div class="formula-feature-item">✓ Instant Micronized Solubility — Mixes clear in 8-10oz cold water with zero shaker grit.</div>
+            <div class="formula-feature-item">✓ Zero Artificial Dyes — Naturally tinted with spirulina, organic beet root, and beta-carotene.</div>
+            <div class="formula-feature-item">✓ Calibrated 17.5g Scoop Included — Precision molded for guaranteed active compound saturation.</div>
           </div>
         </div>
 

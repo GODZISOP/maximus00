@@ -1735,6 +1735,8 @@ body {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 1.5rem;
+  perspective: 1400px;
+  perspective-origin: center top;
 }
 
 @media (min-width: 640px) {
@@ -1757,14 +1759,15 @@ body {
   padding: 1.5rem;
   cursor: pointer;
   overflow: hidden;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .open-tub-card:hover {
-  transform: translateY(-8px);
   border-color: rgba(255, 255, 255, 0.24);
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.75);
 }
@@ -1772,7 +1775,6 @@ body {
 .open-tub-card.active {
   border-color: var(--card-accent, #00d2ff);
   box-shadow: 0 0 35px var(--card-glow, rgba(0, 210, 255, 0.28)), inset 0 0 20px rgba(255, 255, 255, 0.03);
-  transform: translateY(-4px);
 }
 
 .card-glow {

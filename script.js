@@ -1336,75 +1336,385 @@
     }
 
     // ------------------------------------------------------------------------
-    // 3. INSIDE THE FORMULA: 3D PARALLAX STAGE & CONCENTRIC RADAR RINGS
+    // 3. INSIDE THE FORMULA: AWWWARDS-GRADE 3D TELEMETRY & SCROLL CHOREOGRAPHY
+    // (Every-time scroll reactive • Reversible • Deep 3D Levitation • Live Scrub Parallax)
     // ------------------------------------------------------------------------
+    const formulaSection = document.getElementById('formula');
+    const formulaPill = document.getElementById('formulaPill');
+    const formulaHeadline = document.getElementById('formulaHeadline');
+    const formulaCopy = document.getElementById('formulaCopy');
+    const formulaTabs = document.querySelectorAll('.open-tub-tab');
+    const formulaFeatures = document.querySelectorAll('.formula-feature-item');
     const openTubStage = document.getElementById('openTubStage');
     const openTubLayers = document.getElementById('openTubLayers');
-    const formulaHudPins = document.querySelectorAll('.formula-hud-pin');
+    const openTubGlow = document.getElementById('openTubGlow');
+    const radarRings = document.querySelectorAll('.formula-radar-ring');
+    const hudPinLeft = document.getElementById('hudPinLeft');
+    const hudPinRight = document.getElementById('hudPinRight');
+    const deckSection = document.querySelector('.open-tubs-gallery-wrap');
+    const deckHeader = document.querySelector('.gallery-header-row');
+    const deckCards = document.querySelectorAll('.open-tub-card');
 
-    if (openTubStage && openTubLayers) {
-      // Reveal headline & container
-      gsap.fromTo('.section-formula .editorial-headline',
-        { y: 45, opacity: 0 },
-        {
-          scrollTrigger: { trigger: '.section-formula', start: 'top 80%', once: true },
-          y: 0, opacity: 1, duration: 0.9, ease: 'power3.out'
-        }
-      );
+    if (formulaSection && openTubStage) {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Concentric rings pop in
-      gsap.fromTo('.formula-radar-ring',
-        { scale: 0.5, opacity: 0 },
-        {
-          scrollTrigger: { trigger: openTubStage, start: 'top 80%', once: true },
-          scale: 1, opacity: 1, duration: 1.2, stagger: 0.2, ease: 'back.out(1.4)'
-        }
-      );
-
-      // HUD Pins spring reveal + floating oscillation
-      if (formulaHudPins.length) {
-        gsap.fromTo(formulaHudPins,
-          { scale: 0.6, opacity: 0, y: 20 },
-          {
-            scrollTrigger: { trigger: openTubStage, start: 'top 80%', once: true },
-            scale: 1, opacity: 1, y: 0, duration: 0.8, stagger: 0.25, ease: 'back.out(1.8)',
-            onComplete: () => {
-              gsap.to('.pin-top-left', { y: -8, duration: 2.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-              gsap.to('.pin-bottom-right', { y: 8, duration: 2.8, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-            }
+      if (prefersReducedMotion) {
+        gsap.set([formulaPill, formulaHeadline, formulaCopy, openTubLayers, ...formulaTabs, ...formulaFeatures, ...deckCards], {
+          opacity: 1,
+          visibility: 'visible',
+          transform: 'none',
+        });
+      } else {
+        // --------------------------------------------------------------------
+        // A. FORMULA STAGE MASTER ENTRANCE (Runs every time scrolled into view)
+        // --------------------------------------------------------------------
+        const formulaEntranceTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: formulaSection,
+            start: 'top 80%',
+            end: 'bottom 15%',
+            toggleActions: 'play reverse play reverse', // Reversible every-time scroll!
           }
-        );
-      }
+        });
 
-      // 4-Card Open Formulation Gallery Cards reveal
-      gsap.fromTo('.open-tub-card',
-        { y: 35, opacity: 0 },
-        {
-          scrollTrigger: { trigger: '.open-tubs-gallery-wrap', start: 'top 85%', once: true },
-          y: 0, opacity: 1, duration: 0.75, stagger: 0.1, ease: 'power3.out'
+        // 1. Left Column: Pill + 3D Masked Headline + Copy
+        if (formulaPill) {
+          formulaEntranceTl.fromTo(formulaPill,
+            { x: -50, opacity: 0, scale: 0.88 },
+            { x: 0, opacity: 1, scale: 1, duration: 0.6, ease: 'power3.out' },
+            0
+          );
         }
-      );
 
-      // Interactive 3D Tub Parallax Tilt on Mouse Move
-      const rotateXTilt = gsap.quickTo(openTubLayers, 'rotationX', { duration: 0.5, ease: 'power2.out' });
-      const rotateYTilt = gsap.quickTo(openTubLayers, 'rotationY', { duration: 0.5, ease: 'power2.out' });
-      const levitateYTilt = gsap.quickTo(openTubLayers, 'y', { duration: 0.5, ease: 'power2.out' });
+        if (formulaHeadline) {
+          formulaEntranceTl.fromTo(formulaHeadline,
+            { y: 65, opacity: 0, rotationX: 25 },
+            { y: 0, opacity: 1, rotationX: 0, duration: 0.85, ease: 'power4.out' },
+            0.06
+          );
+        }
 
-      openTubStage.addEventListener('mousemove', (e) => {
-        const rect = openTubStage.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        if (formulaCopy) {
+          formulaEntranceTl.fromTo(formulaCopy,
+            { y: 35, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.65, ease: 'power3.out' },
+            0.14
+          );
+        }
 
-        rotateYTilt(x * 24);
-        rotateXTilt(-y * 18);
-        levitateYTilt(y * 12);
-      });
+        // 2. Flavor Switcher Tabs Stagger
+        if (formulaTabs.length) {
+          formulaEntranceTl.fromTo(formulaTabs,
+            { y: 25, scale: 0.85, opacity: 0 },
+            { y: 0, scale: 1, opacity: 1, duration: 0.5, stagger: 0.07, ease: 'back.out(2)' },
+            0.2
+          );
+        }
 
-      openTubStage.addEventListener('mouseleave', () => {
-        rotateXTilt(0);
-        rotateYTilt(0);
-        levitateYTilt(0);
-      });
+        // 3. Clinical Feature Checkmark Bullets Cascade
+        if (formulaFeatures.length) {
+          formulaEntranceTl.fromTo(formulaFeatures,
+            { x: -35, opacity: 0 },
+            { x: 0, opacity: 1, duration: 0.55, stagger: 0.08, ease: 'power3.out' },
+            0.28
+          );
+        }
+
+        // 4. Right Stage: Radar Rings Supersonic Expansion
+        if (radarRings.length) {
+          formulaEntranceTl.fromTo(radarRings,
+            { scale: 0.25, opacity: 0, rotation: -90 },
+            { scale: 1, opacity: 1, rotation: 0, duration: 1.1, stagger: 0.18, ease: 'power3.out' },
+            0.1
+          );
+        }
+
+        // 5. Open Tub Multi-Layer 3D Levitation Drop
+        if (openTubLayers) {
+          formulaEntranceTl.fromTo(openTubLayers,
+            { y: -100, z: -180, scale: 0.72, rotationX: 20, rotationY: -12, opacity: 0 },
+            { y: 0, z: 0, scale: 1, rotationX: 0, rotationY: 0, opacity: 1, duration: 1.0, ease: 'back.out(1.6)' },
+            0.18
+          );
+        }
+
+        // 6. Holographic Ambient Stage Glow Burst
+        if (openTubGlow) {
+          formulaEntranceTl.fromTo(openTubGlow,
+            { scale: 0.35, opacity: 0 },
+            { scale: 1.25, opacity: 0.85, duration: 0.7, ease: 'power2.out' },
+            0.25
+          );
+          formulaEntranceTl.to(openTubGlow, { scale: 1, opacity: 0.5, duration: 0.5, ease: 'power1.inOut' }, 0.95);
+        }
+
+        // 7. Tactical HUD Pins Cross-Shoot
+        if (hudPinLeft) {
+          formulaEntranceTl.fromTo(hudPinLeft,
+            { x: -90, y: -45, scale: 0.65, opacity: 0 },
+            { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.75, ease: 'back.out(1.8)' },
+            0.35
+          );
+        }
+        if (hudPinRight) {
+          formulaEntranceTl.fromTo(hudPinRight,
+            { x: 90, y: 45, scale: 0.65, opacity: 0 },
+            { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.75, ease: 'back.out(1.8)' },
+            0.4
+          );
+        }
+
+        // Continuous subtle idle floating on HUD pins
+        gsap.to('.pin-top-left', { y: -9, rotation: -1.5, duration: 2.7, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+        gsap.to('.pin-bottom-right', { y: 9, rotation: 1.5, duration: 3.1, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+
+        // --------------------------------------------------------------------
+        // B. LIVE SCROLL SCRUB PARALLAX (Active every time user scrolls)
+        // --------------------------------------------------------------------
+        // Open Tub levitates & tilts smoothly as scroll progress advances
+        if (openTubLayers) {
+          gsap.fromTo(openTubLayers,
+            { y: 35, rotationX: 8, rotationY: -6 },
+            {
+              scrollTrigger: {
+                trigger: formulaSection,
+                start: 'top 60%',
+                end: 'bottom 20%',
+                scrub: 1.3,
+              },
+              y: -55,
+              rotationX: -8,
+              rotationY: 8,
+              ease: 'none',
+            }
+          );
+        }
+
+        // Opposing Radar Rings live scroll spin
+        if (radarRings[0]) {
+          gsap.to(radarRings[0], {
+            scrollTrigger: {
+              trigger: formulaSection,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1,
+            },
+            rotation: 140,
+            scale: 1.25,
+            ease: 'none',
+          });
+        }
+        if (radarRings[1]) {
+          gsap.to(radarRings[1], {
+            scrollTrigger: {
+              trigger: formulaSection,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1,
+            },
+            rotation: -140,
+            scale: 1.15,
+            ease: 'none',
+          });
+        }
+
+        // HUD Pins multiplane divergence
+        if (hudPinLeft) {
+          gsap.to(hudPinLeft, {
+            scrollTrigger: {
+              trigger: formulaSection,
+              start: 'top 60%',
+              end: 'bottom 20%',
+              scrub: 1.1,
+            },
+            y: -35,
+            ease: 'none',
+          });
+        }
+        if (hudPinRight) {
+          gsap.to(hudPinRight, {
+            scrollTrigger: {
+              trigger: formulaSection,
+              start: 'top 60%',
+              end: 'bottom 20%',
+              scrub: 1.1,
+            },
+            y: 45,
+            ease: 'none',
+          });
+        }
+
+        // --------------------------------------------------------------------
+        // C. ALL 4 OPEN TUBS DECK GALLERY (Re-triggerable 3D Stagger Entrance)
+        // --------------------------------------------------------------------
+        if (deckSection && deckCards.length) {
+          const deckEntranceTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: deckSection,
+              start: 'top 82%',
+              end: 'bottom 15%',
+              toggleActions: 'play reverse play reverse', // Reversible every time!
+            }
+          });
+
+          if (deckHeader) {
+            deckEntranceTl.fromTo(deckHeader,
+              { y: 40, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.65, ease: 'power3.out' },
+              0
+            );
+          }
+
+          // 4 Open Tub Deck Cards: 3D fan cascade from deep space
+          deckCards.forEach((card, idx) => {
+            const tubImg = card.querySelector('.card-img-wrap img');
+            const pill = card.querySelector('.card-status-pill');
+            const glow = card.querySelector('.card-glow');
+            const cardAngles = [
+              { x: -50, rotY: 18, rotZ: -2 },
+              { x: -15, rotY: 6, rotZ: -1 },
+              { x: 15, rotY: -6, rotZ: 1 },
+              { x: 50, rotY: -18, rotZ: 2 }
+            ];
+            const cfg = cardAngles[idx] || { x: 0, rotY: 0, rotZ: 0 };
+            const dDelay = 0.12 + (idx * 0.1);
+
+            deckEntranceTl.fromTo(card,
+              {
+                x: cfg.x,
+                y: 130,
+                z: -160,
+                rotationY: cfg.rotY,
+                rotationX: 24,
+                rotationZ: cfg.rotZ,
+                scale: 0.85,
+                opacity: 0,
+                transformPerspective: 1200,
+              },
+              {
+                x: 0,
+                y: 0,
+                z: 0,
+                rotationY: 0,
+                rotationX: 0,
+                rotationZ: 0,
+                scale: 1,
+                opacity: 1,
+                duration: 0.9,
+                ease: 'power3.out',
+              },
+              dDelay
+            );
+
+            if (tubImg) {
+              deckEntranceTl.fromTo(tubImg,
+                { y: -35, scale: 0.8, opacity: 0 },
+                { y: 0, scale: 1, opacity: 1, duration: 0.75, ease: 'back.out(1.7)' },
+                dDelay + 0.08
+              );
+            }
+
+            if (glow) {
+              deckEntranceTl.fromTo(glow,
+                { opacity: 0, scale: 0.5 },
+                { opacity: 0.9, scale: 1.1, duration: 0.35, yoyo: true, repeat: 1, ease: 'power2.inOut' },
+                dDelay + 0.12
+              );
+            }
+
+            if (pill) {
+              deckEntranceTl.fromTo(pill,
+                { scale: 0.7, opacity: 0 },
+                { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2)' },
+                dDelay + 0.2
+              );
+            }
+          });
+
+          // Continuous scroll scrub wave across deck
+          deckCards.forEach((card, idx) => {
+            const scrubDistance = (idx % 2 === 0) ? -28 : -50;
+            const tiltDir = (idx % 2 === 0) ? -4 : 4;
+
+            gsap.fromTo(card,
+              { rotationX: 2 },
+              {
+                scrollTrigger: {
+                  trigger: deckSection,
+                  start: 'top 70%',
+                  end: 'bottom 20%',
+                  scrub: 1.2,
+                },
+                y: scrubDistance,
+                rotationX: -4,
+                rotationY: tiltDir,
+                ease: 'none',
+              }
+            );
+          });
+
+          // Interactive 3D Cursor Gyro Tilt on Deck Cards
+          deckCards.forEach((card) => {
+            const cardImg = card.querySelector('.card-img-wrap img');
+            const rotX = gsap.quickTo(card, 'rotationX', { duration: 0.35, ease: 'power2.out' });
+            const rotY = gsap.quickTo(card, 'rotationY', { duration: 0.35, ease: 'power2.out' });
+            const imgX = cardImg ? gsap.quickTo(cardImg, 'x', { duration: 0.4, ease: 'power2.out' }) : null;
+            const imgY = cardImg ? gsap.quickTo(cardImg, 'y', { duration: 0.4, ease: 'power2.out' }) : null;
+
+            card.addEventListener('mousemove', (e) => {
+              const rect = card.getBoundingClientRect();
+              const xPercent = (e.clientX - rect.left) / rect.width - 0.5;
+              const yPercent = (e.clientY - rect.top) / rect.height - 0.5;
+
+              rotX(-yPercent * 14);
+              rotY(xPercent * 14);
+
+              if (imgX && imgY) {
+                imgX(xPercent * 15);
+                imgY(yPercent * 15);
+              }
+            });
+
+            card.addEventListener('mouseleave', () => {
+              rotX(0);
+              rotY(0);
+              if (imgX && imgY) {
+                imgX(0);
+                imgY(0);
+              }
+              gsap.to(card, {
+                rotationX: 0,
+                rotationY: 0,
+                duration: 0.7,
+                ease: 'elastic.out(1, 0.4)',
+              });
+            });
+          });
+        }
+
+        // --------------------------------------------------------------------
+        // D. INTERACTIVE 3D TELEMETRY TUBE ROTATION (Cursor on Stage)
+        // --------------------------------------------------------------------
+        const rotateXTilt = gsap.quickTo(openTubLayers, 'rotationX', { duration: 0.5, ease: 'power2.out' });
+        const rotateYTilt = gsap.quickTo(openTubLayers, 'rotationY', { duration: 0.5, ease: 'power2.out' });
+        const levitateYTilt = gsap.quickTo(openTubLayers, 'y', { duration: 0.5, ease: 'power2.out' });
+
+        openTubStage.addEventListener('mousemove', (e) => {
+          const rect = openTubStage.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+          rotateYTilt(x * 24);
+          rotateXTilt(-y * 18);
+          levitateYTilt(y * 12);
+        });
+
+        openTubStage.addEventListener('mouseleave', () => {
+          rotateXTilt(0);
+          rotateYTilt(0);
+          levitateYTilt(0);
+        });
+      }
     }
 
     // ------------------------------------------------------------------------
