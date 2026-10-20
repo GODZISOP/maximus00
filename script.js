@@ -2731,42 +2731,42 @@
       name: "Blue Raspberry",
       series: "SERIES // 01 · ULTRA HIGH STIM",
       price: 49.00,
-      img: "public/products/blue-raspberry.png"
+      img: "public/products/blue-raspberry.webp"
     },
     {
       id: 1,
       name: "Midnight Grape",
       series: "SERIES // 02 · NEURO MATRIX",
       price: 49.00,
-      img: "public/products/grape.png"
+      img: "public/products/grape.webp"
     },
     {
       id: 2,
       name: "Orange Blast",
       series: "SERIES // 03 · THERMOGENIC DRIVE",
       price: 49.00,
-      img: "public/products/watermelon.png"
+      img: "public/products/watermelon.webp"
     },
     {
       id: 3,
       name: "Sour Apple",
       series: "SERIES // 04 · RAW INTENSITY",
       price: 49.00,
-      img: "public/products/sour-apple.png"
+      img: "public/products/sour-apple.webp"
     },
     {
       id: 4,
       name: "Blue Razz System",
       series: "SERIES // 05 · COMPLETE SYSTEM",
       price: 59.00,
-      img: "public/products/blue-razz-box.png"
+      img: "public/products/blue-razz-box.webp"
     },
     {
       id: 5,
       name: "Red Rush System",
       series: "SERIES // 06 · THERMAL RED SYSTEM",
       price: 59.00,
-      img: "public/products/red-rush-box.png"
+      img: "public/products/red-rush-box.webp"
     }
   ];
 
