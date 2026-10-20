@@ -1408,6 +1408,276 @@
     }
 
     // ------------------------------------------------------------------------
+    // 3.5. COMPLETE PRODUCT ARSENAL: 3D CYBER ENTRANCE & PARALLAX SCROLL SCRUB
+    // ------------------------------------------------------------------------
+    const arsenalSection = document.getElementById('arsenal');
+    const arsenalGrid = document.getElementById('arsenalGrid');
+    const arsenalCards = document.querySelectorAll('.arsenal-card');
+    const arsenalBadge = document.querySelector('.section-arsenal .section-badge');
+    const arsenalHeadline = document.querySelector('.arsenal-headline');
+    const arsenalSubcopy = document.querySelector('.arsenal-subcopy');
+    const arsenalGuar = document.querySelector('.arsenal-guarantee-pill');
+    const arsenalFooter = document.getElementById('arsenalFooterAction');
+    const arsenalAmbientBg = document.querySelector('.arsenal-ambient-bg');
+
+    if (arsenalSection && arsenalCards.length) {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (prefersReducedMotion) {
+        gsap.set([arsenalBadge, arsenalHeadline, arsenalSubcopy, arsenalGuar, arsenalFooter, ...arsenalCards], {
+          opacity: 1,
+          visibility: 'visible',
+          transform: 'none',
+        });
+      } else {
+        // Initial Staging: 3D Perspective Offscreen Position
+        if (arsenalBadge) gsap.set(arsenalBadge, { x: -35, opacity: 0 });
+        if (arsenalHeadline) gsap.set(arsenalHeadline, { y: 45, opacity: 0 });
+        if (arsenalSubcopy) gsap.set(arsenalSubcopy, { y: 30, opacity: 0 });
+        if (arsenalGuar) gsap.set(arsenalGuar, { x: 30, opacity: 0, scale: 0.92 });
+        if (arsenalFooter) gsap.set(arsenalFooter, { y: 35, opacity: 0, scale: 0.92 });
+
+        arsenalCards.forEach((card, idx) => {
+          const scanline = card.querySelector('.arsenal-card-scanline');
+          const tub = card.querySelector('.arsenal-img-closed');
+          const shadow = card.querySelector('.arsenal-shadow');
+          const glow = card.querySelector('.arsenal-card-glow');
+
+          let initX = 0;
+          let initRotY = 0;
+          let initRotZ = 0;
+          if (idx === 0) { initX = -45; initRotY = 16; initRotZ = -2; }
+          else if (idx === 1) { initX = -15; initRotY = 6; initRotZ = -1; }
+          else if (idx === 2) { initX = 15; initRotY = -6; initRotZ = 1; }
+          else if (idx === 3) { initX = 45; initRotY = -16; initRotZ = 2; }
+
+          gsap.set(card, {
+            x: initX,
+            y: 110,
+            rotationY: initRotY,
+            rotationX: 20,
+            rotationZ: initRotZ,
+            scale: 0.9,
+            opacity: 0,
+            transformPerspective: 1200,
+          });
+
+          if (tub) gsap.set(tub, { y: -45, scale: 0.82, opacity: 0 });
+          if (shadow) gsap.set(shadow, { scaleX: 0.3, opacity: 0 });
+          if (scanline) gsap.set(scanline, { y: -20, opacity: 0 });
+          if (glow) gsap.set(glow, { opacity: 0 });
+        });
+
+        // 1. Master Scroll Entrance Timeline
+        const arsenalEntranceTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: arsenalSection,
+            start: 'top 78%',
+            once: true,
+          },
+          onComplete: () => {
+            // Ambient levitation float after landing
+            arsenalCards.forEach((card, idx) => {
+              const tub = card.querySelector('.arsenal-img-closed');
+              const shadow = card.querySelector('.arsenal-shadow');
+              if (tub) {
+                gsap.to(tub, {
+                  y: -8,
+                  duration: 2.8 + (idx * 0.3),
+                  repeat: -1,
+                  yoyo: true,
+                  ease: 'sine.inOut',
+                });
+              }
+              if (shadow) {
+                gsap.to(shadow, {
+                  scaleX: 0.92,
+                  opacity: 0.65,
+                  duration: 2.8 + (idx * 0.3),
+                  repeat: -1,
+                  yoyo: true,
+                  ease: 'sine.inOut',
+                });
+              }
+            });
+          }
+        });
+
+        if (arsenalBadge) {
+          arsenalEntranceTl.to(arsenalBadge, { x: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 0);
+        }
+        if (arsenalHeadline) {
+          arsenalEntranceTl.to(arsenalHeadline, { y: 0, opacity: 1, duration: 0.65, ease: 'power3.out' }, 0.08);
+        }
+        if (arsenalSubcopy) {
+          arsenalEntranceTl.to(arsenalSubcopy, { y: 0, opacity: 1, duration: 0.55, ease: 'power3.out' }, 0.16);
+        }
+        if (arsenalGuar) {
+          arsenalEntranceTl.to(arsenalGuar, { x: 0, opacity: 1, scale: 1, duration: 0.55, ease: 'back.out(1.4)' }, 0.2);
+        }
+
+        // Staggered 3D Landing for the 4 Cards
+        arsenalEntranceTl.to(arsenalCards, {
+          x: 0,
+          y: 0,
+          rotationY: 0,
+          rotationX: 0,
+          rotationZ: 0,
+          scale: 1,
+          opacity: 1,
+          duration: 0.9,
+          stagger: 0.11,
+          ease: 'power3.out',
+        }, 0.22);
+
+        // Tub Elastic Drop & Shadow Expansion inside each card
+        arsenalCards.forEach((card, idx) => {
+          const tub = card.querySelector('.arsenal-img-closed');
+          const shadow = card.querySelector('.arsenal-shadow');
+          const scanline = card.querySelector('.arsenal-card-scanline');
+          const glow = card.querySelector('.arsenal-card-glow');
+          const cardStartTime = 0.28 + (idx * 0.11);
+
+          if (tub) {
+            arsenalEntranceTl.to(tub, {
+              y: 0,
+              scale: 1,
+              opacity: 1,
+              duration: 0.75,
+              ease: 'back.out(1.5)',
+            }, cardStartTime);
+          }
+
+          if (shadow) {
+            arsenalEntranceTl.to(shadow, {
+              scaleX: 1,
+              opacity: 0.75,
+              duration: 0.65,
+              ease: 'power2.out',
+            }, cardStartTime + 0.05);
+          }
+
+          if (scanline) {
+            arsenalEntranceTl.fromTo(scanline,
+              { y: -10, opacity: 0 },
+              {
+                y: 450,
+                opacity: 0.95,
+                duration: 0.65,
+                ease: 'power2.inOut',
+                onComplete: () => gsap.set(scanline, { opacity: 0 })
+              },
+              cardStartTime + 0.08
+            );
+          }
+
+          if (glow) {
+            arsenalEntranceTl.to(glow, {
+              opacity: 0.7,
+              duration: 0.32,
+              yoyo: true,
+              repeat: 1,
+              ease: 'power2.inOut',
+            }, cardStartTime + 0.1);
+          }
+        });
+
+        if (arsenalFooter) {
+          arsenalEntranceTl.to(arsenalFooter, {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.6,
+            ease: 'back.out(1.4)',
+          }, 0.75);
+        }
+
+        // 2. Kinetic Scroll Scrub (Multi-layer Floating Parallax Wave)
+        arsenalCards.forEach((card, idx) => {
+          const img = card.querySelector('.arsenal-img-closed');
+          const cardScrubShift = (idx % 2 === 0) ? -28 : -46;
+
+          if (img) {
+            gsap.to(img, {
+              scrollTrigger: {
+                trigger: arsenalSection,
+                start: 'top 50%',
+                end: 'bottom 15%',
+                scrub: 1.2,
+              },
+              y: cardScrubShift,
+              ease: 'none',
+            });
+          }
+        });
+
+        if (arsenalAmbientBg) {
+          gsap.to(arsenalAmbientBg, {
+            scrollTrigger: {
+              trigger: arsenalSection,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1.5,
+            },
+            y: -100,
+            scale: 1.25,
+            opacity: 0.15,
+            ease: 'none',
+          });
+        }
+
+        // 3. Interactive 3D Gyro Tilt & Cursor Spotlight on Hover
+        arsenalCards.forEach((card) => {
+          const glow = card.querySelector('.arsenal-card-glow');
+          const img = card.querySelector('.arsenal-img-closed');
+          const rotateX = gsap.quickTo(card, 'rotationX', { duration: 0.35, ease: 'power2.out' });
+          const rotateY = gsap.quickTo(card, 'rotationY', { duration: 0.35, ease: 'power2.out' });
+          const imgShiftX = img ? gsap.quickTo(img, 'x', { duration: 0.4, ease: 'power2.out' }) : null;
+          const imgShiftY = img ? gsap.quickTo(img, 'y', { duration: 0.4, ease: 'power2.out' }) : null;
+
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const xPercent = (x / rect.width) - 0.5;
+            const yPercent = (y / rect.height) - 0.5;
+
+            rotateX(-yPercent * 12);
+            rotateY(xPercent * 12);
+
+            if (imgShiftX && imgShiftY) {
+              imgShiftX(xPercent * 14);
+              imgShiftY(yPercent * 14);
+            }
+
+            if (glow) {
+              glow.style.background = `radial-gradient(circle 240px at ${x}px ${y}px, var(--prod-glow) 0%, transparent 70%)`;
+              glow.style.opacity = '1';
+            }
+          });
+
+          card.addEventListener('mouseleave', () => {
+            rotateX(0);
+            rotateY(0);
+            if (imgShiftX && imgShiftY) {
+              imgShiftX(0);
+              imgShiftY(0);
+            }
+            gsap.to(card, {
+              rotationX: 0,
+              rotationY: 0,
+              duration: 0.7,
+              ease: 'elastic.out(1, 0.4)',
+            });
+            if (glow) {
+              glow.style.opacity = '0';
+            }
+          });
+        });
+      }
+    }
+
+    // ------------------------------------------------------------------------
     // 4. MANTRA STATEMENT: DUAL-DIRECTION SCRUB PARALLAX & LASER EXPANSION
     // ------------------------------------------------------------------------
     const mantraLine1 = document.getElementById('mantraLine1');

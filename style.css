@@ -2704,6 +2704,8 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.75rem;
+  perspective: 1400px;
+  perspective-origin: center top;
 }
 
 @media (max-width: 1180px) {
@@ -2728,14 +2730,27 @@ body {
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease;
-  will-change: transform;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .arsenal-card:hover {
-  transform: translateY(-8px);
   border-color: var(--prod-accent);
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65), 0 0 35px var(--prod-glow);
+}
+
+.arsenal-card-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--prod-accent) 50%, transparent 100%);
+  box-shadow: 0 0 14px var(--prod-accent);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
 }
 
 .arsenal-card-glow {
@@ -2743,7 +2758,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 220px;
+  height: 260px;
   background: radial-gradient(circle at 50% 20%, var(--prod-glow) 0%, transparent 70%);
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -3440,14 +3455,30 @@ body {
 }
 
 .arsenal-card:hover .arsenal-img-closed {
-  opacity: 0;
-  transform: translateY(-8px) scale(0.92);
+  opacity: 0 !important;
+  pointer-events: none;
 }
 
 .arsenal-card:hover .arsenal-img-open {
-  opacity: 1;
-  transform: translate(-50%, -54%) scale(1.08);
+  opacity: 1 !important;
+  transform: translate(-50%, -54%) scale(1.08) !important;
   filter: drop-shadow(0 20px 40px var(--prod-glow)) drop-shadow(0 15px 30px rgba(0, 0, 0, 0.85));
+}
+
+.arsenal-show-all-btn {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 25px rgba(255, 44, 44, 0.28);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, background 0.35s ease;
+}
+
+.arsenal-show-all-btn:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 12px 35px rgba(255, 44, 44, 0.55);
+}
+
+.arsenal-show-all-btn:active {
+  transform: translateY(-1px) scale(0.99);
 }
 
 .hover-inspect-badge {
