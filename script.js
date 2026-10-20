@@ -105,6 +105,7 @@
   let currentProgress = 0;
   let isTicking = false;
 
+
   function onScroll() {
     const scrollY = window.pageYOffset || document.documentElement.scrollTop;
 
