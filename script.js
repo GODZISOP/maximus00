@@ -257,7 +257,7 @@
 
     if (frameCounterEl && loadedCount >= TOTAL_FRAMES) {
       frameCounterEl.textContent = `FRAME: [${String(currentFrame + 1).padStart(3, '0')}/160]`;
-    }
+    }no
 
     updateHeroHUD(currentProgress);
   }
