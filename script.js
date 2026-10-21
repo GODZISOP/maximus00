@@ -1636,9 +1636,7 @@
               );
             }
           });
-        }              }
-            );
-          });
+        }
 
           // Interactive 3D Cursor Gyro Tilt on Deck Cards
           deckCards.forEach((card) => {
