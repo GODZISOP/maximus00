@@ -167,10 +167,30 @@
 
     if (document.readyState === 'complete') {
       setTimeout(startBackgroundPreload, 400);
+      setTimeout(preloadOpenTubFormulationAssets, 600);
     } else {
-      window.addEventListener('load', () => setTimeout(startBackgroundPreload, 400), { once: true });
+      window.addEventListener('load', () => {
+        setTimeout(startBackgroundPreload, 400);
+        setTimeout(preloadOpenTubFormulationAssets, 600);
+      }, { once: true });
     }
   }
+
+  // Preload Open Tub assets early so scrolling to formulation & deck has zero GPU texture stalls
+  function preloadOpenTubFormulationAssets() {
+    const openTubSrcs = [
+      'public/open/blue-raspberry-open.webp',
+      'public/open/grape-open.webp',
+      'public/open/orange-blast-open.webp',
+      'public/open/sour-apple-open.webp'
+    ];
+    openTubSrcs.forEach((src) => {
+      const img = new Image();
+      img.decoding = 'async';
+      img.src = src;
+    });
+  }
+
   initProgressivePreloader();
 
   // 2. Ultra-Fast Canvas Draw Function with Adaptive Fallback
@@ -209,6 +229,16 @@
   let currentProgress = 0;
   let isTicking = false;
 
+  let heroTrackTop = 0;
+  let heroTrackHeight = 0;
+  function measureHeroTrack() {
+    if (!heroTrack) return;
+    const rect = heroTrack.getBoundingClientRect();
+    heroTrackTop = rect.top + window.pageYOffset;
+    heroTrackHeight = heroTrack.offsetHeight - window.innerHeight;
+  }
+  measureHeroTrack();
+  window.addEventListener('resize', measureHeroTrack, { passive: true });
 
   function onScroll() {
     const scrollY = window.pageYOffset || document.documentElement.scrollTop;
@@ -222,13 +252,10 @@
       }
     }
 
-    // Calculate Hero Track Target Progress
-    const trackRect = heroTrack.getBoundingClientRect();
-    const trackHeight = heroTrack.offsetHeight - window.innerHeight;
-
-    if (trackHeight > 0) {
-      const scrolled = -trackRect.top;
-      targetProgress = Math.min(Math.max(0, scrolled / trackHeight), 1);
+    // Zero layout-thrashing: use cached measurements
+    if (heroTrackHeight > 0) {
+      const scrolled = scrollY - heroTrackTop;
+      targetProgress = Math.min(Math.max(0, scrolled / heroTrackHeight), 1);
 
       if (!isTicking) {
         isTicking = true;
@@ -257,7 +284,7 @@
 
     if (frameCounterEl && loadedCount >= TOTAL_FRAMES) {
       frameCounterEl.textContent = `FRAME: [${String(currentFrame + 1).padStart(3, '0')}/160]`;
-    }no
+    }
 
     updateHeroHUD(currentProgress);
   }
@@ -902,14 +929,24 @@
   function initProductsScroll() {
     if (!productsTrack) return;
 
-    window.addEventListener('scroll', () => {
-      const trackRect = productsTrack.getBoundingClientRect();
-      const trackHeight = productsTrack.offsetHeight - window.innerHeight;
-      if (trackHeight <= 0) return;
+    let productsTrackTop = 0;
+    let productsTrackHeight = 0;
 
-      const scrolled = -trackRect.top;
-      if (scrolled >= 0 && scrolled <= trackHeight) {
-        const progress = Math.min(Math.max(0, scrolled / trackHeight), 1);
+    function measureProductsTrack() {
+      if (!productsTrack) return;
+      const rect = productsTrack.getBoundingClientRect();
+      productsTrackTop = rect.top + window.pageYOffset;
+      productsTrackHeight = productsTrack.offsetHeight - window.innerHeight;
+    }
+    measureProductsTrack();
+    window.addEventListener('resize', measureProductsTrack, { passive: true });
+
+    window.addEventListener('scroll', () => {
+      if (productsTrackHeight <= 0) return;
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const scrolled = scrollY - productsTrackTop;
+      if (scrolled >= 0 && scrolled <= productsTrackHeight) {
+        const progress = Math.min(Math.max(0, scrolled / productsTrackHeight), 1);
         const targetIndex = Math.min(Math.floor(progress * PRODUCTS.length), PRODUCTS.length - 1);
         if (targetIndex !== activeProductIndex) {
           setProduct(targetIndex, true);
@@ -1235,54 +1272,6 @@
     }
 
     // ------------------------------------------------------------------------
-    // 1.6. FORMULATION COPY (Left & Right Dual-Direction Entrance - Fast & Deep)
-    // ------------------------------------------------------------------------
-    const copyBlock = document.querySelector('.formulation-copy');
-    const descLines = document.querySelectorAll('.formulation-copy .desc-line');
-    if (copyBlock && descLines.length) {
-      // Line 1 starts from far LEFT, Line 2 starts from far RIGHT
-      if (descLines[0]) gsap.set(descLines[0], { x: -280, opacity: 0 });
-      if (descLines[1]) gsap.set(descLines[1], { x: 280, opacity: 0 });
-
-      const revealCopy = () => {
-        if (copyBlock.dataset.revealed === 'true') return;
-        copyBlock.dataset.revealed = 'true';
-
-        if (descLines[0]) {
-          gsap.to(descLines[0], {
-            x: 0,
-            opacity: 1,
-            duration: 0.26,
-            ease: 'power4.out'
-          });
-        }
-        if (descLines[1]) {
-          gsap.to(descLines[1], {
-            x: 0,
-            opacity: 1,
-            duration: 0.26,
-            ease: 'power4.out',
-            delay: 0.04
-          });
-        }
-      };
-
-      if ('IntersectionObserver' in window) {
-        const copyObserver = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              revealCopy();
-              copyObserver.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.05 });
-        copyObserver.observe(copyBlock);
-      } else {
-        revealCopy();
-      }
-    }
-
-    // ------------------------------------------------------------------------
     // 2. PERFORMANCE PILLARS: ALTERNATING LEFT & RIGHT DUAL-DIRECTION (FAST & WIDE)
     // ------------------------------------------------------------------------
     const pillarRows = document.querySelectorAll('.pillar-row');
@@ -1314,7 +1303,11 @@
         const targetPercent = fill ? (parseFloat(fill.getAttribute('data-progress')) || 99.4) : 99.4;
         const progressTarget = targetPercent / 100;
 
-        const rowTl = gsap.timeline();
+        const rowTl = gsap.timeline({
+          onComplete: () => {
+            gsap.set(row, { clearProps: 'willChange' });
+          }
+        });
 
         // 1. Fast & snappy entrance sweep from Left / Right (0.28s power4.out)
         rowTl.to(row, {
@@ -1374,7 +1367,7 @@
         }
       }
 
-      // Primary: Native IntersectionObserver (triggers swiftly on entrance)
+      // Primary: Native IntersectionObserver (triggers swiftly on entrance without scroll fight)
       if ('IntersectionObserver' in window) {
         const pillarObserver = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
@@ -1388,23 +1381,6 @@
         pillarRows.forEach((row) => pillarObserver.observe(row));
       } else {
         pillarRows.forEach((row, idx) => animateSinglePillarRow(row, idx));
-      }
-
-      // Secondary: Scroll Parallax Scrub (Pillars 01 & 03 sweep left, 02 & 04 sweep right)
-      if (window.ScrollTrigger) {
-        pillarRows.forEach((row, idx) => {
-          const scrubDir = (idx % 2 === 0) ? -85 : 85;
-          gsap.to(row, {
-            scrollTrigger: {
-              trigger: row,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 0.8,
-            },
-            x: scrubDir,
-            ease: 'none',
-          });
-        });
       }
 
       // Interactive 3D Tilt & Dynamic Cursor Spotlight
