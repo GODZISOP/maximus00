@@ -1446,15 +1446,17 @@
           transform: 'none',
         });
       } else {
-        // --------------------------------------------------------------------
-        // A. FORMULA STAGE MASTER ENTRANCE (Runs every time scrolled into view)
+        // ------------------------        // --------------------------------------------------------------------
+        // A. FORMULA STAGE MASTER ENTRANCE (Runs smoothly on first scroll into view)
         // --------------------------------------------------------------------
         const formulaEntranceTl = gsap.timeline({
           scrollTrigger: {
             trigger: formulaSection,
             start: 'top 80%',
-            end: 'bottom 15%',
-            toggleActions: 'play reverse play reverse', // Reversible every-time scroll!
+            once: true,
+          },
+          onComplete: () => {
+            gsap.set([openTubLayers, openTubGlow, hudPinLeft, hudPinRight], { clearProps: 'willChange' });
           }
         });
 
@@ -1513,8 +1515,8 @@
         // 5. Open Tub Multi-Layer 3D Levitation Drop
         if (openTubLayers) {
           formulaEntranceTl.fromTo(openTubLayers,
-            { y: -100, z: -180, scale: 0.72, rotationX: 20, rotationY: -12, opacity: 0 },
-            { y: 0, z: 0, scale: 1, rotationX: 0, rotationY: 0, opacity: 1, duration: 1.0, ease: 'back.out(1.6)' },
+            { y: -80, scale: 0.8, opacity: 0 },
+            { y: 0, scale: 1, opacity: 1, duration: 0.85, ease: 'back.out(1.4)' },
             0.18
           );
         }
@@ -1532,15 +1534,15 @@
         // 7. Tactical HUD Pins Cross-Shoot
         if (hudPinLeft) {
           formulaEntranceTl.fromTo(hudPinLeft,
-            { x: -90, y: -45, scale: 0.65, opacity: 0 },
-            { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.75, ease: 'back.out(1.8)' },
+            { x: -70, y: -30, scale: 0.75, opacity: 0 },
+            { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.65, ease: 'back.out(1.8)' },
             0.35
           );
         }
         if (hudPinRight) {
           formulaEntranceTl.fromTo(hudPinRight,
-            { x: 90, y: 45, scale: 0.65, opacity: 0 },
-            { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.75, ease: 'back.out(1.8)' },
+            { x: 70, y: 30, scale: 0.75, opacity: 0 },
+            { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.65, ease: 'back.out(1.8)' },
             0.4
           );
         }
@@ -1550,91 +1552,17 @@
         gsap.to('.pin-bottom-right', { y: 9, rotation: 1.5, duration: 3.1, repeat: -1, yoyo: true, ease: 'sine.inOut' });
 
         // --------------------------------------------------------------------
-        // B. LIVE SCROLL SCRUB PARALLAX (Active every time user scrolls)
-        // --------------------------------------------------------------------
-        // Open Tub levitates & tilts smoothly as scroll progress advances
-        if (openTubLayers) {
-          gsap.fromTo(openTubLayers,
-            { y: 35, rotationX: 8, rotationY: -6 },
-            {
-              scrollTrigger: {
-                trigger: formulaSection,
-                start: 'top 60%',
-                end: 'bottom 20%',
-                scrub: 1.3,
-              },
-              y: -55,
-              rotationX: -8,
-              rotationY: 8,
-              ease: 'none',
-            }
-          );
-        }
-
-        // Opposing Radar Rings live scroll spin
-        if (radarRings[0]) {
-          gsap.to(radarRings[0], {
-            scrollTrigger: {
-              trigger: formulaSection,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 1,
-            },
-            rotation: 140,
-            scale: 1.25,
-            ease: 'none',
-          });
-        }
-        if (radarRings[1]) {
-          gsap.to(radarRings[1], {
-            scrollTrigger: {
-              trigger: formulaSection,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 1,
-            },
-            rotation: -140,
-            scale: 1.15,
-            ease: 'none',
-          });
-        }
-
-        // HUD Pins multiplane divergence
-        if (hudPinLeft) {
-          gsap.to(hudPinLeft, {
-            scrollTrigger: {
-              trigger: formulaSection,
-              start: 'top 60%',
-              end: 'bottom 20%',
-              scrub: 1.1,
-            },
-            y: -35,
-            ease: 'none',
-          });
-        }
-        if (hudPinRight) {
-          gsap.to(hudPinRight, {
-            scrollTrigger: {
-              trigger: formulaSection,
-              start: 'top 60%',
-              end: 'bottom 20%',
-              scrub: 1.1,
-            },
-            y: 45,
-            ease: 'none',
-          });
-        }
-
-        // --------------------------------------------------------------------
-        // C. ALL 4 OPEN TUBS DECK GALLERY (Re-triggerable 3D Stagger Entrance)
+        // C. ALL 4 OPEN TUBS DECK GALLERY (Smooth, Non-blocking 3D Stagger Entrance)
         // --------------------------------------------------------------------
         if (deckSection && deckCards.length) {
           const deckEntranceTl = gsap.timeline({
             scrollTrigger: {
               trigger: deckSection,
-              start: 'top 82%',
-              end: 'bottom 15%',
-              toggleActions: 'play reverse play reverse', // Reversible every time!
+              start: 'top 85%',
+              once: true,
+            },
+            onComplete: () => {
+              gsap.set(deckCards, { clearProps: 'willChange' });
             }
           });
 
@@ -1652,36 +1580,33 @@
             const pill = card.querySelector('.card-status-pill');
             const glow = card.querySelector('.card-glow');
             const cardAngles = [
-              { x: -50, rotY: 18, rotZ: -2 },
-              { x: -15, rotY: 6, rotZ: -1 },
-              { x: 15, rotY: -6, rotZ: 1 },
-              { x: 50, rotY: -18, rotZ: 2 }
+              { x: -35, rotY: 12, rotZ: -2 },
+              { x: -10, rotY: 4, rotZ: -1 },
+              { x: 10, rotY: -4, rotZ: 1 },
+              { x: 35, rotY: -12, rotZ: 2 }
             ];
             const cfg = cardAngles[idx] || { x: 0, rotY: 0, rotZ: 0 };
-            const dDelay = 0.12 + (idx * 0.1);
+            const dDelay = 0.1 + (idx * 0.08);
 
             deckEntranceTl.fromTo(card,
               {
                 x: cfg.x,
-                y: 130,
-                z: -160,
+                y: 80,
                 rotationY: cfg.rotY,
-                rotationX: 24,
+                rotationX: 15,
                 rotationZ: cfg.rotZ,
-                scale: 0.85,
+                scale: 0.9,
                 opacity: 0,
-                transformPerspective: 1200,
               },
               {
                 x: 0,
                 y: 0,
-                z: 0,
                 rotationY: 0,
                 rotationX: 0,
                 rotationZ: 0,
                 scale: 1,
                 opacity: 1,
-                duration: 0.9,
+                duration: 0.75,
                 ease: 'power3.out',
               },
               dDelay
@@ -1689,8 +1614,8 @@
 
             if (tubImg) {
               deckEntranceTl.fromTo(tubImg,
-                { y: -35, scale: 0.8, opacity: 0 },
-                { y: 0, scale: 1, opacity: 1, duration: 0.75, ease: 'back.out(1.7)' },
+                { y: -25, scale: 0.85, opacity: 0 },
+                { y: 0, scale: 1, opacity: 1, duration: 0.65, ease: 'back.out(1.5)' },
                 dDelay + 0.08
               );
             }
@@ -1698,7 +1623,7 @@
             if (glow) {
               deckEntranceTl.fromTo(glow,
                 { opacity: 0, scale: 0.5 },
-                { opacity: 0.9, scale: 1.1, duration: 0.35, yoyo: true, repeat: 1, ease: 'power2.inOut' },
+                { opacity: 0.8, scale: 1, duration: 0.4, ease: 'power2.out' },
                 dDelay + 0.12
               );
             }
@@ -1707,30 +1632,11 @@
               deckEntranceTl.fromTo(pill,
                 { scale: 0.7, opacity: 0 },
                 { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2)' },
-                dDelay + 0.2
+                dDelay + 0.15
               );
             }
           });
-
-          // Continuous scroll scrub wave across deck
-          deckCards.forEach((card, idx) => {
-            const scrubDistance = (idx % 2 === 0) ? -28 : -50;
-            const tiltDir = (idx % 2 === 0) ? -4 : 4;
-
-            gsap.fromTo(card,
-              { rotationX: 2 },
-              {
-                scrollTrigger: {
-                  trigger: deckSection,
-                  start: 'top 70%',
-                  end: 'bottom 20%',
-                  scrub: 1.2,
-                },
-                y: scrubDistance,
-                rotationX: -4,
-                rotationY: tiltDir,
-                ease: 'none',
-              }
+        }              }
             );
           });
 
